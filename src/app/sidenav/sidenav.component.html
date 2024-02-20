@@ -1,0 +1,35 @@
+<mat-nav-list>
+    <div class="logo py-4">
+      <img src="./assets/logo.svg" alt="" />
+    </div>
+    <mat-divider></mat-divider>
+    &nbsp;
+    <h2 matSubheader class="mt-2">APPLICATIONS</h2>
+  
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="home">
+      <mat-icon>home</mat-icon> <span>Home</span>
+    </a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard">
+      <mat-icon>dashboard</mat-icon> <span>Dashboard</span> 
+    </a>
+   &nbsp;
+    <mat-expansion-panel  [class.mat-elevation-z0]="true">
+      <mat-expansion-panel-header> 
+          <mat-icon>phone</mat-icon>Phone
+      </mat-expansion-panel-header>
+      <mat-nav-list>
+          <a mat-list-item routerLink="#"><span>Spring</span></a>
+          <a mat-list-item routerLink="#"><span>Hibernate</span></a>
+          <a mat-list-item routerLink="#"><span>Struts</span></a>
+      </mat-nav-list>
+  </mat-expansion-panel>
+
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="post">
+    <mat-icon>group </mat-icon> <span>Group</span>  
+  </a>
+
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard">
+    <mat-icon>cloud_done </mat-icon> <span>Upload to Cloud</span>  
+  </a>
+  
+  </mat-nav-list>

@@ -1,0 +1,49 @@
+.logo {
+    text-align: center;
+    padding: 2.6rem 1rem;
+    img {
+      width: 150px;
+      height: 100px;
+      display: block;
+      border-radius: 10%;
+      margin: 0 auto;
+    }
+  }
+  
+  .mat-icon {
+    vertical-align: center;
+    margin-right: 1rem;
+    color: rgb(60, 170, 60);
+  }
+  .mat-divider {
+    border-top-width: 2px;
+    border-color: white;
+  }
+
+  mat-expansion-panel{
+    background: #1e2431;
+    margin-left: -6px;
+    margin-bottom: 20px;
+  }
+
+  .mat-expansion-panel-header {
+    color: rgb(223, 217, 217);
+    font-size: 1.0rem;
+    .mat-expansion-indicator {
+      color: white; 
+    }
+  }
+
+  span {
+    color: rgb(223, 217, 217);
+  }
+ 
+
+  h2 {
+    color: #f2f3f8;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+

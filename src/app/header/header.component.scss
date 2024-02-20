@@ -1,0 +1,43 @@
+mat-toolbar {
+    position: sticky;
+    top: -10000;
+    background: rgb(240, 243, 243);
+    z-index: 1000;
+  }
+  
+  .mat-menu {
+    background-color: black;
+  }
+  
+  ul {
+    li {
+      list-style: none;
+    }
+  }
+  button {
+    outline: none;
+    border: 0;
+    background: transparent;
+  }
+  .user {
+    font-size: 14px;
+  }
+  .user-image {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    &-icon {
+      height: 18px;
+      font-size: 16px;
+    }
+  }
+  
+  ::ng-deep {
+    .mat-menu-content {
+      width: 160px;
+      z-index: 1100;
+    }
+  }
+  
+  
+  
