@@ -15,7 +15,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { PostComponent } from './post/post.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { PostComponent } from './post/post.component';
     SidenavComponent,
     HomeComponent,
     DashboardComponent,
-    PostComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

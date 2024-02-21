@@ -2,13 +2,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PostComponent } from './post/post.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'post', component: PostComponent},
+  // {path: 'home', redirectTo: 'home', pathMatch: 'full'},
+  { path: '', component: WelcomeComponent },   
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    children: [
+      { path: 'home', component: HomeComponent },
+      // { path: 'posts', component: PostComponent },
+    ],
+  },
+
 ];
 
 @NgModule({
