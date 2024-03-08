@@ -2,6 +2,28 @@
     box-sizing: border-box;
 }
 
+.large-card {
+    width: 1120px; /* Set the desired width */
+    height: 100px; /* Set the desired height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgb(252, 251, 251);
+    border: 1px solid #ccc;
+  }
+  
+  .center-text {
+    margin: 0;
+  }
+
+  .mat-progress-bar {
+    width: 100%;
+  }
+  
+  
+  
+
 
 /* Style the body */
 
@@ -16,7 +38,7 @@ body {
 .header {
     padding: 60px;
     text-align: center;
-    background: #1abc9c;
+    background: #4e4ed1;
     color: rgb(255, 255, 255);
 }
 
@@ -32,7 +54,7 @@ body {
 /* Style the navigation bar links */
 
 .navbar a {
-    color: rgba(167, 45, 45, 0.829);
+    color: #13926c;
     padding: 14px 20px;
     text-decoration: none;
     text-align: center;
@@ -94,7 +116,7 @@ body {
     padding: 6px;
     text-align: center;
     color: white;
-    background: #7b1fa2;
+    background: #4e4ed1;
 }
 
 
@@ -145,7 +167,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #7b1fa2;
+    background-color: #4e4ed1;
 }
 
 nav {
@@ -228,12 +250,12 @@ a {
 
 .bg-image {
     /* The image used */
-    background-image: url("/assets/img/food1.jpg");
+    background-image: url("/assets/img/home.jpg");
     /* Add the blur effect */
     filter: blur(3px);
     -webkit-filter: blur(3px);
     /* Full height */
-    height: 50%;
+    height: 120%;
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;

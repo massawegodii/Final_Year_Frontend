@@ -1,35 +1,44 @@
 <mat-nav-list>
     <div class="logo py-4">
-      <img src="./assets/logo.svg" alt="" />
+      <img src="./assets/img/1.png" alt="" />
     </div>
     <mat-divider></mat-divider>
     &nbsp;
-    <h2 matSubheader class="mt-2">APPLICATIONS</h2>
+    <h2 matSubheader >SAMS</h2>
   
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/home">
-      <mat-icon>home</mat-icon> <span>Home</span>
-    </a>
     <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/home">
-      <mat-icon>dashboard</mat-icon> <span>Dashboard</span> 
+      <mat-icon>dashboard</mat-icon> <span>Dashboard</span>
+    </a>
+    &nbsp;
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/assets">
+      <mat-icon>devices</mat-icon> <span>Assets</span> 
     </a>
    &nbsp;
+   <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/maintainance">
+    <mat-icon>construction </mat-icon> <span>Maintenance</span>  
+  </a>
+  &nbsp;
+  <mat-divider></mat-divider>
+  &nbsp;
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/reports">
+    <mat-icon>picture_as_pdf</mat-icon> <span>Reports</span> 
+  </a>
+  &nbsp;
+  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard/notifications">
+    <mat-icon color="warn">forum </mat-icon> <span>Notifications</span>  
+  </a>
+  &nbsp;
     <mat-expansion-panel  [class.mat-elevation-z0]="true">
       <mat-expansion-panel-header> 
-          <mat-icon>phone</mat-icon>Phone
+          <mat-icon>manage_accounts</mat-icon> Manage Assets
       </mat-expansion-panel-header>
       <mat-nav-list>
-          <a mat-list-item routerLink="#"><span>Spring</span></a>
-          <a mat-list-item routerLink="#"><span>Hibernate</span></a>
-          <a mat-list-item routerLink="#"><span>Struts</span></a>
+          <a mat-list-item routerLink="/dashboard/departments"><span><mat-icon>business</mat-icon> Departments</span></a>
+          <a mat-list-item routerLink="/dashboard/status"><span><mat-icon>lightbulb</mat-icon> Status</span></a>
+          <a mat-list-item routerLink="/dashboard/category"><span><mat-icon>category</mat-icon> Categories</span></a>
+          <a mat-list-item routerLink="/dashboard/users"><span><mat-icon>groups</mat-icon> Users</span></a>
       </mat-nav-list>
   </mat-expansion-panel>
 
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="post">
-    <mat-icon>group </mat-icon> <span>Group</span>  
-  </a>
-
-  <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard">
-    <mat-icon>cloud_done </mat-icon> <span>Upload to Cloud</span>  
-  </a>
   
   </mat-nav-list>

@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  title = 'admin';
+  title = 'SAMS';
   sideBarOpen = true;
 
   sideBarToggler() {

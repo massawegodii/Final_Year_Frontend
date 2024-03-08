@@ -1,0 +1,144 @@
+<div class="container">
+    <h2 style="font-weight: bold; text-align: center;">Add New User's</h2>
+    <div class="card">
+        <mat-dialog-content class="mat-typography">
+            <br>
+            <form>
+              <div fxFlex fxLayout="column">
+                &nbsp;
+                <mat-form-field class="custom-width" appearance="fill">
+                  <mat-label>First Name</mat-label>
+                  <input matInput  autocomplete="off" />
+                  <mat-icon matSuffix>person_circle</mat-icon>
+                  <mat-error>
+                    <span>This is field mandatory.</span>
+                    <span>This is field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+                &nbsp;
+          
+                <mat-form-field class="custom-width" appearance="fill">
+                  <mat-label>Last Name</mat-label>
+                  <input matInput  autocomplete="off" />
+                  <mat-icon matSuffix>person_circle</mat-icon>
+                  <mat-error>
+                    <span>This is field mandatory.</span>
+                    <span>This is field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+                &nbsp;
+
+                <mat-form-field class="custom-width" appearance="fill">
+                  <mat-label>Email</mat-label>
+                  <input matInput  autocomplete="off" />
+                  <mat-icon matSuffix>email</mat-icon>
+                  <mat-error>
+                    <span>This is field mandatory.</span>
+                    <span>This is field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+            </div>
+            
+            <div fxFlex fxLayout="column">
+                &nbsp;
+                <mat-form-field class="custom-width" appearance="fill">
+                  <mat-label>Phone Number</mat-label>
+                  <input matInput  autocomplete="off" />
+                  <mat-icon matSuffix>phone_in_talk</mat-icon>
+                  <mat-error>
+                    <span>This is field mandatory.</span>
+                    <span>This is field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+                &nbsp;
+
+                <mat-form-field class="custom-width" appearance="fill">
+                  <mat-label>Password</mat-label>
+                  <input matInput type="password"  autocomplete="off" />
+                  <mat-icon matSuffix>password</mat-icon>
+                  <mat-error>
+                    <span>This is field mandatory.</span>
+                    <span>This is field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+                 &nbsp;
+
+                <mat-form-field class="custom-width" appearance="fill">
+                  <mat-label>Confirm Password</mat-label>
+                  <input matInput type="password"  autocomplete="off" />
+                  <mat-icon matSuffix>password</mat-icon>
+                  <mat-error>
+                    <span>This is field mandatory.</span>
+                    <span>This is field is invalid.</span>
+                  </mat-error>
+                </mat-form-field>
+                &nbsp;
+              </div>
+            </form>
+          </mat-dialog-content>
+          
+          <mat-dialog-actions align="end">
+            <button mat-raised-button color="primary" type="submit">
+              <mat-icon>save</mat-icon> Save
+            </button>
+            &nbsp;
+            <button mat-raised-button color="accent" mat-dialog-close routerLink="/dashboard/home">
+              <mat-icon>close</mat-icon>Close
+            </button> &nbsp; &nbsp;
+          </mat-dialog-actions>
+          <br>
+    </div>
+</div>
+<br><br>
+
+<div class="container">
+  <div class="card header">
+    <h2 style="text-align: center; font-weight: bold;">Total User's</h2>
+    </div>
+    <br>
+    <form class="d-flex">
+      <div class="ms-auto">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      </div>
+      &nbsp; &nbsp;
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+    <br>
+
+    <div class="card"> 
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+      
+          <!-- Weight Column -->
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          </ng-container>
+      
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      
+
+        </table>
+      </div>
+      
+    </div>  
+</div>

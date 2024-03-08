@@ -1,0 +1,7 @@
+:host {
+    --custom-width: 300px;
+  }
+  
+  .custom-width {
+    width: var(--custom-width);
+  }

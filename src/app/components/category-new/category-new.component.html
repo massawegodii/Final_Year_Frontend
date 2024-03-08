@@ -1,0 +1,59 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+      <span class="custom-title">Add Category</span>
+      <span class="spacer"></span>
+      <button
+        class="mat-dialog-close custom-close-button"
+        mat-icon-button
+        mat-dialog-close
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-dialog-content class="mat-typography">
+    <form>
+      <div fxFlex fxLayout="column">
+          
+            <mat-form-field appearance="fill" fxFlex>
+                <mat-label>Category Name</mat-label>
+                <input matInput formControlName="email" required />
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-error
+                  
+                >
+                <span 
+                    >This is field mandatory.</span
+                  >
+                  <span 
+                    >This is field is invalid.</span
+                  >
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Category Type</mat-label>
+                <mat-select>
+                  <mat-option value="one">First option</mat-option>
+                  <mat-option value="two">Second option</mat-option>
+                </mat-select>
+              </mat-form-field>
+   
+      </div>
+    </form>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="end">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      
+    >
+      <mat-icon>save</mat-icon>Save Category
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+      <mat-icon>cancel</mat-icon>Close
+    </button>
+  </mat-dialog-actions>

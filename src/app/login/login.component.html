@@ -1,0 +1,87 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row fxLayout="row">
+    <span class="custom-title">Login</span>
+    <span class="spacer"></span>
+    <button
+      class="mat-dialog-close custom-close-button"
+      mat-icon-button
+      mat-dialog-close
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="loginForm">
+    <div fxFlex fxLayout="column">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>UserName</mat-label>
+        <input matInput formControlName="userName" required />
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error
+          *ngIf="
+            loginForm.get('userName')?.touched &&
+            loginForm.get('userName')?.invalid
+          "
+        >
+          <span *ngIf="loginForm.get('userName')?.hasError('required')"
+            >This is field mandatory.</span
+          >
+          <span *ngIf="loginForm.get('userName')?.hasError('pattern')"
+            >This is field is invalid.</span
+          >
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="userPassword"
+          type="password"
+          required
+          [type]="userPassword ? 'password' : 'text'"
+        />
+        <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="userPassword = !userPassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria.pressed]="userPassword"
+        >
+          <mat-icon matSuffix>{{
+            userPassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error
+          *ngIf="
+            loginForm.get('userPassword')?.touched &&
+            loginForm.get('userPassword')?.invalid
+          "
+        >
+          <span *ngIf="loginForm.get('userPassword')?.hasError('required')"
+            >This is field mandatory.</span
+          >
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    (click)="handleSubmit()"
+      [disabled]="!(loginForm.valid && loginForm.dirty)"
+  >
+    <mat-icon>login</mat-icon>Login
+  </button>
+  <button mat-raised-button color="warn" mat-dialog-close>
+    <mat-icon>cancel</mat-icon>Close
+  </button>
+</mat-dialog-actions>

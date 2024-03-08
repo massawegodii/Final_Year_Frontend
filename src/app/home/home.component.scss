@@ -1,0 +1,105 @@
+// Variables
+$primary-color: #287bd3;
+$secondary-color: #1c9b3a;
+$mantainance-color: #9aa728;
+$report-color: #c2169d;
+$card-size: 150px;
+$circle-size: 190px; 
+$distance-between: 35px; 
+
+// Mixin for circle
+@mixin circle($color) {
+  width: $circle-size;
+  height: $circle-size;
+  border-radius: 50%;
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $color;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .number {
+    font-size: 20px;
+  }
+
+  .name {
+    margin-top: 8px; 
+  }
+
+  mat-icon {
+    font-size: 60px; 
+    width: 60px; 
+    height: 60px; 
+  }
+}
+.asset-model{
+  text-align: center;
+  margin-bottom: auto;
+}
+
+table {
+  width: 100%;
+}
+
+// Asset circle card
+.circle-card.asset {
+  .circle {
+    @include circle($primary-color);
+  }
+}
+
+// Component circle card
+.circle-card.component {
+  .circle {
+    @include circle($secondary-color);
+  }
+}
+
+// Mantainance circle card
+.circle-card.mantainance {
+    .circle {
+      @include circle($mantainance-color);
+    }
+  }
+
+  // Report circle card
+.circle-card.report {
+    .circle {
+      @include circle($report-color);
+    }
+  }
+
+// Dashboard styles
+.dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 30px auto;
+  margin-left: 120px;
+  max-width: 800px;
+}
+
+// Space between the circle cards
+.circle-card {
+  margin-right: $distance-between;
+}
+
+// Media query for responsiveness
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .circle-card {
+    margin-bottom: 20px;
+    margin-right: 0; 
+  }
+}

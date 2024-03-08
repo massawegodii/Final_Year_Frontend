@@ -1,12 +1,11 @@
 .logo {
-    text-align: center;
     padding: 2.6rem 1rem;
     img {
-      width: 150px;
-      height: 100px;
+      width: 205px;
+      height: 150px;
+      margin-left: 0;
       display: block;
       border-radius: 10%;
-      margin: 0 auto;
     }
   }
   
@@ -41,8 +40,8 @@
 
   h2 {
     color: #f2f3f8;
-    font-size: 1rem;
-    text-align: center;
+    font-size: 1.2rem;
+    margin-left: 50px;
     font-weight: 600;
     letter-spacing: 1px;
   }

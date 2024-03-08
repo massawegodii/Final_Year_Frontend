@@ -1,0 +1,51 @@
+:host {
+    --custom-width: 325px;
+  }
+  
+  .custom-width {
+    width: var(--custom-width);
+  }
+
+  table {
+    width: 100%;
+  }
+  
+  .mat-mdc-form-field {
+    font-size: 14px;
+  }
+  
+  td, th {
+    width: 25%;
+  }
+  
+  .table-container {
+  max-height: 400px; /* Set the maximum height for the table */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.mat-header-row {
+  position: sticky;
+  top: 0;
+  background-color: #f5f5f5;
+  z-index: 1;
+}
+
+.mat-header-cell {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  background-color: #f5f5f5;
+  z-index: 1;
+}
+
+.mat-cell {
+  z-index: 0;
+}
+
+.header {
+  background-color: rgb(248, 247, 243);
+}
+
+
+
+  
