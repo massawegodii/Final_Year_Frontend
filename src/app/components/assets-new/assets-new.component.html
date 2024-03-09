@@ -13,27 +13,45 @@
 </mat-toolbar>
 
 <mat-dialog-content class="mat-typography">
-  <form>
+  <form [formGroup]="addProductForm">
     <div fxFlex fxLayout="column">
       &nbsp;
       <mat-form-field class="custom-width" appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput autocomplete="off" />
+        <input matInput formControlName="productName" autocomplete="off" />
         <mat-icon matSuffix>person_circle</mat-icon>
-        <mat-error>
-          <span>This is field mandatory.</span>
-          <span>This is field is invalid.</span>
+        <mat-error
+          *ngIf="
+            addProductForm.controls.productName.touched &&
+            addProductForm.controls.productName.invalid
+          "
+        >
+          <span *ngIf="addProductForm.controls.productName.errors.required"
+            >This is field mandatory.</span
+          >
+          <span *ngIf="addProductForm.controls.productName.errors.pattern"
+            >This is field is invalid.</span
+          >
         </mat-error>
       </mat-form-field>
       &nbsp;
 
       <mat-form-field class="custom-width" appearance="fill">
         <mat-label>Costs</mat-label>
-        <input matInput autocomplete="off" />
+        <input matInput formControlName="productPrice" autocomplete="off" />
         <mat-icon matSuffix>payments</mat-icon>
-        <mat-error>
-          <span>This is field mandatory.</span>
-          <span>This is field is invalid.</span>
+        <mat-error
+          *ngIf="
+            addProductForm.controls.productPrice.touched &&
+            addProductForm.controls.productPrice.invalid
+          "
+        >
+          <span *ngIf="addProductForm.controls.productPrice.errors.required"
+            >This is field mandatory.</span
+          >
+          <span *ngIf="addProductForm.controls.productPrice.errors.pattern"
+            >This is field is invalid.</span
+          >
         </mat-error>
       </mat-form-field>
       &nbsp;
@@ -43,11 +61,20 @@
       &nbsp;
       <mat-form-field class="custom-width" appearance="fill">
         <mat-label>Serial No</mat-label>
-        <input matInput autocomplete="off" />
+        <input matInput formControlName="productSerialNo" autocomplete="off" />
         <mat-icon matSuffix>fingerprint</mat-icon>
-        <mat-error>
-          <span>This is field mandatory.</span>
-          <span>This is field is invalid.</span>
+        <mat-error
+          *ngIf="
+            addProductForm.controls.productSerialNo.touched &&
+            addProductForm.controls.productSerialNo.invalid
+          "
+        >
+          <span *ngIf="addProductForm.controls.productSerialNo.errors.required"
+            >This is field mandatory.</span
+          >
+          <span *ngIf="addProductForm.controls.productSerialNo.errors.pattern"
+            >This is field is invalid.</span
+          >
         </mat-error>
       </mat-form-field>
       &nbsp;
@@ -88,19 +115,51 @@
     <div fxFlex fxLayout="column">
       &nbsp;
       <mat-form-field appearance="fill" fxFlex>
-        <mat-label>Notes</mat-label>
+        <mat-label>Description</mat-label>
         <textarea
           matInput
+          formControlName="productDescription"
           placeholder="Enter your notes here"
           autocomplete="off"
         ></textarea>
         <mat-icon matSuffix>description</mat-icon>
-        <mat-error>
-          <span>This is field mandatory.</span>
-          <span>This is field is invalid.</span>
+        <mat-error
+          *ngIf="
+            addProductForm.controls.productDescription.touched &&
+            addProductForm.controls.productDescription.invalid
+          "
+        >
+          <span
+            *ngIf="addProductForm.controls.productDescription.errors.required"
+            >This is field mandatory.</span
+          >
+          <span
+            *ngIf="addProductForm.controls.productDescription.errors.pattern"
+            >This is field is invalid.</span
+          >
         </mat-error>
       </mat-form-field>
       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+      <mat-form-field class="custom-width" appearance="fill">
+        <mat-label>Model</mat-label>
+        <input matInput formControlName="productModel" autocomplete="off" />
+        <mat-icon matSuffix>payments</mat-icon>
+        <mat-error
+          *ngIf="
+            addProductForm.controls.productModel.touched &&
+            addProductForm.controls.productModel.invalid
+          "
+        >
+          <span *ngIf="addProductForm.controls.productModel.errors.required"
+            >This is field mandatory.</span
+          >
+          <span *ngIf="addProductForm.controls.productModel.errors.pattern"
+            >This is field is invalid.</span
+          >
+        </mat-error>
+      </mat-form-field>
+      &nbsp;
 
       <mat-form-field class="custom-width" appearance="fill">
         <mat-label>Status</mat-label>
@@ -112,22 +171,23 @@
       &nbsp;
     </div>
     &nbsp;
+
+    <!-- Image generating -->
     <div fxFlex fxLayout="column">
-      &nbsp;
-     <mat-form-field appearance="fill" fxFlex>
-      <mat-label>Image</mat-label>
-      <input matInput autocomplete="off" />
-        <mat-icon matSuffix>image</mat-icon>
-      <mat-error>
-        <span>This is field mandatory.</span>
-        <span>This is field is invalid.</span>
-      </mat-error>
-    </mat-form-field>
+      <div>
+        <input
+          type="file"
+          multiple
+          value="select"
+          #selectFile
+          (change)="onFileSelected($event)"
+        />
+      </div>
     </div>
   </form>
 
   <mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" type="submit">
+    <button mat-raised-button color="primary" type="submit" (click)="handleAddProductSubmit()">
       <mat-icon>save</mat-icon> Add
     </button>
     <button mat-raised-button color="warn" mat-dialog-close>

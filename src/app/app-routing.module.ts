@@ -12,6 +12,7 @@ import { DepartmentsComponent } from './components/departments/departments.compo
 import { CategoryComponent } from './components/category/category.component';
 import { StatusComponent } from './components/status/status.component';
 import { MaintananceComponent } from './components/maintanance/maintanance.component';
+import { AuthGuard } from './_auth/auth.guard';
 
 const routes: Routes = [
 
@@ -20,7 +21,8 @@ const routes: Routes = [
 
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    component: DashboardComponent,canActivate: [AuthGuard],
+    data: { roles: ['Admin'] },
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'assets', component: AssetsComponent },

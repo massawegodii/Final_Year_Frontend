@@ -48,6 +48,7 @@ import { CategoryNewComponent } from './components/category-new/category-new.com
 import { StatusComponent } from './components/status/status.component';
 import { StatusNewComponent } from './components/status-new/status-new.component';
 import { MaintananceComponent } from './components/maintanance/maintanance.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 
@@ -112,6 +113,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatGridListModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   providers: [

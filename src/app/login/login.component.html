@@ -12,7 +12,6 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="loginForm">
     <div fxFlex fxLayout="column">
@@ -76,12 +75,11 @@
     mat-raised-button
     color="primary"
     type="submit"
-    (click)="handleSubmit()"
-      [disabled]="!(loginForm.valid && loginForm.dirty)"
+    (click)="login()"
   >
     <mat-icon>login</mat-icon>Login
   </button>
   <button mat-raised-button color="warn" mat-dialog-close>
     <mat-icon>cancel</mat-icon>Close
   </button>
-</mat-dialog-actions>
+</mat-dialog-actions> 

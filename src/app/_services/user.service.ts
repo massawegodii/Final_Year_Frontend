@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { UserAuthService } from './user-auth.service';
+import { NgForm } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,12 @@ export class UserService implements OnInit {
     private httpClient: HttpClient,
     private userAuthService: UserAuthService
   ) {}
+
+  // public login(data: any) {
+  //   return this.httpClient.post(this.PATH_OF_API + '/authenticate', data, {
+  //     headers: this.requestHeader,
+  //   });
+  // }
 
   public login(data: any) {
     return this.httpClient.post(this.PATH_OF_API + '/authenticate', data, {
