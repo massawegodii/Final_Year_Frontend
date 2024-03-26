@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { GlobalConstant } from '../_constants/global-constant';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../_services/user.service';
@@ -56,9 +56,10 @@ export class LoginComponent implements OnInit {
     this.userService.login(data).subscribe(
       (response: any) => {
 
-        console.log(response)
         this.ngxService.stop();
         this.dialogRef.close();
+        this.responseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.responseMessage, 'success');
 
         this.userAuthService.setRoles(response.user.role);
         this.userAuthService.setToken(response.jwtToken);
@@ -70,7 +71,7 @@ export class LoginComponent implements OnInit {
         if (role === 'Admin') {
           this.router.navigate(['/dashboard/home']);
         } else {
-          this.router.navigate(['/']);
+          this.router.navigate(['/userpage']);
         }
       },
       (error:any)=>{

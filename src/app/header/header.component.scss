@@ -39,5 +39,14 @@ mat-toolbar {
     }
   }
   
+    
+  .demo-section + .demo-section {
+    margin-top: 16px;
+  }
+
+  .matBadge {
+    margin-left: 890px;
+    font-size: 50px;
+  }
   
   

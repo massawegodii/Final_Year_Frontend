@@ -1,75 +1,69 @@
 <div class="container mt-3">
-    <div class="card">
-        <div class="dashboard">
-            <div class="circle-card asset">
-              <div class="circle">
-                <p class="number">109</p>
-                <mat-icon>devices</mat-icon>
-                <span class="name">Asset</span>
-              </div>
-            </div>
-            <div class="circle-card component">
-              <div class="circle">
-                <p class="number">6</p>
-                <mat-icon>groups</mat-icon>
-                <span class="name">Active Users</span>
-              </div>
-            </div>
-            <div class="circle-card mantainance">
-                <div class="circle">
-                  <p class="number">150</p>
-                  <mat-icon>construction</mat-icon>
-                  <span class="name">Mantainance</span>
-                </div>
-              </div>
-              <div class="circle-card report">
-                <div class="circle">
-                  <p class="number">189</p>
-                  <mat-icon>picture_as_pdf</mat-icon>
-                  <span class="name">Report</span>
-                </div>
-              </div>
-          </div>
+  <div class="card">
+    <div class="dashboard">
+      <div class="circle-card asset">
+        <div class="circle">
+          <p class="number">109</p>
+          <mat-icon>devices</mat-icon>
+          <span class="name">Asset</span>
+        </div>
+      </div>
+      <div class="circle-card component">
+        <div class="circle">
+          <p class="number">6</p>
+          <mat-icon>groups</mat-icon>
+          <span class="name">Active Users</span>
+        </div>
+      </div>
+      <div class="circle-card mantainance">
+        <div class="circle">
+          <p class="number">150</p>
+          <mat-icon>construction</mat-icon>
+          <span class="name">Mantainance</span>
+        </div>
+      </div>
+      <div class="circle-card report">
+        <div class="circle">
+          <p class="number">189</p>
+          <mat-icon>picture_as_pdf</mat-icon>
+          <span class="name">Report</span>
+        </div>
+      </div>
     </div>
-    <br>
-<!-- asset model -->
-<div class="card" style="background-color: rgb(236, 235, 233);">
-    <h2 class="asset-model">Assets Model</h2>
-    <br>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  </div>
+  &nbsp;
 
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-      
+    <!-- Notification model -->
+    <div class="card" style="background-color: rgb(236, 235, 233)">
+      <h2 class="asset-model">Notification and Messages</h2>
+      &nbsp;
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <!-- Position Column -->
         <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let element">{{ element.position }}</td>
         </ng-container>
-      
+
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
         </ng-container>
-      
+
         <!-- Weight Column -->
         <ng-container matColumnDef="weight">
-          <th mat-header-cell *matHeaderCellDef> Weight </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          <th mat-header-cell *matHeaderCellDef>Weight</th>
+          <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
         </ng-container>
-      
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="symbol">
-          <th mat-header-cell *matHeaderCellDef> Symbol </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          <th mat-header-cell *matHeaderCellDef>Symbol</th>
+          <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
         </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      
-      
-</div>
 
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
 </div>

@@ -1,3 +1,4 @@
+import { FileHandle } from "./file-handle";
 
 
 export interface Product {
@@ -7,4 +8,12 @@ export interface Product {
   productPrice: number;
   productModel: string;
   productSerialNo: number;
+  productStatus: string,
+  productCategory:string,
+  productDepartment: string,
+  productImages: FileHandle[],
+  user: {
+    userName: string
 }
+}
+

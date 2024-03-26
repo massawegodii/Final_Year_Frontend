@@ -1,0 +1,70 @@
+:host {
+    --custom-width: 300px;
+  }
+  
+  .custom-width {
+    width: var(--custom-width);
+  }
+
+
+  .dropzone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .drag-icon {
+    font-size: 48px;
+    color: #ccc;
+  }
+  
+  .preview-image {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  mat-grid-tile {
+    border: 2px solid #eee;
+}
+
+.btn-remove-image {
+    position: absolute;
+    cursor: pointer;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: auto;
+    text-align: center;
+}
+
+.dropzone {
+  height: 20px;
+  min-width: 150px;
+  display: table;
+  background-color: #e2d9d9;
+  width: 310px;
+  border: dashed 1px #aaa;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-top: -100px;
+}
+
+
+.text-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.centered {
+    text-align: center;
+}
+
+.browse-button {
+    color: blue;
+    cursor: pointer;
+}
+

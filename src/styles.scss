@@ -31,17 +31,19 @@ body {
     padding: 0px 8px 0px 15px !important;
 }
 
-.black-snackbar {
-    background-color: #ff6700;
+ .black-snackbar {
+    background-color: #ff6700 !important;
     text-align: center;
     color: white;
 }
+
 
 .green-snackbar {
     background: green;
     text-align: center;
     color: white;
 }
+
 
 .mat-snack-bar-container {
     margin-right: auto !important;
@@ -58,3 +60,5 @@ body {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+

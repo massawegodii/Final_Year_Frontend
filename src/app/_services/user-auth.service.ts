@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class UserAuthService {
 
-  constructor() { }
+
+  constructor() {}
+
 
   public setRoles(roles: []) {
     localStorage.setItem('roles', JSON.stringify(roles));
@@ -29,6 +31,7 @@ export class UserAuthService {
     return jwtToken !== null ? jwtToken : null;
   }
 
+
   public clear() {
     localStorage.clear();
   }
@@ -46,4 +49,5 @@ export class UserAuthService {
     const roles: any[] = this.getRoles()
     return roles[0].roleName === 'User';
   }
+
 }

@@ -13,15 +13,21 @@ import { CategoryComponent } from './components/category/category.component';
 import { StatusComponent } from './components/status/status.component';
 import { MaintananceComponent } from './components/maintanance/maintanance.component';
 import { AuthGuard } from './_auth/auth.guard';
+import { UserPageComponent } from './user-page/user-page.component';
 
 const routes: Routes = [
-
-  { path: '', component: WelcomeComponent},
-
+  { path: '', component: WelcomeComponent },
+  {
+    path: 'userpage',
+    component: UserPageComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['User'] },
+  },
 
   {
     path: 'dashboard',
-    component: DashboardComponent,canActivate: [AuthGuard],
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
     data: { roles: ['Admin'] },
     children: [
       { path: 'home', component: HomeComponent },
@@ -35,11 +41,11 @@ const routes: Routes = [
       { path: 'maintainance', component: MaintananceComponent },
     ],
   },
-  { path: 'forbidden', component: ForbidentComponent},
+  { path: 'forbidden', component: ForbidentComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

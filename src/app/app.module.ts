@@ -49,6 +49,17 @@ import { StatusComponent } from './components/status/status.component';
 import { StatusNewComponent } from './components/status-new/status-new.component';
 import { MaintananceComponent } from './components/maintanance/maintanance.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { ToastrModule } from 'ngx-toastr';
+import { DragDirective } from './_services/drag.directive';
+import { ShowImageDialogComponent } from './components/show-image-dialog/show-image-dialog.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { AssetEditComponent } from './components/asset-edit/asset-edit.component';
+import { ViewStatusComponent } from './components/extra/view-status/view-status.component';
+import { UserPageComponent } from './user-page/user-page.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import { ShareComponent } from './components/extra/share/share.component';
+import { ReturnAssetComponent } from './components/extra/return-asset/return-asset.component';
+import { DeleteAssetComponent } from './components/extra/delete-asset/delete-asset.component';
 
 
 
@@ -86,6 +97,14 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     StatusComponent,
     StatusNewComponent,
     MaintananceComponent,
+    DragDirective,
+    ShowImageDialogComponent,
+    AssetEditComponent,
+    ViewStatusComponent,
+    UserPageComponent,
+    ShareComponent,
+    ReturnAssetComponent,
+    DeleteAssetComponent,
 
   ],
   imports: [
@@ -114,6 +133,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatPaginatorModule,
     MatSelectModule,
     MatGridListModule,
+    MatTooltipModule,
+    MatBadgeModule,
+    ToastrModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   providers: [

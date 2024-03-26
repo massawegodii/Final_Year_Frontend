@@ -1,43 +1,56 @@
 <div class="container mt-3">
-    <h1 style="font-weight: bold">Department</h1>
-  
-    <div style="display: flex; justify-content: flex-end">
-      <button mat-raised-button color="primary" (click)="handleNewDepartmentAction()">
-        <mat-icon>domain_add</mat-icon> Create New
-      </button>
-    </div>
-    <br />
-    <button mat-stroked-button>All Department</button>
-    &nbsp;
-    <div class="card mt-3">
-      
-      <div class="table-container">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      
-          <!-- Position Column -->
-          <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-          </ng-container>
-      
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-          </ng-container>
-      
-          <!-- Weight Column -->
-          <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef> Weight </th>
-            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-          </ng-container>
+  <h1 style="font-weight: bold">Department</h1>
 
-      
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </div>
-      
+  <div style="display: flex; justify-content: flex-end">
+    <button mat-raised-button color="primary"  (click)="addDepartment()">
+      <mat-icon>domain_add</mat-icon> Create New
+    </button>
+  </div>
+  <br />
+  <button mat-stroked-button>All Department</button>
+  &nbsp;
+  <div class="card mt-3">
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Id Column -->
+        <ng-container matColumnDef="Department Id">
+          <th mat-header-cell *matHeaderCellDef>Department Id</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="Department Name">
+          <th mat-header-cell *matHeaderCellDef>Department Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!--  Button -->
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              matTooltip="Edit"
+              color="primary"
+              (click)="editDepartment(element)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button
+              mat-icon-button
+              matTooltip="Delete"
+              color="warn"
+              (click)="deleteDepartment(element.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
     </div>
   </div>
-  
+</div>

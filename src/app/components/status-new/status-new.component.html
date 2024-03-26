@@ -1,34 +1,44 @@
-<mat-card>
-</mat-card>
+<mat-card> </mat-card>
 <mat-card>
   <mat-card-header>
     <div mat-card-avatar></div>
-    <mat-card-title>Add Status</mat-card-title>
+    <mat-card-title>{{dialogData.action}} Status</mat-card-title>
   </mat-card-header>
+  <span class="spacer"></span>
   <div mat-card-image></div>
   <mat-card-content>
-
-    <form>
-        <div class="form-group">
-          <label >Status Name</label>
-          <br>
-          <input type="email" class="form-control" placeholder="Enter Status Name">
-        </div>
-        <br>
-      </form>
-      
+    <form [formGroup]="statusForm">
+      <div class="form-group">
+        <label>Status Name</label>
+        <br />
+        <mat-form-field class="custom-width">
+          <input formControlName="name" matInput autocomplete="off" required />
+          <mat-icon matSuffix>add_task</mat-icon>
+          <mat-error
+            *ngIf="
+              statusForm.controls['name'].touched &&
+              statusForm.controls['name'].invalid
+            "
+          >
+            <span *ngIf="statusForm.controls['name'].hasError('required')"
+              >This is field mandatory.</span
+            >
+            <span *ngIf="statusForm.controls['name'].hasError('required')"
+              >This is field is invalid.</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <br />
+    </form>
   </mat-card-content>
   <mat-dialog-actions align="end">
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"  
-    >
-      <mat-icon>save</mat-icon>Add Status
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
+    [disabled]="!(statusForm.valid && statusForm.dirty)">
+      <mat-icon>add_task</mat-icon>{{action}} Status
     </button>
     <button mat-raised-button color="accent" mat-dialog-close>
-      <mat-icon>cancel</mat-icon>Close
+      <mat-icon>close</mat-icon>Close
     </button>
   </mat-dialog-actions>
 </mat-card>
-

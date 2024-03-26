@@ -1,52 +1,73 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
 import { AssetsNewComponent } from '../assets-new/assets-new.component';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+import { ProductService } from '../../_services/product.service';
+import { Product } from '../../_model/product_model';
+import { SnackbarService } from '../../_services/snackbar.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { GlobalConstant } from '../../_constants/global-constant';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ShowImageDialogComponent } from '../show-image-dialog/show-image-dialog.component';
+import { ImageProcessingService } from '../../_services/image-processing.service';
+import { map } from 'rxjs';
+import { AssetEditComponent } from '../asset-edit/asset-edit.component';
+import { StatusService } from '../../_services/status.service';
+import { Status } from '../../_model/status_model';
+import { CategoryService } from '../../_services/category.service';
+import { Category } from '../../_model/category-model';
+import { Department } from '../../_model/department-model';
+import { DepartmentService } from '../../_services/department.service';
+import { ShareComponent } from '../extra/share/share.component';
+import { DeleteAssetComponent } from '../extra/delete-asset/delete-asset.component';
 
 
 @Component({
   selector: 'app-assets',
   templateUrl: './assets.component.html',
-  styleUrl: './assets.component.scss'
+  styleUrl: './assets.component.scss',
 })
-export class AssetsComponent implements OnInit{
+export class AssetsComponent implements OnInit {
+  responseMessage: any;
+  filteredProducts: Product[] = [];
+  productDetails: Product[] = [];
 
-  constructor(private dialog: MatDialog){}
+  // Pass to get userName
+  selectedUserName: string = '';
+
+  displayedColumns: string[] = [
+    'Id',
+    'Product Name',
+    'Product Description',
+    'Product Price',
+    'Product Model',
+    'Product Status',
+    'Product Category',
+    'Product Serial Number',
+    'Product Department',
+    'Date Assigned',
+    'Name Assigned',
+    'Actions',
+  ];
+
+
+  constructor(
+    private dialog: MatDialog,
+    private productService: ProductService,
+    private snackbarService: SnackbarService,
+    private ngxService: NgxUiLoaderService,
+    private imageProcessingService: ImageProcessingService,
+    private statusService: StatusService,
+    private categoryService : CategoryService,
+    private departmentService: DepartmentService,
+  ) {}
 
   ngOnInit(): void {
+    this.getAllProduct();
+    this.getAllStatus();
+    this.getAllCategory();
+    this.getAllDepartment();
+    this.ngxService.start();
   }
-
-
-
-
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
 
   handleCreateNewAssetAction() {
     const dialogConfig = new MatDialogConfig();
@@ -56,4 +77,189 @@ export class AssetsComponent implements OnInit{
 
 
 
+  // Calling the Select data
+  statuses: Status[] = [];
+    getStatusName(productStatus: string): string {
+      if (!productStatus) {
+        return 'No Status';
+      }
+    
+      const status = this.statuses.find((s) => s.name === productStatus);
+      return status ? status.name : 'No Status';
+    }
+
+
+    categories: Category[] = [];
+    getCategoryName(productCategory: string): string {
+      if (!productCategory) {
+        return 'No Category';
+      }
+    
+      const category = this.categories.find((c) => c.name === productCategory);
+      return category ? category.name : 'No Category';
+    }
+
+    departments: Department[] = [];
+    getDepartmentName(productDepartment: string): string {
+      if (!productDepartment) {
+        return 'No Department';
+      }
+    
+      const department = this.departments.find((d) => d.name === productDepartment);
+      return department ? department.name : 'No Department';
+    }
+
+
+
+    public getAllDepartment() {
+      this.departmentService.getAllDepartment().subscribe((response: Department[]) => {
+        this.departments = response;
+        console.log(response);
+      }, (error) => {
+        console.log(error);
+      });
+    }
+    
+
+    public getAllCategory() {
+      this.categoryService.getAllCategory().subscribe((response: Category[]) => {
+        this.categories = response;
+        console.log(response);
+      }, (error) => {
+        console.log(error);
+      });
+    }
+    
+
+
+  public getAllStatus() {
+    this.statusService.getAllStatus().subscribe((response: Status[]) =>{
+      this.statuses = response; 
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  public getAllProduct() {
+    this.getAllStatus();
+    this.productService.getAllProduct()
+    .pipe(
+      map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
+    )
+    .subscribe(
+      (response: Product[]) => {
+        console.log(response);
+        this.productDetails = response;
+        
+        // Assigning the userName
+        this.productDetails = response.map(product => {
+          return {
+            ...product,
+            userName: product.user?.userName || 'Not Assigned' 
+          };
+        });
+        this.ngxService.stop();
+      },
+      (error) => {
+        this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstant.genericError;
+        }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstant.error
+        );
+      }
+    );
+  }
+
+
+  //Delete Asset in Admin
+    openDeleteAssetDialog(productId: any): void {
+      const dialogRef = this.dialog.open(DeleteAssetComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.deleteProduct(productId);
+        }
+      });
+    }
+
+
+
+  public deleteProduct(productId: any) {
+      this.productService.deleteProductDetails(productId).subscribe(
+        (response) => {
+          this.getAllProduct();
+          console.log(response);
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
+  }
+  
+
+  showImage(product: Product) {
+    console.log(product);
+    this.dialog.open(ShowImageDialogComponent, {
+      data: {
+        image: product.productImages
+      },
+      height: '400px',
+      width: '600px'
+    });
+  }
+
+
+
+  editProductDetails(productId: any) {
+    const product = this.productDetails.find(p => p.productId === productId);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '700px';
+    dialogConfig.data = { product: product }; 
+    const dialogRef = this.dialog.open(AssetEditComponent, dialogConfig);
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getAllProduct();
+      }
+    });
+  }
+
+
+  shareProductToUser(productId: any) {
+    const product = this.productDetails.find(p => p.productId === productId);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '700px';
+    dialogConfig.data = { product: product }; 
+    const dialogRef = this.dialog.open(ShareComponent, dialogConfig);
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getAllProduct();
+      }
+    });
+  }
+  
+
+  applFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.toLowerCase().trim();
+    this.filteredProducts = this.productDetails.filter((product: Product) =>
+      product.productName.toLowerCase().includes(filterValue) ||
+      product.productDescription.toLowerCase().includes(filterValue) ||
+      product.productModel.toLowerCase().includes(filterValue) ||
+      product.productSerialNo.toString().toLowerCase().includes(filterValue) ||
+      product.productPrice.toString().toLowerCase().includes(filterValue) ||
+      product.productStatus.toString().toLowerCase().includes(filterValue) ||
+      product.productCategory.toString().toLowerCase().includes(filterValue) ||
+      product.productDepartment.toString().toLowerCase().includes(filterValue)
+    );
+  }
+
+  
+  
 }

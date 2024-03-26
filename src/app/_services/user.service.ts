@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { UserAuthService } from './user-auth.service';
-import { NgForm } from '@angular/forms';
+import { User } from '../_model/users_model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,17 +18,34 @@ export class UserService implements OnInit {
     private userAuthService: UserAuthService
   ) {}
 
-  // public login(data: any) {
-  //   return this.httpClient.post(this.PATH_OF_API + '/authenticate', data, {
-  //     headers: this.requestHeader,
-  //   });
-  // }
+
 
   public login(data: any) {
     return this.httpClient.post(this.PATH_OF_API + '/authenticate', data, {
       headers: this.requestHeader,
     });
   }
+
+  public addUser(data: any) {
+    return this.httpClient.post(this.PATH_OF_API + '/user/registerNewUser', data, {
+      headers: this.requestHeader,
+    });
+  }
+
+  
+  public getAllUsers() {
+    return this.httpClient.get<User[]>("http://localhost:8080/user/getAllUsers");
+  }
+  
+
+  public deleteUsers(data: any) {
+    return this.httpClient.delete("http://localhost:8080/user/deleteUser/"+data);
+  }
+
+  public updateUsers(data: any) {
+    return this.httpClient.post<User[]>("http://localhost:8080/user/updateUser",data);
+  }
+
 
   public roleMatch(allowedRoles: any): boolean {
     let isMatch = false;

@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row fxLayout="row">
-      <span class="custom-title">Add Category</span>
+      <span class="custom-title">{{dialogData.action}} Category</span>
       <span class="spacer"></span>
       <button
         class="mat-dialog-close custom-close-button"
@@ -13,33 +13,28 @@
   </mat-toolbar>
 
   <mat-dialog-content class="mat-typography">
-    <form>
+    <form [formGroup]="categoryForm">
       <div fxFlex fxLayout="column">
           
             <mat-form-field appearance="fill" fxFlex>
                 <mat-label>Category Name</mat-label>
-                <input matInput formControlName="email" required />
+                <input matInput formControlName="name" required />
                 <mat-icon matSuffix>person</mat-icon>
                 <mat-error
-                  
+                *ngIf="
+                  categoryForm.controls['name'].touched &&
+                  categoryForm.controls['name'].invalid
+                "
+              >
+                <span *ngIf="categoryForm.controls['name'].hasError('required')"
+                  >This is field mandatory.</span
                 >
-                <span 
-                    >This is field mandatory.</span
-                  >
-                  <span 
-                    >This is field is invalid.</span
-                  >
-                </mat-error>
+                <span *ngIf="categoryForm.controls['name'].hasError('required')"
+                  >This is field is invalid.</span
+                >
+              </mat-error>
               </mat-form-field>
 
-              <mat-form-field>
-                <mat-label>Category Type</mat-label>
-                <mat-select>
-                  <mat-option value="one">First option</mat-option>
-                  <mat-option value="two">Second option</mat-option>
-                </mat-select>
-              </mat-form-field>
-   
       </div>
     </form>
   </mat-dialog-content>
@@ -49,9 +44,10 @@
       mat-raised-button
       color="primary"
       type="submit"
-      
+      (click)="handleSubmit()"
+      [disabled]="!(categoryForm.valid && categoryForm.dirty)"
     >
-      <mat-icon>save</mat-icon>Save Category
+      <mat-icon>save</mat-icon>{{action}} Category
     </button>
     <button mat-raised-button color="warn" mat-dialog-close>
       <mat-icon>cancel</mat-icon>Close

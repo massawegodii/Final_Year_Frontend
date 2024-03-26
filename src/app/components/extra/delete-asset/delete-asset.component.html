@@ -1,0 +1,15 @@
+<mat-card class="mat-card">
+    <h1 class="text-center" mat-dialog-title>Confirmation</h1>
+</mat-card>
+<span class="spacer"></span>
+<mat-dialog-content>
+  <h4>Are you sure you want to delete the Asset?</h4>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="accent" [mat-dialog-close]="true">
+    <mat-icon>delete</mat-icon> Delete
+</button>
+  <button mat-raised-button color="primary" mat-dialog-close>
+    <mat-icon>close</mat-icon> Cancel
+  </button>
+</mat-dialog-actions>
