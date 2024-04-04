@@ -22,6 +22,11 @@ export class HeaderComponent implements OnInit {
     this.toggleSidebarForMe.emit();
   }
 
+  
+  fetchData() {
+    window.open('http://localhost:8080/', '_blank');
+  }
+
   public logout() {
     this.userAuthService.clear();
     this.router.navigate(['/']);

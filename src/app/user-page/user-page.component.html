@@ -7,17 +7,24 @@
       <p>Smart Asset Management System</p>
     </div>
     <span class="spacer"></span>
-    <button mat-icon-button>
-      <mat-icon>manage_accounts</mat-icon>
+    <button mat-icon-button matTooltip="Live Chat Room"  (click)="fetchData()">
+      <mat-icon matBadge="1" matBadgeColor="accent" style="color: green; font-size: 28px">forum</mat-icon>
     </button>
-    <button mat-icon-button>
-      <mat-icon matBadge="15" matBadgeColor="warn"
-        >notifications_active</mat-icon
-      >
+
+    <button mat-icon-button matTooltip="Manage Account" [matMenuTriggerFor]="beforeMenu">
+      <mat-icon style="color: green; font-size: 26.4px">account_circle</mat-icon>
     </button>
-    <button mat-icon-button (click)="logout()">
-      <mat-icon>logout</mat-icon>
-    </button>
+
+      <mat-menu #menu="matMenu" #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="handleChangePasswordAction()">
+          <mat-icon>password</mat-icon>
+          Change Password
+        </button>  
+
+        <button mat-menu-item matTooltip="Logout"  (click)="logout()">
+          <mat-icon>logout</mat-icon> Logout
+        </button>  
+      </mat-menu>
   </mat-toolbar>
 </div>
 &nbsp; &nbsp;
@@ -35,7 +42,11 @@
   </mat-card>
   &nbsp; &nbsp;
 
-  <div class="card">
+  <div class="card mt-3">
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+  </div>
+
+  <div class="card mt-5">
     <div *ngIf="assignDetails && assignDetails.length > 0">
           <!-- Table contents -->
         <table mat-table [dataSource]="assignDetails" class="mat-elevation-z8">

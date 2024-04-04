@@ -2,9 +2,19 @@
     box-sizing: border-box;
 }
 
+.user-image {
+    border-radius: 100%;
+    width: 60px;
+    
+    &-icon {
+      height: 20px;
+      font-size: 18px;
+    }
+  }
+
 .large-card {
-    width: 1120px; /* Set the desired width */
-    height: 100px; /* Set the desired height */
+    width: 1120px; 
+    height: 90px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,12 +30,7 @@
   .mat-progress-bar {
     width: 100%;
   }
-  
-  
-  
 
-
-/* Style the body */
 
 body {
     font-family: Arial;
@@ -33,7 +38,6 @@ body {
 }
 
 
-/* Header/logo Title */
 
 .header {
     padding: 60px;
@@ -77,10 +81,6 @@ body {
 }
 
 
-/* Create two unequal columns that sits next to each other */
-
-
-/* Sidebar/left column */
 
 .side {
     flex: 30%;
@@ -119,8 +119,6 @@ body {
     background: #4e4ed1;
 }
 
-
-/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 
 @media screen and (max-width: 700px) {
     .row,
@@ -250,12 +248,12 @@ a {
 
 .bg-image {
     /* The image used */
-    background-image: url("/assets/img/home.jpg");
+    background-image: url("/assets/img/logo3.jpg");
     /* Add the blur effect */
-    filter: blur(3px);
-    -webkit-filter: blur(3px);
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
     /* Full height */
-    height: 120%;
+    height: 110%;
     /* Center and scale the image nicely */
     background-position: center;
     background-repeat: no-repeat;
@@ -306,7 +304,7 @@ a {
 
 /* Style for each timeline item */
 .timeline li {
-    margin-bottom: 50px;
+    margin-bottom: 120px;
     position: relative;
 }
 

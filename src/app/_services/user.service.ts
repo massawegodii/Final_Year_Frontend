@@ -46,6 +46,15 @@ export class UserService implements OnInit {
     return this.httpClient.post<User[]>("http://localhost:8080/user/updateUser",data);
   }
 
+  public changePassword(data: any) {
+    return this.httpClient.post("http://localhost:8080/user/changePassword",data);
+  }
+
+  public forgotPassword(data: any) {
+    return this.httpClient.post("http://localhost:8080/user/forgotPassword",data);
+
+  }
+
 
   public roleMatch(allowedRoles: any): boolean {
     let isMatch = false;

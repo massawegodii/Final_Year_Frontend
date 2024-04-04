@@ -110,13 +110,13 @@
 
       <mat-form-field class="custom-width" appearance="fill">
         <mat-label>Username</mat-label>
-        <mat-select
+        <mat-select 
            formControlName="userName"
            (selectionChange)="onAssignUserNameSelect($event)"
           [(value)]="selectedUserName"
           required
         >
-          <mat-option *ngFor="let user of users" [value]="user.userName">
+          <mat-option  *ngFor="let user of users" [value]="user.userName">
             {{ user.userName }}
           </mat-option>
         </mat-select>

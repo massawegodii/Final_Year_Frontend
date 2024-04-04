@@ -106,20 +106,6 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- <mat-form-field class="custom-width" appearance="fill">
-        <mat-label>Department</mat-label>
-        <mat-select
-          [(value)]="selectedDepartment"
-          (selectionChange)="onDepartmentSelect($event)"
-          name="productDepartment"
-          [(ngModel)]="product.productDepartment"
-          required
-        >
-          <mat-option *ngFor="let department of departments" [value]="department.name">
-            {{ department.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
     </div>
     &nbsp;
 
@@ -148,20 +134,7 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- <mat-form-field class="custom-width" appearance="fill">
-        <mat-label>Category</mat-label>
-        <mat-select
-          [(value)]="selectedCategory"
-          (selectionChange)="onCategorySelect($event)"
-          name="productCategory"
-          required
-          [(ngModel)]="product.productCategory"
-        >
-          <mat-option *ngFor="let category of categories" [value]="category.name">
-            {{ category.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
+     
       &nbsp;
     </div>
 
@@ -232,21 +205,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <!-- <mat-form-field class="custom-width" appearance="fill">
-        <mat-label>Status</mat-label>
-        <mat-select
-          [(value)]="selectedStatus"
-          (selectionChange)="onStatusSelect($event)"
-          name="productStatus"
-          [(ngModel)]="product.productStatus"
-          required
-        >
-          <mat-option *ngFor="let status of statuses" [value]="status.name">
-            {{ status.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
       &nbsp;
     </div>
     &nbsp;

@@ -4,8 +4,8 @@
       <mat-icon>menu</mat-icon>
     </button>
     
-    <button mat-icon-button class="matBadge">
-      <mat-icon matBadge="15" matBadgeColor="warn" style="font-size: 30px;">notifications_active</mat-icon>
+    <button mat-icon-button class="matBadge" matTooltip="Live Chat Room"   (click)="fetchData()">
+      <mat-icon matBadge="1" matBadgeColor="accent"  style="color: green; font-size: 30px;">chat</mat-icon>
     </button>
 
 
@@ -14,11 +14,12 @@
         <li>
           <button
             mat-button
+            matTooltip="Click to Check Options" 
             [matMenuTriggerFor]="menu"
             class="user mt-2 d-flex align-items-center"
           >
           
-            <img src="./assets/user.jpg" alt="" class="user-image mr-1 p-2" />
+            <img src="./assets/img/logo2.jpg" alt="" class="user-image mr-1 p-2" />
             
           
           </button>

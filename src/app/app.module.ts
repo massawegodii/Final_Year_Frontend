@@ -60,6 +60,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { ShareComponent } from './components/extra/share/share.component';
 import { ReturnAssetComponent } from './components/extra/return-asset/return-asset.component';
 import { DeleteAssetComponent } from './components/extra/delete-asset/delete-asset.component';
+import { ConfirmationComponent } from './components/extra/confirmation/confirmation.component';
+import { ChangePasswordComponent } from './components/extra/change-password/change-password.component';
 
 
 
@@ -105,6 +107,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ShareComponent,
     ReturnAssetComponent,
     DeleteAssetComponent,
+    ConfirmationComponent,
+    ChangePasswordComponent,
 
   ],
   imports: [
@@ -145,7 +149,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
       useClass: AuthInterceptor,
       multi: true
     },
-    UserService
+    UserService,
   ],
   bootstrap: [AppComponent],
 })

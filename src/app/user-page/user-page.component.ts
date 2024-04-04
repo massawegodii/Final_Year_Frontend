@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Assign } from '../_model/assign_model';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ImageProcessingService } from '../_services/image-processing.service';
 import { ProductService } from '../_services/product.service';
@@ -10,6 +10,8 @@ import { UserAuthService } from '../_services/user-auth.service';
 import { Router } from '@angular/router';
 import { ReturnAssetComponent } from '../components/extra/return-asset/return-asset.component';
 import { Product } from '../_model/product_model';
+import { ConfirmationComponent } from '../components/extra/confirmation/confirmation.component';
+import { ChangePasswordComponent } from '../components/extra/change-password/change-password.component';
 
 @Component({
   selector: 'app-user-page',
@@ -18,6 +20,8 @@ import { Product } from '../_model/product_model';
 })
 export class UserPageComponent implements OnInit {
 
+  isIconBlinking: boolean = false;
+  
   productDetails: Product[] = [];
 
   responseMessage: any;
@@ -107,35 +111,32 @@ export class UserPageComponent implements OnInit {
   }
 
 
-  // public getAllProduct() {
-  //   this.productService.getAllProduct()
-  //   .pipe(
-  //     map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
-  //   )
-  //   .subscribe(
-  //     (response: Product[]) => {
-  //       console.log(response);
-  //       this.productDetails = response;
-  //       this.ngxService.stop();
-  //     },
-  //     (error) => {
-  //       this.ngxService.stop();
-  //       if (error.error?.message) {
-  //         this.responseMessage = error.error?.message;
-  //       } else {
-  //         this.responseMessage = GlobalConstant.genericError;
-  //       }
-  //       this.snackbarService.openSnackBar(
-  //         this.responseMessage,
-  //         GlobalConstant.error
-  //       );
-  //     }
-  //   );
-  // }
+// This if for opening chat in new window
+  fetchData() {
+    window.open('http://localhost:8080/', '_blank');
+  }
+
 
 
   public logout() {
-    this.userAuthService.clear();
-    this.router.navigate(['/']);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'Logout',
+      confirmation: true
+    };
+
+    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitterStatusChange.subscribe((response) => {
+      dialogRef.close();
+      this.userAuthService.clear();
+      this.router.navigate(['/']);
+    });
+  }
+
+  
+  handleChangePasswordAction() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '550px';
+    this.dialog.open(ChangePasswordComponent, dialogConfig);
   }
 }

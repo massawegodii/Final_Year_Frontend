@@ -10,7 +10,7 @@
       <mat-icon>add_circle</mat-icon> Create New
     </button>
     &nbsp;
-    <button mat-raised-button color="accent">
+    <button mat-raised-button color="accent" routerLink="/dashboard/reports">
       <mat-icon>print</mat-icon> Print Report
     </button>
   </div>
@@ -106,10 +106,11 @@
          <!-- Name Assigned Column -->
          <ng-container matColumnDef="Name Assigned">
           <th mat-header-cell *matHeaderCellDef>Assigned To</th>
-          <td mat-cell *matCellDef="let element">
+          <td mat-cell *matCellDef="let element" [ngClass]="{'warning-text': element.userName === 'Not Assigned'}">
             {{ element.userName }}
           </td>
         </ng-container>
+        
 
         <!-- Images Button -->
         <ng-container matColumnDef="Actions">
