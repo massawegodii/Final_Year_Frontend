@@ -12,6 +12,8 @@ import { ReturnAssetComponent } from '../components/extra/return-asset/return-as
 import { Product } from '../_model/product_model';
 import { ConfirmationComponent } from '../components/extra/confirmation/confirmation.component';
 import { ChangePasswordComponent } from '../components/extra/change-password/change-password.component';
+import { QrCodeComponent } from '../components/extra/qr-code/qr-code.component';
+import { QrcodeService } from '../_services/qrcode.service';
 
 @Component({
   selector: 'app-user-page',
@@ -45,6 +47,7 @@ export class UserPageComponent implements OnInit {
     private ngxService: NgxUiLoaderService,
     private userAuthService: UserAuthService,
     private router: Router,
+    private qrcodeService: QrcodeService,
     private imageProcessingService: ImageProcessingService
   ) {}
 
@@ -116,6 +119,32 @@ export class UserPageComponent implements OnInit {
     window.open('http://localhost:8080/', '_blank');
   }
 
+  
+  showQrCode(product: Product) {
+    if (product.productId !== null && product.productId !== undefined) {
+      this.qrcodeService.generateQRCode(product.productId)
+        .subscribe((blob: Blob) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            if (reader.result !== null) {
+              const base64data = reader.result.toString();
+              this.dialog.open(QrCodeComponent, {
+                data: {
+                  image: base64data
+                },
+                height: '230px',
+                width: '200px'
+              });
+            } else {
+              console.error('Reader result is null.');
+            }
+          };
+        });
+    } else {
+      console.error('Asset ID is null or undefined.');
+    }
+  }
 
 
   public logout() {

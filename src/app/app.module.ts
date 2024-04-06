@@ -62,6 +62,8 @@ import { ReturnAssetComponent } from './components/extra/return-asset/return-ass
 import { DeleteAssetComponent } from './components/extra/delete-asset/delete-asset.component';
 import { ConfirmationComponent } from './components/extra/confirmation/confirmation.component';
 import { ChangePasswordComponent } from './components/extra/change-password/change-password.component';
+import { QrCodeComponent } from './components/extra/qr-code/qr-code.component';
+import { EmployeeComponent } from './components/employee/employee.component';
 
 
 
@@ -109,6 +111,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     DeleteAssetComponent,
     ConfirmationComponent,
     ChangePasswordComponent,
+    QrCodeComponent,
+    EmployeeComponent,
 
   ],
   imports: [

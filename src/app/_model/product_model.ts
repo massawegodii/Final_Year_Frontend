@@ -11,6 +11,7 @@ export interface Product {
   productStatus: string,
   productCategory:string,
   productDepartment: string,
+  qrCode: string;
   productImages: FileHandle[],
   user: {
     userName: string

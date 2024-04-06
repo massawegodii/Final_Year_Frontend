@@ -1,0 +1,18 @@
+.container {
+text-align: center;  }
+
+.download-link {
+    cursor: pointer;
+    color: blue;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.3s, background-color 0.3s; 
+    padding: 3px 20px;
+  }
+  
+  .download-link:hover {
+    color: rgb(21, 235, 14);
+    background-color: #f0f0f0; 
+    border-radius: 10px;
+  }
+  

@@ -58,6 +58,7 @@ export class AssetsNewComponent implements OnInit {
     productDepartment: '',
     productCategory: '',
     productImages: [],
+    qrCode: '',
 
     user: {
       userName: ''
@@ -88,6 +89,7 @@ export class AssetsNewComponent implements OnInit {
         [Validators.required, Validators.pattern(GlobalConstant.number)],
       ],
       productImages: [null] ,
+      qrCode: [null] ,
 
       user: this.formBuilder.group({
         userName: [null],
@@ -107,6 +109,7 @@ export class AssetsNewComponent implements OnInit {
         productStatus: product.productStatus,
         productCategory: product.productCategory,
         productDepartment: product.productDepartment,
+        qrCode: product.qrCode,
         productImages: [],
 
         user: {

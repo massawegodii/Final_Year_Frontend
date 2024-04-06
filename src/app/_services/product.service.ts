@@ -22,6 +22,7 @@ export class ProductService {
     return this.httpClient.get<Assign[]>("http://localhost:8080/products/getAssignById/" +data);
   }
 
+
   public getAllAssign() {
     return this.httpClient.get<Assign[]>("http://localhost:8080/assign/getAssignDetails");
   }

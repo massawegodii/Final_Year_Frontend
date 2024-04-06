@@ -54,6 +54,7 @@ export class AssetEditComponent implements OnInit {
     productStatus: '',
     productDepartment: '',
     productCategory: '',
+    qrCode: '',
     productImages: [],
 
     user: {
@@ -84,6 +85,7 @@ export class AssetEditComponent implements OnInit {
         null,
         [Validators.required, Validators.pattern(GlobalConstant.number)],
       ],
+      qrCode: [null],
       productImages: [null],
       productStatus: [this.product.productStatus, Validators.required], 
       productCategory: [this.product.productCategory, Validators.required], 
@@ -108,6 +110,7 @@ export class AssetEditComponent implements OnInit {
         productCategory: product.productCategory,
         productDepartment: product.productDepartment,
         productImages: product.productImages,
+        qrCode: product.qrCode,
 
         user: {
           userName: product.user.userName

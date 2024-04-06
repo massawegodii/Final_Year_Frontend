@@ -19,6 +19,8 @@ import { Department } from '../../_model/department-model';
 import { DepartmentService } from '../../_services/department.service';
 import { ShareComponent } from '../extra/share/share.component';
 import { DeleteAssetComponent } from '../extra/delete-asset/delete-asset.component';
+import { QrCodeComponent } from '../extra/qr-code/qr-code.component';
+import { QrcodeService } from '../../_services/qrcode.service';
 
 
 @Component({
@@ -59,6 +61,7 @@ export class AssetsComponent implements OnInit {
     private statusService: StatusService,
     private categoryService : CategoryService,
     private departmentService: DepartmentService,
+    private qrcodeService: QrcodeService
   ) {}
 
   ngOnInit(): void {
@@ -214,6 +217,31 @@ export class AssetsComponent implements OnInit {
     });
   }
 
+  showQrCode(product: Product) {
+    if (product.productId !== null && product.productId !== undefined) {
+      this.qrcodeService.generateQRCode(product.productId)
+        .subscribe((blob: Blob) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            if (reader.result !== null) {
+              const base64data = reader.result.toString();
+              this.dialog.open(QrCodeComponent, {
+                data: {
+                  image: base64data
+                },
+                height: '230px',
+                width: '200px'
+              });
+            } else {
+              console.error('Reader result is null.');
+            }
+          };
+        });
+    } else {
+      console.error('Asset ID is null or undefined.');
+    }
+  }
 
 
   editProductDetails(productId: any) {
