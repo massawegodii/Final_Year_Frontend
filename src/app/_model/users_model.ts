@@ -4,6 +4,8 @@ export interface User {
     userFirstName: string;
     userLastName: string;
     userPassword: string;
+    imageUrl: string;
+    phoneNumber: string;
     role: Role[];
 
 }

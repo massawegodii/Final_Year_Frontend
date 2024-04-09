@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../_services/user.service';
 import { UserAuthService } from '../_services/user-auth.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ConfirmationComponent } from '../components/extra/confirmation/confirmation.component';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +17,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private userAuthService: UserAuthService,
     private router: Router,
-    public userService: UserService
+    public userService: UserService,
+    private dialog : MatDialog
   ) {}
 
   toggleSidebar() {
@@ -27,8 +30,24 @@ export class HeaderComponent implements OnInit {
     window.open('http://localhost:8080/', '_blank');
   }
 
+  // public logout() {
+  //   this.userAuthService.clear();
+  //   this.router.navigate(['/']);
+  // }
+
   public logout() {
-    this.userAuthService.clear();
-    this.router.navigate(['/']);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'Logout',
+      confirmation: true
+    };
+
+    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitterStatusChange.subscribe((response) => {
+      dialogRef.close();
+      this.userAuthService.clear();
+      this.router.navigate(['/']);
+    });
   }
+
 }

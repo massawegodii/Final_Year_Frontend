@@ -32,6 +32,11 @@ export class AssetsComponent implements OnInit {
   responseMessage: any;
   filteredProducts: Product[] = [];
   productDetails: Product[] = [];
+  p: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 50;
+
+  // productName: any;
 
   // Pass to get userName
   selectedUserName: string = '';
@@ -71,6 +76,46 @@ export class AssetsComponent implements OnInit {
     this.getAllDepartment();
     this.ngxService.start();
   }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  get pages(): number[] {
+    const pagesArray: number[] = [];
+    for (let i = 1; i <= this.totalPages; i++) {
+      pagesArray.push(i);
+    }
+    return pagesArray;
+  }
+
+  // search() {
+  //   if(this.productName == "") {
+  //     this.ngOnInit();
+  //   }else {
+  //     this.productDetails = this.productDetails.filter(resp => {
+  //       return resp.productName.toLocaleLowerCase().match(this.productName.toLocaleLowerCase());
+  //     });
+  //   }
+  // }
+
+  key: string = '';
+  reverse: boolean = false;
+  sort(key: string): void {
+    if (this.key === key) {
+      this.reverse = !this.reverse;
+    } else {
+      this.reverse = false;
+    }
+    this.key = key;
+    this.productDetails.sort((a, b) => {
+      if (a[key] < b[key]) return this.reverse ? 1 : -1;
+      if (a[key] > b[key]) return this.reverse ? -1 : 1;
+      return 0;
+    });
+  }
+  
+  
 
   handleCreateNewAssetAction() {
     const dialogConfig = new MatDialogConfig();

@@ -63,7 +63,10 @@ import { DeleteAssetComponent } from './components/extra/delete-asset/delete-ass
 import { ConfirmationComponent } from './components/extra/confirmation/confirmation.component';
 import { ChangePasswordComponent } from './components/extra/change-password/change-password.component';
 import { QrCodeComponent } from './components/extra/qr-code/qr-code.component';
-import { EmployeeComponent } from './components/employee/employee.component';
+import { AddEmployeeComponent } from './components/extra/add-employee/add-employee.component';
+import { DeleteEmployeeComponent } from './components/extra/delete-employee/delete-employee.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginationComponent } from './components/extra/pagination/pagination.component';
 
 
 
@@ -112,7 +115,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ConfirmationComponent,
     ChangePasswordComponent,
     QrCodeComponent,
-    EmployeeComponent,
+    AddEmployeeComponent,
+    DeleteEmployeeComponent,
+    PaginationComponent,
 
   ],
   imports: [
@@ -143,6 +148,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatGridListModule,
     MatTooltipModule,
     MatBadgeModule,
+    NgxPaginationModule,
     ToastrModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],

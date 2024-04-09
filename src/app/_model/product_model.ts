@@ -16,5 +16,6 @@ export interface Product {
   user: {
     userName: string
 }
+[key: string]: any;
 }
 

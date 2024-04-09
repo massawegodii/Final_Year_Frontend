@@ -25,10 +25,11 @@ mat-toolbar {
   .user-image {
     border-radius: 80%;
     width: 60px;
+    margin-left: -30px;
     height: 60px;
     &-icon {
-      height: 18px;
-      font-size: 16px;
+      height: 17px;
+      font-size: 15px;
     }
   }
   

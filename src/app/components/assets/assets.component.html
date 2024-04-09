@@ -19,7 +19,11 @@
   &nbsp;
   <button mat-stroked-button>All New</button>
   &nbsp;
-  <button mat-stroked-button>All Distributed</button>
+  <button mat-stroked-button>All Assign</button>
+  <!-- <nav class="navbar">
+    <input class="form-control" name="productName" [(ngModel)]="productName" (ngModelChange)="search()" type="text"
+    placeholder="Enter Name to search">
+  </nav> -->
   <div class="card mt-3">
     <mat-form-field>
       <mat-label>Filter Data</mat-label>
@@ -29,25 +33,25 @@
     <div class="table-container">
       <table
         mat-table
-        [dataSource]="productDetails"
+        [dataSource]="productDetails | paginate: {itemsPerPage: itemsPerPage, currentPage: p}"
         [dataSource]="filteredProducts"
         class="mat-elevation-z8"
       >
         <!-- Id Column -->
         <ng-container matColumnDef="Id">
-          <th mat-header-cell *matHeaderCellDef>Id</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productId')">Id &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">{{ element.productId }}</td>
         </ng-container>
 
         <!-- Product Name Column -->
         <ng-container matColumnDef="Product Name">
-          <th mat-header-cell *matHeaderCellDef>Product Name</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productName')">Product Name &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
         </ng-container>
 
         <!-- productDescription Column -->
         <ng-container matColumnDef="Product Description">
-          <th mat-header-cell *matHeaderCellDef>Product Description</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productDescription')">Product Description &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">
             {{ element.productDescription }}
           </td>
@@ -55,19 +59,19 @@
 
         <!-- productPrice Column -->
         <ng-container matColumnDef="Product Price">
-          <th mat-header-cell *matHeaderCellDef>Product Price</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productPrice')">Product Price &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">{{ element.productPrice }}</td>
         </ng-container>
 
         <!-- productModel Column -->
         <ng-container matColumnDef="Product Model">
-          <th mat-header-cell *matHeaderCellDef>Product Model</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productModel')">Product Model &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">{{ element.productModel }}</td>
         </ng-container>
 
         <!-- productStatus Column -->
         <ng-container matColumnDef="Product Status">
-          <th mat-header-cell *matHeaderCellDef>Product Status</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productStatus')">Product Status &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">
             {{ getStatusName(element.productStatus) }}
           </td>
@@ -75,7 +79,7 @@
 
         <!-- product Category Column -->
         <ng-container matColumnDef="Product Category">
-          <th mat-header-cell *matHeaderCellDef>Product Category</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productCategory')">Product Category &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">
             {{ getCategoryName(element.productCategory) }}
           </td>
@@ -83,7 +87,7 @@
 
         <!-- Product Department Column -->
         <ng-container matColumnDef="Product Department">
-          <th mat-header-cell *matHeaderCellDef>Product Department</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productDepartment')">Product Department &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">
             {{ getDepartmentName(element.productDepartment) }}
           </td>
@@ -91,7 +95,7 @@
 
         <!-- productSerialNo Column -->
         <ng-container matColumnDef="Product Serial Number">
-          <th mat-header-cell *matHeaderCellDef>Serial Number</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productSerialNo')">Serial Number &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">
             {{ element.productSerialNo }}
           </td>
@@ -99,13 +103,13 @@
 
         <!-- productDate Column -->
         <ng-container matColumnDef="Date Assigned">
-          <th mat-header-cell *matHeaderCellDef>Date Assign</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('productDate')">Date Assign &nbsp; <i class="fa fa-sort"></i></th>
           <td mat-cell *matCellDef="let element">{{ element.productDate }}</td>
         </ng-container>
 
         <!-- Name Assigned Column -->
         <ng-container matColumnDef="Name Assigned">
-          <th mat-header-cell *matHeaderCellDef>Assigned To</th>
+          <th mat-header-cell *matHeaderCellDef (click)="sort('userName')">Assigned To &nbsp; <i class="fa fa-sort"></i></th>
           <td
             mat-cell
             *matCellDef="let element"
@@ -177,4 +181,19 @@
       </table>
     </div>
   </div>
+  <br>
+  <!--  Pagination  -->
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item" [ngClass]="{ 'disabled': p === 1 }">
+        <a class="page-link" (click)="p = p - 1">Previous</a>
+      </li>
+      <li class="page-item" *ngFor="let page of pages" [ngClass]="{ 'active': p === page }">
+        <a class="page-link" (click)="p = page">{{ page }}</a>
+      </li>
+      <li class="page-item" [ngClass]="{ 'disabled': p === totalPages }">
+        <a class="page-link" (click)="p = p + 1">Next</a>
+      </li>
+    </ul>
+  </nav>
 </div>

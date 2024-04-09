@@ -6,6 +6,9 @@ import { SnackbarService } from '../../_services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { Role, User } from './../../_model/users_model';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { AddEmployeeComponent } from '../extra/add-employee/add-employee.component';
+import { DeleteEmployeeComponent } from '../extra/delete-employee/delete-employee.component';
 import { HttpErrorResponse } from '@angular/common/http';
 
 
@@ -19,18 +22,36 @@ export class UsersComponent implements OnInit {
   password = true;
   addUserForm: any = FormGroup;
   responseMessage: any;
+  
+  public users: User[] = [];
+  
+  currentPage = 1;
+  itemsPerPage = 8;
+  totalUsers: number = 0;
+  totalPages: number;
+  changePage(page: number) {
+   this.currentPage = page;
+  }
+
+  get PaginatedData() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.users.slice(start, end);
+  }
+
   role: Role[] = [];
-  selectedUser: User | null = null; // Property to store the selected user for editing
  
 
   constructor(
-    private router: Router,
     private userServices: UserService,
+    private router: Router,
     private formBuilder: FormBuilder,
     private snackbarService: SnackbarService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private dialog: MatDialog,
   ) {
     this.role = [];
+    this.totalPages = Math.ceil(this.users.length / this.itemsPerPage);
   }
 
 
@@ -67,102 +88,56 @@ export class UsersComponent implements OnInit {
     this.getAllUsers();
   }
 
-  dataSource : User[] = [];
-  displayedColumns: string[] = [
-    'Username', 
-    'First Name', 
-    'Last Name', 
-    'Email', 
-    'Role',
-    'Actions'
-  ];
 
 
-
-
-  validationSubmit(){
-    if(this.addUserForm.controls['password'].value != this.addUserForm.controls['confirmPassword'].value){
-      return true;
-    }
-    else {
-      return false;
-    }
+  addEmployee() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action: 'Add',
+    };
+    dialogConfig.width = '650px';
+    const dialogRef = this.dialog.open(AddEmployeeComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+      this.getAllUsers();
+    });
+    const sub = dialogRef.componentInstance.onAddDepartment.subscribe(
+      (response: any) => {
+        this.getAllUsers();
+      }
+    );
   }
 
 
-
-  handleSubmit() {
-    this.ngxService.start();
-    const formData = this.addUserForm.value;
-    const data = {
-      userName: formData.userName,
-      userFirstName: formData.userFirstName,
-      userLastName: formData.userLastName,
-      email: formData.email,
-      userPassword: formData.userPassword,
-      role: formData.role,
+  editDepartment(values: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action: 'Edit',
+      data: values,
     };
 
-    if (this.selectedUser) {
-      // Editing existing user
-      data['userName'] = this.selectedUser.userName; // Assuming userId is available in User model
-      delete data['role']; // Remove 'role' from data
-      this.userServices.updateUsers(data).subscribe(
-        (response: any) => {
-          this.getAllUsers();
-          this.ngxService.stop();
-          this.responseMessage = response?.message;
-          this.snackbarService.openSnackBar(this.responseMessage, 'success');
-          this.router.navigate(['/dashboard/users']);
-          this.addUserForm.reset();
-          this.selectedUser = null; // Reset selected user after editing
-        },
-        (error) => {
-          this.ngxService.stop();
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstant.genericError;
-          }
-          this.snackbarService.openSnackBar(
-            this.responseMessage,
-            GlobalConstant.error
-          );
-        }
-      );
-    } else {
-      // Adding new user
-      this.userServices.addUser(data).subscribe(
-        (response: any) => {
-          this.getAllUsers();
-          this.ngxService.stop();
-          this.responseMessage = response?.message;
-          this.snackbarService.openSnackBar(this.responseMessage, 'success');
-          this.router.navigate(['/dashboard/users']);
-          this.addUserForm.reset();
-        },
-        (error) => {
-          this.ngxService.stop();
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstant.genericError;
-          }
-          this.snackbarService.openSnackBar(
-            this.responseMessage,
-            GlobalConstant.error
-          );
-        }
-      );
-    }
+    dialogConfig.width = '650px';
+    const dialogRef = this.dialog.open(AddEmployeeComponent, dialogConfig);
+    this.router.events.subscribe(() => {
+      dialogRef.close();
+      this.getAllUsers();
+    });
+    const sub = dialogRef.componentInstance.onAddDepartment.subscribe(
+      (response: any) => {
+        this.getAllUsers();
+      }
+    );
   }
+
+
 
 
   public getAllUsers() {
     return this.userServices.getAllUsers().subscribe((response: User[]) => {
       console.log(response);
-      this.dataSource = response;
+      this.users = response;
       this.ngxService.stop();
+      this.totalUsers = response.length;
 
        // Extract all roles dynamically
        const roles: Role[] = [];
@@ -195,40 +170,25 @@ export class UsersComponent implements OnInit {
     );
   }
 
+  public deleteEmployee(userName: any) {
+    const dialogRef: MatDialogRef<any> = this.dialog.open(DeleteEmployeeComponent, {
+      width: '550px',
+      data: { userName: userName }
+    });
 
-  public deleteUsers(userName: any) {
-    const isConfirmed = window.confirm(
-      'Are you sure you want to delete this User?'
-    );
-
-    if (isConfirmed) {
-      this.userServices.deleteUsers(userName).subscribe(
-        (response:any) => {
-          this.getAllUsers();
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error);
-        }
-      );
-    } else {
-      // User cancelled the deletion
-      console.log('Deletion canceled.');
-    }
-  }
-
-
-  handleEditAction(user: User) {
-    // Populate form with selected user's data for editing
-    this.selectedUser = user;
-    this.addUserForm.patchValue({
-      userName: user.userName,
-      userFirstName: user.userFirstName,
-      userLastName: user.userLastName,
-      email: user.email,
-      userPassword: user.userPassword,
-      role: user.role
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userServices.deleteUsers(userName).subscribe(
+          (response: any) => {
+            console.log(userName);
+            this.getAllUsers();
+          },
+          (error: HttpErrorResponse) => {
+            console.log(error);
+          }
+        );
+      }
     });
   }
-
     
 }

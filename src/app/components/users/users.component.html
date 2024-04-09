@@ -1,229 +1,86 @@
-<div class="container">
-  <h2 style="font-weight: bold; text-align: center">Add New Employee</h2>
-  <div class="card">
-    <mat-dialog-content class="mat-typography">
-      <br />
-      <form [formGroup]="addUserForm">
-        <div fxFlex fxLayout="column">
-          &nbsp;
-          <mat-form-field class="custom-width" appearance="fill">
-            <mat-label>Username</mat-label>
-            <input matInput formControlName="userName" autocomplete="off" required/>
-            <mat-icon matSuffix>account_circle</mat-icon>
-            <mat-error
-              *ngIf="
-                addUserForm.controls.userName.touched &&
-                addUserForm.controls.userName.invalid
-              "
-            >
-              <span *ngIf="addUserForm.controls.userName.errors.required"
-                >This is field mandatory.</span
-              >
-              <span *ngIf="addUserForm.controls.userName.errors.pattern"
-                >This is field is invalid.</span
-              >
-            </mat-error>
-          </mat-form-field>
-          &nbsp;
+<div class="body">
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <a class="navbar-brand" style="color:white;">Manage Employee</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor02">
+     <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+           <a style="color: white" (click)="addEmployee()">Add Employee <span class="sr-only">(current)</span></a>
+        </li>
+     </ul>
+     
+     <form class="form-inline my-2 my-lg-0">
+        <input class="form-inline my-2 my-lg-0" type="search" class="form-control mr-sm-2" placeholder="Search employee ..." required>
+     </form>
+  </div>
+</nav>
 
-          <mat-form-field class="custom-width" appearance="fill">
-            <mat-label>First Name</mat-label>
-            <input matInput formControlName="userFirstName" autocomplete="off" required/>
-            <mat-icon matSuffix>person_circle</mat-icon>
-            <mat-error
-              *ngIf="
-                addUserForm.controls.userFirstName.touched &&
-                addUserForm.controls.userFirstName.invalid
-              "
-            >
-              <span *ngIf="addUserForm.controls.userFirstName.errors.required"
-                >This is field mandatory.</span
-              >
-              <span *ngIf="addUserForm.controls.userFirstName.errors.pattern"
-                >This is field is invalid.</span
-              >
-            </mat-error>
-          </mat-form-field>
-          &nbsp;
 
-          <mat-form-field class="custom-width" appearance="fill">
-            <mat-label>Last Name</mat-label>
-            <input matInput formControlName="userLastName" autocomplete="off" required/>
-            <mat-icon matSuffix>person</mat-icon>
-            <mat-error
-              *ngIf="
-                addUserForm.controls.userLastName.touched &&
-                addUserForm.controls.userLastName.invalid
-              "
-            >
-              <span *ngIf="addUserForm.controls.userLastName.errors.required"
-                >This is field mandatory.</span
-              >
-              <span *ngIf="addUserForm.controls.userLastName.errors.pattern"
-                >This is field is invalid.</span
-              >
-            </mat-error>
-          </mat-form-field>
+<div class="container" id="main-container">
+<div class="row">
+   <!-- Before paginated *ngFor="let user of users"  -->
+  <div *ngFor="let user of PaginatedData" class="col-md-6 col-xl-3">
+     <div class="card m-b-30">
+        <div class="card-body row">
+           <div class="col-6">
+            <div class="image-container">
+               <a>
+                   <img src="{{ user?.imageUrl }}" alt="" class="img-fluid w-60">
+               </a>
+           </div>
+           </div>
+           <div class="col-6 card-title align-self-center mb-0">
+              <h4>{{user?.userName}}</h4>
+              <p class="m-0" *ngFor="let role of user?.role">{{role.roleName}}</p>
+           </div>
         </div>
 
-        <div fxFlex fxLayout="column">
-          &nbsp;
-          <mat-form-field class="custom-width" appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" autocomplete="off" required/>
-            <mat-icon matSuffix>email</mat-icon>
-            <mat-error
-              *ngIf="
-                addUserForm.controls.email.touched &&
-                addUserForm.controls.email.invalid
-              "
-            >
-              <span *ngIf="addUserForm.controls.email.errors.required"
-                >This is field mandatory.</span
-              >
-              <span *ngIf="addUserForm.controls.email.errors.pattern"
-                >This is field is invalid.</span
-              >
-            </mat-error>
-          </mat-form-field>
-          &nbsp;
-
-          <mat-form-field class="custom-width" appearance="fill">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="userPassword" autocomplete="off" required/>
-            <mat-icon matSuffix>password</mat-icon>
-            <mat-error
-              *ngIf="
-                addUserForm.controls.userPassword.touched &&
-                addUserForm.controls.userPassword.invalid
-              "
-            >
-              <span *ngIf="addUserForm.controls.userPassword.errors.required"
-                >This is field mandatory.</span
-              >
-              <span *ngIf="addUserForm.controls.userPassword.errors.pattern"
-                >This is field is invalid.</span
-              >
-            </mat-error>
-          </mat-form-field>
-          &nbsp;
-
-          <mat-form-field class="custom-width" appearance="fill">
-            <mat-label>Role</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let r of role" [value]="r.roleName">
-                {{ r.roleName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          &nbsp;
-        </div>
-      </form>
-    </mat-dialog-content>
-
-    <mat-dialog-actions align="end">
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        (click)="handleSubmit()"
-      >
-        <mat-icon>save</mat-icon> Save
-      </button>
-      &nbsp;
-      <button
-        mat-raised-button
-        color="accent"
-        mat-dialog-close
-        routerLink="/dashboard/home"
-      >
-        <mat-icon>close</mat-icon>Close
-      </button>
-      &nbsp; &nbsp;
-    </mat-dialog-actions>
-    <br />
-  </div>
-</div>
-<br /><br />
-
-
-<!-- User's Table -->
-
-<div class="container">
-  <div class="card header">
-    <h2 style="text-align: center; font-weight: bold">Manage Employee</h2>
-  </div>
-  <br />
-  <form class="d-flex">
-    <div class="ms-auto">
-      <input
-        class="form-control me-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-    </div>
-    &nbsp; &nbsp;
-    <button class="btn btn-outline-success" type="submit">Search</button>
-  </form>
-  <br />
-
-  <div class="card">
-    <div class="table-container">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <!-- Username Column -->
-        <ng-container matColumnDef="Username">
-          <th mat-header-cell *matHeaderCellDef>Username</th>
-          <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
-        </ng-container>
-
-        <!-- First Name Column -->
-        <ng-container matColumnDef="First Name">
-          <th mat-header-cell *matHeaderCellDef>First Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.userFirstName }}</td>
-        </ng-container>
-
-        <!-- Last Name Column -->
-        <ng-container matColumnDef="Last Name">
-          <th mat-header-cell *matHeaderCellDef>Last Name</th>
-          <td mat-cell *matCellDef="let element">{{ element.userLastName }}</td>
-        </ng-container>
-
-        <!-- Email Column -->
-        <ng-container matColumnDef="Email">
-          <th mat-header-cell *matHeaderCellDef>Email</th>
-          <td mat-cell *matCellDef="let element">{{ element.email }}</td>
-        </ng-container>
-
-        <!-- Role Column -->
-        <ng-container matColumnDef="Role">
-          <th mat-header-cell *matHeaderCellDef>Role</th>
-          <td mat-cell *matCellDef="let element">
-            <ng-container *ngIf="element.role && element.role.length > 0">
-              <div *ngFor="let r of element.role">{{ r.roleName }}</div>
-            </ng-container>
-          </td>
-        </ng-container>
-
-        <!-- Action Column -->
-        <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef>Actions</th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button matTooltip="Edit" color="primary" (click)="handleEditAction(element)">
-              <mat-icon>edit</mat-icon>
-            </button>
-
-            <button mat-icon-button matTooltip="Delete" color="warn" (click)="deleteUsers(element.userName)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+       <ul class="list-group list-group-flush">
+      <li class="list-group-item d-flex justify-content-start align-items-center">
+        <span class="flex-grow-1">{{user?.email}}</span>
+        <span class="ml-auto">
+          <mat-icon>email</mat-icon>
+        </span>
+      </li>
+      <li class="list-group-item d-flex justify-content-start align-items-center">
+        <span class="flex-grow-1">{{user?.phoneNumber}}</span>
+        <span class="ml-auto">
+          <mat-icon>phone</mat-icon>
+        </span>
+      </li>
+    </ul>
         
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
+        <div class="card-body">
+           <div class="float-right btn-group btn-group-sm">
+              <a (click)="editDepartment(user)" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a> &nbsp;
+              <a (click)="deleteEmployee(user.userName)" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
+           </div>
+        </div>
+     </div>
   </div>
+
+
+ <!-- <div class="mt-8 py-4 flex justify-center items-center ">
+   <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>  -->
+
+<app-pagination
+[totalItems]="totalUsers"
+[itemsPerPage]="itemsPerPage"
+[currentPage]="currentPage"
+(onclick)="changePage($event)"
+></app-pagination>
+
+
 </div>
+<!-- Notification for no employees -->
+<div *ngIf="users?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+<div class="alert alert-info" role="alert">
+  <h4 class="alert-heading text-center" >NO EMPLOYEES!</h4>
+  <p class="text-center">No Employee were found.</p>
+</div>
+</div>
+</div>
+
