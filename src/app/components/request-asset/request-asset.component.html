@@ -1,0 +1,93 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row">
+      <span class="custom-title">Request Asset</span>
+      <span class="spacer"></span>
+      <button
+        class="mat-dialog-close custom-close-button"
+        mat-icon-button
+        mat-dialog-close
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="requestForm">
+      <div fxFlex fxLayout="column">
+        <mat-form-field appearance="fill" fxFlex>
+          <mat-label>Name of Asset</mat-label>
+          <input matInput formControlName="name" autocomplete="off" required />
+          <mat-error
+              *ngIf="
+                requestForm.controls['name'].touched &&
+                requestForm.controls['name'].invalid
+              "
+            >
+              <span *ngIf="requestForm.controls['name'].hasError('required')"
+                >This is field mandatory.</span
+              >
+              <span *ngIf="requestForm.controls['name'].hasError('required')"
+                >This is field is invalid.</span
+              >
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" fxFlex>
+            <mat-label>Number of Asset</mat-label>
+            <input matInput formControlName="numberOfAsset" autocomplete="off" required />
+            <mat-error
+                *ngIf="
+                  requestForm.controls['numberOfAsset'].touched &&
+                  requestForm.controls['numberOfAsset'].invalid
+                "
+              >
+                <span *ngIf="requestForm.controls['numberOfAsset'].hasError('required')"
+                  >This is field mandatory.</span
+                >
+                <span *ngIf="requestForm.controls['numberOfAsset'].hasError('required')"
+                  >This is field is invalid.</span
+                >
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-form-field">
+            <mat-label>Date</mat-label>
+            <mat-date-range-input
+              [rangePicker]="campaignOnePicker">
+              <input matStartDate placeholder="Start date" formControlName="startDate">
+              <input matEndDate placeholder="End date" formControlName="endDate">
+            </mat-date-range-input>
+            <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+          </mat-form-field>
+          
+
+        <mat-form-field class="custom-width" appearance="fill">
+            <mat-label>Choose your Department</mat-label>
+            <mat-select formControlName="department" required>
+              <mat-option
+                *ngFor="let department of departments"
+                [value]="department.name"
+              >
+                {{ department.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+      </div>
+    </form>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" 
+    (click)="handleSubmitRequest()"
+    [disabled]="!(requestForm.valid && requestForm.dirty)">
+      <mat-icon>add_alert</mat-icon> Request For Asset
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+      <mat-icon>cancel</mat-icon> Cancel
+    </button>
+  </mat-dialog-actions>
+  

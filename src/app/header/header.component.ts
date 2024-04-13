@@ -30,10 +30,6 @@ export class HeaderComponent implements OnInit {
     window.open('http://localhost:8080/', '_blank');
   }
 
-  // public logout() {
-  //   this.userAuthService.clear();
-  //   this.router.navigate(['/']);
-  // }
 
   public logout() {
     const dialogConfig = new MatDialogConfig();

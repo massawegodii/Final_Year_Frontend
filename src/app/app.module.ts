@@ -67,6 +67,12 @@ import { AddEmployeeComponent } from './components/extra/add-employee/add-employ
 import { DeleteEmployeeComponent } from './components/extra/delete-employee/delete-employee.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationComponent } from './components/extra/pagination/pagination.component';
+import { RequestAssetComponent } from './components/request-asset/request-asset.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MyRequestComponent } from './components/my-request/my-request.component';
+import { DeleteStatusComponent } from './components/extra/delete-status/delete-status.component';
 
 
 
@@ -118,6 +124,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AddEmployeeComponent,
     DeleteEmployeeComponent,
     PaginationComponent,
+    RequestAssetComponent,
+    MyRequestComponent,
+    DeleteStatusComponent,
 
   ],
   imports: [
@@ -149,6 +158,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatTooltipModule,
     MatBadgeModule,
     NgxPaginationModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatNativeDateModule,
     ToastrModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],

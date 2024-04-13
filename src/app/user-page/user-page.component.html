@@ -7,6 +7,9 @@
       <p>Smart Asset Management System</p>
     </div>
     <span class="spacer"></span>
+
+    <a class="btn btn-outline-primary" (click)="openMyRequest()" routerLinkActive="active">My Request</a>
+    &nbsp; &nbsp; 
     <button mat-icon-button matTooltip="Live Chat Room"  (click)="fetchData()">
       <mat-icon matBadge="1" matBadgeColor="accent" style="color: green; font-size: 28px">forum</mat-icon>
     </button>
@@ -27,14 +30,19 @@
       </mat-menu>
   </mat-toolbar>
 </div>
-&nbsp; &nbsp;
+&nbsp; &nbsp; <br>
 
-<div class="container">
-  <mat-card class="mt-3">
+<div class="container mt-3">
+  <mat-card style="background-color: rgb(250, 246, 246);">
     <mat-card-header>
       <div mat-card-avatar></div>
       <mat-card-title>Welcome, </mat-card-title>
     </mat-card-header>
+          
+    <div class="text-right" (click)="requestAsset()">
+      <a class="btn btn-primary">Request For Asset</a>
+    </div>
+
     <div mat-card-image></div>
     <mat-card-content>
       <!-- <p>The Shiba Inu is the smallest</p> -->
@@ -42,12 +50,15 @@
   </mat-card>
   &nbsp; &nbsp;
 
-  <div class="card mt-3">
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-  </div>
+  <!-- <div class="card mt-3">
+    <h2 class="text-center">My Request</h2> 
+  </div> -->
 
-  <div class="card mt-5">
+  <div class="card mt-4 card border-info mb-20">
     <div *ngIf="assignDetails && assignDetails.length > 0">
+      <div class="text-center mt-3">
+       <h2><span class="assign-text">Asset Assigned</span></h2>
+      </div>
           <!-- Table contents -->
         <table mat-table [dataSource]="assignDetails" class="mat-elevation-z8">
           <!-- productName Column -->

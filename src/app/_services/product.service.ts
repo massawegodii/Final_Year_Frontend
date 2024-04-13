@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../_model/product_model';
 import { Assign } from '../_model/assign_model';
+import { Request } from '../_model/request-asset';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,27 @@ export class ProductService {
 
   public unAssignUserProduct(productId: number, userName: string) {
     return this.httpClient.delete<any>("http://localhost:8080/assign/unAssignUser/"+ productId + "/" + userName);
+  }
+
+  public requestAssets(data: any) {
+    return this.httpClient.post<Request[]>("http://localhost:8080/request/asset", data);
+  }
+
+  public getAllRequestByUsername() {
+    return this.httpClient.get<Request[]>("http://localhost:8080/request/getAllRequestByUsername");
+  }
+
+  public getAllRequest() {
+    return this.httpClient.get<Request[]>("http://localhost:8080/request/getAllRequest");
+  }
+
+  
+  public changeRequestStatus(id: number, status: string) {
+    return this.httpClient.get<Request[]>(`http://localhost:8080/request/changeStatus/${id}/${status}`);
+  }
+
+  public deleteRequest(id:number) {
+    return this.httpClient.delete("http://localhost:8080/request/deleteRequest/"+ id);
   }
 
 }

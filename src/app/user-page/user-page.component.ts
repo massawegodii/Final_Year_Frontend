@@ -14,6 +14,8 @@ import { ConfirmationComponent } from '../components/extra/confirmation/confirma
 import { ChangePasswordComponent } from '../components/extra/change-password/change-password.component';
 import { QrCodeComponent } from '../components/extra/qr-code/qr-code.component';
 import { QrcodeService } from '../_services/qrcode.service';
+import { RequestAssetComponent } from '../components/request-asset/request-asset.component';
+import { MyRequestComponent } from '../components/my-request/my-request.component';
 
 @Component({
   selector: 'app-user-page',
@@ -167,5 +169,18 @@ export class UserPageComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
     this.dialog.open(ChangePasswordComponent, dialogConfig);
+  }
+
+  requestAsset() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '550px';
+    this.dialog.open(RequestAssetComponent, dialogConfig);
+  }
+
+  openMyRequest() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '750px';
+    dialogConfig.position = { top: '50px' };
+    this.dialog.open(MyRequestComponent, dialogConfig);
   }
 }

@@ -7,9 +7,18 @@
   }
 
   .toolbar {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
     height: 90px;
     background-color: rgb(199, 194, 194);
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    
+    width: 100%;
   }
   
   .center-span {
@@ -51,6 +60,28 @@
     margin-left: auto;
     margin-right: auto;
   }
+
+  .text-right {
+    margin-left: 900px;
+    margin-top: -50px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .text-right {
+      margin-left: 0; 
+      margin-top: 0;  
+      text-align: right; 
+    }
+  }
+
+  .assign-text {
+    display: inline-table;
+    background-color: rgb(169, 169, 173);
+    color: white;
+    padding: 2px;
+  }
+
+  
 
   
 

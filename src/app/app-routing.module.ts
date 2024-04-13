@@ -24,6 +24,7 @@ const routes: Routes = [
     data: { roles: ['User'] },
   },
 
+
   {
     path: 'dashboard',
     component: DashboardComponent,

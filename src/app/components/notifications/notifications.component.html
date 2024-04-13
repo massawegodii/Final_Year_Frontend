@@ -1,1 +1,82 @@
-<p>notifications works!</p>
+<div class="container mt-3">
+  <h2>Status Approval</h2>
+  <div class="card mt-3">
+    <!-- Check if Requests is not empty, then display the table -->
+    <div *ngIf="myRequests && myRequests.length > 0; else noRequestsMessage">
+      <table class="table align-middle mb-0 bg-dark">
+        <thead class="bg-light">
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Quantity</th>
+            <th>From Date</th>
+            <th>To Date</th>
+            <th>Status</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let myRequest of myRequests">
+            <td>{{myRequest.user ? myRequest.user.userName : ''}}</td>
+            <td>{{myRequest.user ? myRequest.user.email : '' }}</td>
+            <td>{{ myRequest.name }}</td>
+            <td>{{ myRequest.department }}</td>
+            <td>{{ myRequest.numberOfAsset }}</td>
+            <td>{{ myRequest.startDate }}</td>
+            <td>{{ myRequest.endDate }}</td>
+            <td>
+              <button
+                class="btn btn-primary btn-sm"
+                [ngClass]="{
+                  approved: myRequest.statusAsset === 'APPROVED',
+                  rejected: myRequest.statusAsset === 'REJECTED',
+                  pending: myRequest.statusAsset === 'PENDING'
+                }"
+                [ngStyle]="{
+                            'cursor': 'pointer',
+                            'text-align': 'center',
+                        }"
+              >
+                {{ myRequest.statusAsset }}
+              </button>
+            </td>
+            <!-- Change the Status -->
+            <td>
+              <span *ngIf="myRequest.statusAsset == 'PENDING'"></span>
+              <button
+                class="btn btn-primary btn-sm"
+                style="margin-left: 10px"
+                (click)="changeRequestStatus(myRequest.id, 'Approved')"
+              >
+                Approve
+              </button>
+              <button
+               
+                class="btn btn-danger btn-sm"
+                style="margin-left: 10px"
+                (click)="changeRequestStatus(myRequest.id, 'Rejected')"
+              >
+                Reject
+              </button>
+
+              &nbsp;
+
+              <button mat-icon-button
+              (click)="deleteRequest(myRequest.id)"
+              matTooltip="Delete Request">
+              <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 20px;"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Message to display when Requests is empty -->
+    <ng-template #noRequestsMessage>
+      <h2 class="text-center">No requests available.</h2>
+    </ng-template>
+  </div>
+</div>

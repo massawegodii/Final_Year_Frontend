@@ -14,7 +14,6 @@
       <mat-icon>print</mat-icon> Print Report
     </button>
   </div>
-  <br />
   <button mat-stroked-button>All Assets</button>
   &nbsp;
   <button mat-stroked-button>All New</button>
@@ -24,7 +23,7 @@
     <input class="form-control" name="productName" [(ngModel)]="productName" (ngModelChange)="search()" type="text"
     placeholder="Enter Name to search">
   </nav> -->
-  <div class="card mt-3">
+  <div class="card mt-2">
     <mat-form-field>
       <mat-label>Filter Data</mat-label>
       <input matInput #input (keyup)="applFilter($event)" />

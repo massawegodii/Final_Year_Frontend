@@ -5,9 +5,9 @@ table {
 
 th, td {
   border: 1px solid #ddd;
-  padding: 5px; 
+  padding: 8px; 
   text-align: left;
-  line-height: 1.5; 
+  line-height: 1.2; 
 }
 
 tr:nth-child(even) {
@@ -48,6 +48,13 @@ td.touchable {
     }
   }
 
+  .button-like {
+    
+    padding: 5px 5px;
+    border-radius: 30px;
+    cursor: pointer;
+    text-align: center;
+  }
   
   .approved {
     background-color: green;
@@ -63,12 +70,4 @@ td.touchable {
     background-color: red;
     color: white;
   }
-
-  .sweet-alert-custom {
-    z-index: 99999 !important;
-  }
-  
-  
-
-
   
