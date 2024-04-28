@@ -35,7 +35,6 @@ export class AssetsComponent implements OnInit {
   p: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 50;
-
   // productName: any;
 
   // Pass to get userName
@@ -66,7 +65,7 @@ export class AssetsComponent implements OnInit {
     private statusService: StatusService,
     private categoryService : CategoryService,
     private departmentService: DepartmentService,
-    private qrcodeService: QrcodeService
+    private qrcodeService: QrcodeService,
   ) {}
 
   ngOnInit(): void {
@@ -114,8 +113,8 @@ export class AssetsComponent implements OnInit {
       return 0;
     });
   }
-  
-  
+
+
 
   handleCreateNewAssetAction() {
     const dialogConfig = new MatDialogConfig();
@@ -131,7 +130,7 @@ export class AssetsComponent implements OnInit {
       if (!productStatus) {
         return 'No Status';
       }
-    
+
       const status = this.statuses.find((s) => s.name === productStatus);
       return status ? status.name : 'No Status';
     }
@@ -142,7 +141,7 @@ export class AssetsComponent implements OnInit {
       if (!productCategory) {
         return 'No Category';
       }
-    
+
       const category = this.categories.find((c) => c.name === productCategory);
       return category ? category.name : 'No Category';
     }
@@ -152,7 +151,7 @@ export class AssetsComponent implements OnInit {
       if (!productDepartment) {
         return 'No Department';
       }
-    
+
       const department = this.departments.find((d) => d.name === productDepartment);
       return department ? department.name : 'No Department';
     }
@@ -167,7 +166,7 @@ export class AssetsComponent implements OnInit {
         console.log(error);
       });
     }
-    
+
 
     public getAllCategory() {
       this.categoryService.getAllCategory().subscribe((response: Category[]) => {
@@ -177,12 +176,12 @@ export class AssetsComponent implements OnInit {
         console.log(error);
       });
     }
-    
+
 
 
   public getAllStatus() {
     this.statusService.getAllStatus().subscribe((response: Status[]) =>{
-      this.statuses = response; 
+      this.statuses = response;
       console.log(response);
     }, (error) => {
       console.log(error);
@@ -199,12 +198,12 @@ export class AssetsComponent implements OnInit {
       (response: Product[]) => {
         console.log(response);
         this.productDetails = response;
-        
+
         // Assigning the userName
         this.productDetails = response.map(product => {
           return {
             ...product,
-            userName: product.user?.userName || 'Not Assigned' 
+            userName: product.user?.userName || 'Not Assigned'
           };
         });
         this.ngxService.stop();
@@ -249,7 +248,7 @@ export class AssetsComponent implements OnInit {
         }
       );
   }
-  
+
 
   showImage(product: Product) {
     console.log(product);
@@ -293,9 +292,9 @@ export class AssetsComponent implements OnInit {
     const product = this.productDetails.find(p => p.productId === productId);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '700px';
-    dialogConfig.data = { product: product }; 
+    dialogConfig.data = { product: product };
     const dialogRef = this.dialog.open(AssetEditComponent, dialogConfig);
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.getAllProduct();
@@ -308,16 +307,16 @@ export class AssetsComponent implements OnInit {
     const product = this.productDetails.find(p => p.productId === productId);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '700px';
-    dialogConfig.data = { product: product }; 
+    dialogConfig.data = { product: product };
     const dialogRef = this.dialog.open(ShareComponent, dialogConfig);
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.getAllProduct();
       }
     });
   }
-  
+
 
   applFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase().trim();
@@ -333,6 +332,6 @@ export class AssetsComponent implements OnInit {
     );
   }
 
-  
-  
+
+
 }

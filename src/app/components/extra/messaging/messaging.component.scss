@@ -1,0 +1,21 @@
+.input-with-icon {
+    position: relative;
+  }
+  
+  .input-with-icon input {
+    padding-right: 35px; /* Adjust as needed to accommodate the icon */
+  }
+  
+  .input-with-icon button {
+    position: absolute;
+    color: green;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+.success-snackbar {
+  background-color: #4caf50; /* Green */
+  color: white;
+}

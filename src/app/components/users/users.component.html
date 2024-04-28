@@ -1,86 +1,133 @@
 <div class="body">
-<nav class="navbar navbar-expand-lg navbar-light bg-dark">
-  <a class="navbar-brand" style="color:white;">Manage Employee</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarColor02">
-     <ul class="navbar-nav mr-auto">
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand" style="color: white">Manage Employee</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarColor02"
+      aria-controls="navbarColor02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-           <a style="color: white" (click)="addEmployee()">Add Employee <span class="sr-only">(current)</span></a>
+          <a style="color: white" (click)="addEmployee()"
+            >Add Employee <span class="sr-only">(current)</span></a
+          >
         </li>
-     </ul>
-     
-     <form class="form-inline my-2 my-lg-0">
-        <input class="form-inline my-2 my-lg-0" type="search" class="form-control mr-sm-2" placeholder="Search employee ..." required>
-     </form>
-  </div>
-</nav>
+      </ul>
 
+      <form class="form-inline my-2 my-lg-0">
+        <input
+          class="form-inline my-2 my-lg-0"
+          type="search"
+          class="form-control mr-sm-2"
+          placeholder="Search employee ..."
+          required
+        />
+      </form>
+    </div>
+  </nav>
 
-<div class="container" id="main-container">
-<div class="row">
-   <!-- Before paginated *ngFor="let user of users"  -->
-  <div *ngFor="let user of PaginatedData" class="col-md-6 col-xl-3">
-     <div class="card m-b-30">
-        <div class="card-body row">
-           <div class="col-6">
-            <div class="image-container">
-               <a>
-                   <img src="{{ user?.imageUrl }}" alt="" class="img-fluid w-60">
-               </a>
-           </div>
-           </div>
-           <div class="col-6 card-title align-self-center mb-0">
-              <h4>{{user?.userName}}</h4>
-              <p class="m-0" *ngFor="let role of user?.role">{{role.roleName}}</p>
-           </div>
+  <div class="container" id="main-container">
+    <div class="row">
+      <!-- Before paginated *ngFor="let user of users"  -->
+      <div *ngFor="let user of PaginatedData" class="col-md-6 col-xl-3">
+        <div class="card m-b-30">
+          <div class="card-body row">
+            <div class="col-6">
+              <div class="image-container">
+                <a>
+                  <img
+                    src="{{ user?.imageUrl }}"
+                    alt=""
+                    class="img-fluid w-60"
+                  />
+                </a>
+              </div>
+            </div>
+            <div class="col-6 card-title align-self-center mb-0">
+              <h4>{{ user?.userName }}</h4>
+              <p class="m-0" *ngFor="let role of user?.role">
+                {{ role.roleName }}
+              </p>
+            </div>
+          </div>
+
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item d-flex justify-content-start align-items-center"
+            >
+              <span class="flex-grow-1">{{ user?.email }}</span>
+              <span class="ml-auto">
+                <mat-icon>email</mat-icon>
+              </span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-start align-items-center"
+              matTooltip="Click to Send Message 📲☎️"
+
+              (click)="messagePhone()"
+              >
+
+              <span class="flex-grow-1 phone-number">{{ user?.phoneNumber }}</span>
+              &nbsp;
+              <span (click)="copyPhoneNumber(user.phoneNumber)" class="ml-auto" matTooltip="Copy">
+                <mat-icon style="font-size: 20px">content_copy</mat-icon>
+              </span>
+              <span class="ml-auto">
+                <mat-icon style="color: green">sms</mat-icon>
+              </span>
+            </li>
+          </ul>
+
+          <div class="card-body">
+            <div class="float-right btn-group btn-group-sm">
+              <mat-slide-toggle
+                class="btn btn-info"
+                style="font-size: 10px"
+                matTooltip="Block user"
+              ></mat-slide-toggle>
+              &nbsp; &nbsp;
+              <a
+                (click)="editDepartment(user)"
+                class="btn btn-primary tooltips"
+                matTooltip="Edit user"
+                ><i class="fa fa-pencil"></i>
+              </a>
+              &nbsp; &nbsp;
+              <a
+                (click)="deleteEmployee(user.userName)"
+                class="btn btn-secondary tooltips"
+                matTooltip="Delete user"
+                ><i class="fa fa-times"></i
+              ></a>
+            </div>
+          </div>
         </div>
+      </div>
 
-       <ul class="list-group list-group-flush">
-      <li class="list-group-item d-flex justify-content-start align-items-center">
-        <span class="flex-grow-1">{{user?.email}}</span>
-        <span class="ml-auto">
-          <mat-icon>email</mat-icon>
-        </span>
-      </li>
-      <li class="list-group-item d-flex justify-content-start align-items-center">
-        <span class="flex-grow-1">{{user?.phoneNumber}}</span>
-        <span class="ml-auto">
-          <mat-icon>phone</mat-icon>
-        </span>
-      </li>
-    </ul>
-        
-        <div class="card-body">
-           <div class="float-right btn-group btn-group-sm">
-              <a (click)="editDepartment(user)" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a> &nbsp;
-              <a (click)="deleteEmployee(user.userName)" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times"></i></a>
-           </div>
-        </div>
-     </div>
-  </div>
-
-
- <!-- <div class="mt-8 py-4 flex justify-center items-center ">
+      <!-- <div class="mt-8 py-4 flex justify-center items-center ">
    <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>  -->
 
-<app-pagination
-[totalItems]="totalUsers"
-[itemsPerPage]="itemsPerPage"
-[currentPage]="currentPage"
-(onclick)="changePage($event)"
-></app-pagination>
-
-
+      <app-pagination
+        [totalItems]="totalUsers"
+        [itemsPerPage]="itemsPerPage"
+        [currentPage]="currentPage"
+        (onclick)="changePage($event)"
+      ></app-pagination>
+    </div>
+    <!-- Notification for no employees -->
+    <div *ngIf="users?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading text-center">NO EMPLOYEES!</h4>
+        <p class="text-center">No Employee were found.</p>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- Notification for no employees -->
-<div *ngIf="users?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
-<div class="alert alert-info" role="alert">
-  <h4 class="alert-heading text-center" >NO EMPLOYEES!</h4>
-  <p class="text-center">No Employee were found.</p>
-</div>
-</div>
-</div>
-

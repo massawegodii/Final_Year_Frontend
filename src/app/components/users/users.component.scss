@@ -89,3 +89,23 @@ color: white;
   color: black;
 }
 
+/* styles.css or your component-specific CSS file */
+.phone-number {
+  font-size: 16px;
+  cursor: pointer; 
+  transition: font-size 0.3s, color 0.3s;
+}
+
+.phone-number:hover {
+  background-color: #1f9108; 
+  margin-bottom: 10px;
+}
+
+.copy-icon {
+  cursor: pointer; 
+}
+
+.copy-icon:hover {
+  background-color: #f0f0f0;
+  margin-bottom: 10px;
+}

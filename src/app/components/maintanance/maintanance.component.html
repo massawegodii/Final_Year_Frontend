@@ -1,1 +1,98 @@
-<p>maintanance works!</p>
+<div class="container">
+  <h1>Maintenance</h1>
+  <mat-divider></mat-divider>
+  <br />
+
+ <!-- Alert Message -->
+<div *ngIf="alertMessage" class="alert alert-danger" role="alert">
+  <h4 class="text-center">Asset needs to be Maintained! {{ alertMessage }}</h4>
+</div>
+
+
+  <button
+    style="display: flex; align-items: center"
+    class="btn btn-primary float-end"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasRight"
+    aria-controls="offcanvasRight"
+  >
+    Calender &nbsp;
+    <mat-icon style="margin-left: 5px">event_available</mat-icon>
+  </button>
+
+  <div
+    class="offcanvas offcanvas-end"
+    tabindex="-1"
+    id="offcanvasRight"
+    aria-labelledby="offcanvasRightLabel"
+  >
+    <div class="offcanvas-body">
+      <div class="container maintenance">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: aliceblue;
+          "
+        >
+          <h2>Maintenance Time Settings</h2>
+        </div>
+
+        &nbsp;
+        <mat-divider></mat-divider>
+        &nbsp;
+        <form [formGroup]="maintenanceForm">
+          <div>
+            <mat-form-field class="example-form-field" [ngClass]="{ 'invalid-field': maintenanceForm.get('selectedDate').invalid && (maintenanceForm.get('selectedDate').dirty || maintenanceForm.get('selectedDate').touched) }">
+              <mat-label>Set date for maintenance</mat-label>
+              <input matInput [matDatepicker]="datepicker" formControlName="selectedDate" required />
+              <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+              <mat-datepicker #datepicker></mat-datepicker>
+              <mat-error *ngIf="maintenanceForm.get('selectedDate').hasError('required')">Date is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-form-field">
+              <input
+                matInput
+                formControlName="selectedTime"
+                [ngxTimepicker]="timepicker"
+                [format]="24"
+                placeholder="Choose a time"
+                required
+              />
+              <ngx-material-timepicker #timepicker></ngx-material-timepicker>
+              <mat-error *ngIf="maintenanceForm.get('selectedTime').hasError('required')">Time is required</mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="example-form-field">
+              <mat-label>Add Note</mat-label>
+              <textarea matInput formControlName="note" required></textarea>
+              <mat-error *ngIf="maintenanceForm.get('note').hasError('required')">Note is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="d-grid gap-2 col-6 mx-auto example-form-field">
+            <button (click)="onSubmit()" class="btn btn-outline-primary" type="submit">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <mat-card class="custom-card">
+    <div style="display: flex; align-items: center">
+      <span style="margin-right: 8px; cursor: pointer;">Maintenance Events</span>
+      <mat-icon>events</mat-icon>
+    </div>
+  </mat-card>
+
+  <div class="card mt-3">
+    &nbsp;
+    <full-calendar
+    class="full-calendar"
+    [options]="calendarOptions"
+    ></full-calendar>
+  </div>
+</div>

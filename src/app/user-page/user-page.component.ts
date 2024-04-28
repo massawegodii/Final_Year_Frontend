@@ -8,7 +8,6 @@ import { SnackbarService } from '../_services/snackbar.service';
 import { GlobalConstant } from '../_constants/global-constant';
 import { UserAuthService } from '../_services/user-auth.service';
 import { Router } from '@angular/router';
-import { ReturnAssetComponent } from '../components/extra/return-asset/return-asset.component';
 import { Product } from '../_model/product_model';
 import { ConfirmationComponent } from '../components/extra/confirmation/confirmation.component';
 import { ChangePasswordComponent } from '../components/extra/change-password/change-password.component';
@@ -16,6 +15,8 @@ import { QrCodeComponent } from '../components/extra/qr-code/qr-code.component';
 import { QrcodeService } from '../_services/qrcode.service';
 import { RequestAssetComponent } from '../components/request-asset/request-asset.component';
 import { MyRequestComponent } from '../components/my-request/my-request.component';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-user-page',
@@ -82,14 +83,27 @@ export class UserPageComponent implements OnInit {
   }
 
   openReturnAssetDialog(productId: number, userName: string): void {
-    const dialogRef = this.dialog.open(ReturnAssetComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `Do you want to return the Asset?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      width: 400,
+      confirmButtonText: 'Yes, Return it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.unAssignProduct(productId, userName);
+        Swal.fire(
+          'Returned!',
+          `Asset has been returned successfully.`,
+          'success'
+        );
       }
     });
   }
+
 
   unAssignProduct(productId: number, userName: string) {
     this.productService.unAssignUserProduct(productId, userName).subscribe(

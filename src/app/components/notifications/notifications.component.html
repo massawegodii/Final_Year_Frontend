@@ -1,6 +1,13 @@
 <div class="container mt-3">
   <h2>Status Approval</h2>
-  <div class="card mt-3">
+
+  <nav class="navbar">
+    <input class="form-control" name="userName" [(ngModel)]="userName" (ngModelChange)="search()" 
+      type="text" placeholder="Enter username to search" 
+      style="width: 300px; margin-left: auto; display: block;"> 
+  </nav>
+
+  <div class="card mt-2">
     <!-- Check if Requests is not empty, then display the table -->
     <div *ngIf="myRequests && myRequests.length > 0; else noRequestsMessage">
       <table class="table align-middle mb-0 bg-dark">

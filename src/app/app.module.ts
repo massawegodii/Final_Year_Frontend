@@ -58,7 +58,6 @@ import { ViewStatusComponent } from './components/extra/view-status/view-status.
 import { UserPageComponent } from './user-page/user-page.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { ShareComponent } from './components/extra/share/share.component';
-import { ReturnAssetComponent } from './components/extra/return-asset/return-asset.component';
 import { DeleteAssetComponent } from './components/extra/delete-asset/delete-asset.component';
 import { ConfirmationComponent } from './components/extra/confirmation/confirmation.component';
 import { ChangePasswordComponent } from './components/extra/change-password/change-password.component';
@@ -73,6 +72,12 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MyRequestComponent } from './components/my-request/my-request.component';
 import { DeleteStatusComponent } from './components/extra/delete-status/delete-status.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MessagingComponent } from './components/extra/messaging/messaging.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -116,7 +121,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ViewStatusComponent,
     UserPageComponent,
     ShareComponent,
-    ReturnAssetComponent,
     DeleteAssetComponent,
     ConfirmationComponent,
     ChangePasswordComponent,
@@ -127,6 +131,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     RequestAssetComponent,
     MyRequestComponent,
     DeleteStatusComponent,
+    MessagingComponent,
 
   ],
   imports: [
@@ -161,6 +166,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatDatepickerModule,
     MatMomentDateModule,
     MatNativeDateModule,
+    MatSlideToggleModule,
+    ClipboardModule,
+    FullCalendarModule,
+    NgxMaterialTimepickerModule.setOpts('en-KE'),
     ToastrModule.forRoot(),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
@@ -172,6 +181,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
       multi: true
     },
     UserService,
+    DatePipe
   ],
   bootstrap: [AppComponent],
 })

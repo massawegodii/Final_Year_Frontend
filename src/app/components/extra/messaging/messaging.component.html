@@ -1,0 +1,49 @@
+<div class="card text-center">
+  <div class="card-header" style="font-size: 20px">
+    Text Message
+  </div>
+  <div class="card-body">
+    <form [formGroup]="messageForm">
+      <div class="form-group">
+        <span class="input-with-icon">
+          <input
+          formControlName="phoneNumber"
+            #phoneInput
+            type="text"
+            class="form-control"
+            placeholder="+255624279007"
+            autocomplete="off"
+          />
+          <button
+            mat-icon-button
+            matTooltip="Paste"
+            matSuffix
+            (click)="pasteClipboard(phoneInput)"
+          >
+            <mat-icon>content_paste</mat-icon>
+          </button>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <textarea
+        formControlName="message"
+          class="form-control"
+          placeholder="Enter Message"
+          rows="3"
+          autocomplete="off"
+        ></textarea>
+       
+      </div>
+      <button (click)="handleMesageSubmit()" 
+      [disabled]="!messageForm.valid"
+      mat-raised-button type="submit" class="btn btn-primary">
+        <mat-icon>send</mat-icon> send message
+      </button> 
+      &nbsp;
+      <button mat-raised-button color="accent" mat-dialog-close>
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReturnAssetComponent } from './return-asset.component';
+import { MessagingComponent } from './messaging.component';
 
-describe('ReturnAssetComponent', () => {
-  let component: ReturnAssetComponent;
-  let fixture: ComponentFixture<ReturnAssetComponent>;
+describe('MessagingComponent', () => {
+  let component: MessagingComponent;
+  let fixture: ComponentFixture<MessagingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ReturnAssetComponent]
+      declarations: [MessagingComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ReturnAssetComponent);
+    fixture = TestBed.createComponent(MessagingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -10,6 +10,9 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { AddEmployeeComponent } from '../extra/add-employee/add-employee.component';
 import { DeleteEmployeeComponent } from '../extra/delete-employee/delete-employee.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MessagingComponent } from '../extra/messaging/messaging.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 
 
@@ -22,6 +25,7 @@ export class UsersComponent implements OnInit {
   password = true;
   addUserForm: any = FormGroup;
   responseMessage: any;
+  user: any;
   
   public users: User[] = [];
   
@@ -49,6 +53,8 @@ export class UsersComponent implements OnInit {
     private snackbarService: SnackbarService,
     private ngxService: NgxUiLoaderService,
     private dialog: MatDialog,
+    private clipboard: Clipboard, 
+    private snackBar: MatSnackBar
   ) {
     this.role = [];
     this.totalPages = Math.ceil(this.users.length / this.itemsPerPage);
@@ -190,5 +196,23 @@ export class UsersComponent implements OnInit {
       }
     });
   }
+
+
+  messagePhone() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '550px';
+    dialogConfig.position = { top: '0' };
+    this.dialog.open(MessagingComponent, dialogConfig);
+  }
+
+  copyPhoneNumber(phoneNumber: string) {
+    if (phoneNumber) {
+      this.clipboard.copy(phoneNumber);
+      this.snackBar.open('Phone number copied to clipboard!', 'Close', {
+        duration: 2000,
+      });
+    }
+  }
+  
     
 }

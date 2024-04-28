@@ -4,7 +4,6 @@ import { ProductService } from '../../_services/product.service';
 import { SnackbarService } from '../../_services/snackbar.service';
 import { Request } from '../../_model/request-asset';
 import { GlobalConstant } from '../../_constants/global-constant';
-import Swal from 'sweetalert2';
 import { DeleteStatusComponent } from '../extra/delete-status/delete-status.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -16,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class NotificationsComponent implements OnInit {
   responseMessage: any;
   myRequests: Request[] = [];
+  userName: any;
 
   constructor(
     private productService: ProductService,
@@ -78,16 +78,12 @@ export class NotificationsComponent implements OnInit {
       }
     );
   }
-  
-
-
-  
 
   deleteRequest(id: number) {
     const dialogRef = this.dialog.open(DeleteStatusComponent, {
       width: '380px',
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.productService.deleteRequest(id).subscribe(
@@ -101,7 +97,15 @@ export class NotificationsComponent implements OnInit {
       }
     });
   }
-  
-  
-  
+
+
+    search() {
+    if(this.userName == "") {
+      this.ngOnInit();
+    }else {
+      this.myRequests = this.myRequests.filter(resp => {
+        return resp.user.userName.toLocaleLowerCase().match(this.userName.toLocaleLowerCase());
+      });
+    }
+  }
 }
