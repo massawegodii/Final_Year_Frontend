@@ -28,7 +28,6 @@ export class MaintananceComponent implements OnInit {
 
   }
 
-
   ngOnInit(): void {
     this.initializeForm();
     this.getAllSchedule();

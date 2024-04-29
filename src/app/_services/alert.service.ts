@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, interval, map } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertService {
   private alertMessage$: Observable<string>;
-  
+
   private alertTime: Date | null = null;
 
   constructor() {
@@ -18,9 +18,9 @@ export class AlertService {
         return '';
       })
     );
-   }
+  }
 
-   setAlertTime(time: Date) {
+  setAlertTime(time: Date) {
     this.alertTime = time;
   }
 

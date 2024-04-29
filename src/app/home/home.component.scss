@@ -1,11 +1,12 @@
+
 // Variables
 $primary-color: #287bd3;
 $secondary-color: #1c9b3a;
 $mantainance-color: #9aa728;
 $report-color: #c2169d;
 $card-size: 150px;
-$circle-size: 190px; 
-$distance-between: 35px; 
+$circle-size: 190px;
+$distance-between: 35px;
 
 // Mixin for circle
 @mixin circle($color) {
@@ -30,13 +31,13 @@ $distance-between: 35px;
   }
 
   .name {
-    margin-top: 8px; 
+    margin-top: 8px;
   }
 
   mat-icon {
-    font-size: 60px; 
-    width: 60px; 
-    height: 60px; 
+    font-size: 60px;
+    width: 60px;
+    height: 60px;
   }
 }
 .asset-model{
@@ -100,6 +101,6 @@ table {
 
   .circle-card {
     margin-bottom: 20px;
-    margin-right: 0; 
+    margin-right: 0;
   }
 }

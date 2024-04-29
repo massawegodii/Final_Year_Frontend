@@ -45,8 +45,7 @@
             <table
               mat-table
               [dataSource]="chatDetails"
-              class="mat-elevation-z8"
-            >
+              class="mat-elevation-z8">
               <!-- Nickname Column -->
               <ng-container matColumnDef="nickName">
                 <th mat-header-cell *matHeaderCellDef>Nickname</th>
@@ -74,8 +73,7 @@
                       color: 'white',
                       padding: '4px 8px',
                       'border-radius': '20px'
-                    }"
-                  >
+                    }">
                     {{ element.status }}
                   </span>
                 </td>
@@ -92,7 +90,14 @@
           <p class="text-center">No User Chatting</p>
         </div>
       </div>
-      <div class="col-6">content here</div>
+      <div class="col-6">
+
+        <div class="card">
+          <p-chart type="bar" [data]="basicData"
+            [options]="basicOptions"></p-chart>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

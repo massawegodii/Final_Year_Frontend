@@ -33,30 +33,30 @@ import { UserService } from './_services/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './_auth/auth-interceptor';
 import { AuthGuard } from './_auth/auth.guard';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { AssetsComponent } from './components/assets/assets.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { AssetsNewComponent } from './components/assets-new/assets-new.component';
 import { UsersComponent } from './components/users/users.component';
 import { DepartmentsComponent } from './components/departments/departments.component';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { DepartmentsNewComponent } from './components/departments-new/departments-new.component';
 import { CategoryComponent } from './components/category/category.component';
 import { CategoryNewComponent } from './components/category-new/category-new.component';
 import { StatusComponent } from './components/status/status.component';
 import { StatusNewComponent } from './components/status-new/status-new.component';
 import { MaintananceComponent } from './components/maintanance/maintanance.component';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { ToastrModule } from 'ngx-toastr';
 import { DragDirective } from './_services/drag.directive';
 import { ShowImageDialogComponent } from './components/show-image-dialog/show-image-dialog.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AssetEditComponent } from './components/asset-edit/asset-edit.component';
 import { ViewStatusComponent } from './components/extra/view-status/view-status.component';
 import { UserPageComponent } from './user-page/user-page.component';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 import { ShareComponent } from './components/extra/share/share.component';
 import { DeleteAssetComponent } from './components/extra/delete-asset/delete-asset.component';
 import { ConfirmationComponent } from './components/extra/confirmation/confirmation.component';
@@ -67,19 +67,19 @@ import { DeleteEmployeeComponent } from './components/extra/delete-employee/dele
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationComponent } from './components/extra/pagination/pagination.component';
 import { RequestAssetComponent } from './components/request-asset/request-asset.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MyRequestComponent } from './components/my-request/my-request.component';
 import { DeleteStatusComponent } from './components/extra/delete-status/delete-status.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MessagingComponent } from './components/extra/messaging/messaging.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DatePipe } from '@angular/common';
-
-
+import { ButtonModule } from 'primeng/button';
+import { ChartModule } from 'primeng/chart';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading ...',
@@ -132,12 +132,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MyRequestComponent,
     DeleteStatusComponent,
     MessagingComponent,
-
   ],
   imports: [
     HttpClientModule,
     RouterModule,
     BrowserModule,
+    ChartModule,
+    ButtonModule,
     AppRoutingModule,
     MatDividerModule,
     MatIconModule,
@@ -178,10 +179,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
+      multi: true,
     },
     UserService,
-    DatePipe
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })
