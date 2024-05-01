@@ -19,28 +19,30 @@ export class MaintananceComponent implements OnInit {
   events: EventInput[] = [];
   alertMessage!: string;
 
-
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private mantainanceService: MaintenanceService,
     private snackbarService: SnackbarService,
     private alertService: AlertService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
     this.getAllSchedule();
 
-    const alertTime = new Date();
-    alertTime.setMinutes(alertTime.getMinutes() + 5);
-    this.alertService.setAlertTime(alertTime);
-
-
-    this.alertService.getAlertMessage().subscribe(message => {
+    this.alertService.getAlertMessage().subscribe((message) => {
       this.alertMessage = message;
       console.log(this.alertMessage);
     });
+
+    // const alertTime = new Date();
+    // alertTime.setMinutes(alertTime.getMinutes() + 1);
+    // this.alertService.setAlertTime(alertTime);
+
+    // this.alertService.getAlertMessage().subscribe((message) => {
+    //   this.alertMessage = message;
+    //   console.log(this.alertMessage);
+    // });
   }
 
   initializeForm(): void {
@@ -123,7 +125,6 @@ export class MaintananceComponent implements OnInit {
     }
   }
 
-
   onSubmit() {
     if (this.maintenanceForm.valid) {
       const selectedDate = this.maintenanceForm.value.selectedDate;
@@ -132,8 +133,8 @@ export class MaintananceComponent implements OnInit {
 
       const data = {
         selectedDate: selectedDate.toISOString().slice(0, 10), // Format as "yyyy-MM-dd"
-        selectedTime : selectedTime.slice(0, 5),
-        note: note
+        selectedTime: selectedTime.slice(0, 5),
+        note: note,
       };
 
       this.events.push(data);
