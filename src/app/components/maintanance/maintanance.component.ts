@@ -34,15 +34,6 @@ export class MaintananceComponent implements OnInit {
       this.alertMessage = message;
       console.log(this.alertMessage);
     });
-
-    // const alertTime = new Date();
-    // alertTime.setMinutes(alertTime.getMinutes() + 1);
-    // this.alertService.setAlertTime(alertTime);
-
-    // this.alertService.getAlertMessage().subscribe((message) => {
-    //   this.alertMessage = message;
-    //   console.log(this.alertMessage);
-    // });
   }
 
   initializeForm(): void {
