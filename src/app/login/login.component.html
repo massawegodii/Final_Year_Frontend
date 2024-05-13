@@ -1,12 +1,11 @@
-<mat-toolbar color="primary">
+<mat-toolbar style="background-color: rgb(169, 177, 184);">
   <mat-toolbar-row fxLayout="row">
     <span class="custom-title">Login</span>
     <span class="spacer"></span>
     <button
       class="mat-dialog-close custom-close-button"
       mat-icon-button
-      mat-dialog-close
-    >
+      mat-dialog-close>
       <mat-icon>close</mat-icon>
     </button>
   </mat-toolbar-row>
@@ -23,14 +22,11 @@
           *ngIf="
             loginForm.get('userName')?.touched &&
             loginForm.get('userName')?.invalid
-          "
-        >
-          <span *ngIf="loginForm.get('userName')?.hasError('required')"
-            >This is field mandatory.</span
-          >
-          <span *ngIf="loginForm.get('userName')?.hasError('pattern')"
-            >This is field is invalid.</span
-          >
+          ">
+          <span *ngIf="loginForm.get('userName')?.hasError('required')">This is
+            field mandatory.</span>
+          <span *ngIf="loginForm.get('userName')?.hasError('pattern')">This is
+            field is invalid.</span>
         </mat-error>
       </mat-form-field>
 
@@ -41,29 +37,25 @@
           formControlName="userPassword"
           type="password"
           required
-          [type]="userPassword ? 'password' : 'text'"
-        />
+          [type]="userPassword ? 'password' : 'text'" />
         <button
           type="button"
           mat-icon-button
           matSuffix
           (click)="userPassword = !userPassword"
           [attr.aria-label]="'Hide password'"
-          [attr.aria.pressed]="userPassword"
-        >
+          [attr.aria.pressed]="userPassword">
           <mat-icon matSuffix>{{
             userPassword ? "visibility_off" : "visibility"
-          }}</mat-icon>
+            }}</mat-icon>
         </button>
         <mat-error
           *ngIf="
             loginForm.get('userPassword')?.touched &&
             loginForm.get('userPassword')?.invalid
-          "
-        >
-          <span *ngIf="loginForm.get('userPassword')?.hasError('required')"
-            >This is field mandatory.</span
-          >
+          ">
+          <span *ngIf="loginForm.get('userPassword')?.hasError('required')">This
+            is field mandatory.</span>
         </mat-error>
       </mat-form-field>
     </div>
@@ -75,11 +67,10 @@
     mat-raised-button
     color="primary"
     type="submit"
-    (click)="login()"
-  >
+    (click)="login()">
     <mat-icon>login</mat-icon>Login
   </button>
   <button mat-raised-button color="warn" mat-dialog-close>
     <mat-icon>cancel</mat-icon>Close
   </button>
-</mat-dialog-actions> 
+</mat-dialog-actions>

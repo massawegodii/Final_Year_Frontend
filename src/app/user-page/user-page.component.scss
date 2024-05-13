@@ -6,45 +6,78 @@
     font-size: 27px;
   }
 
-  .toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 90px;
-    background-color: rgb(199, 194, 194);
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    
-    width: 100%;
-  }
-  
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 90px;
+      background-color: rgb(199, 194, 194);
+      position: relative;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    @media screen and (max-width: 600px) {
+      .toolbar {
+        height: auto;
+        /* Change the height to auto on smaller screens */
+        flex-direction: column;
+        /* Stack items vertically */
+        padding: 10px;
+        /* Add padding for spacing */
+      }
+
+      .center-span {
+        margin-bottom: 10px;
+        /* Add some margin at the bottom for spacing */
+      }
+    }
+
+
+.center-span {
+  flex-grow: 1;
+  justify-content: center;
+  text-align: center;
+  font-size: 24px;
+  /* Default font size */
+
+  /* Add media queries for responsiveness */
+}
+
+@media screen and (max-width: 600px) {
   .center-span {
-    flex-grow: 1;
-  
-    justify-content: center;
-    text-align: center;
-    font-size: 24px;
+    font-size: 20px;
+    /* Adjust font size for smaller screens */
   }
-  
+}
+
+@media screen and (max-width: 400px) {
+  .center-span {
+    font-size: 16px;
+    /* Further adjust font size for even smaller screens */
+  }
+}
+
   .logo {
     padding: 2.6rem 1rem;
     img {
-      width: 150px;
-      height: 90px;
+      width: 90px;
+      height: 190px;
       margin-left: -5px;
       display: block;
       border-radius: 10%;
     }
   }
 
-  
+
   .demo-section + .demo-section {
     margin-top: 16px;
   }
-  
+
   mat-grid-tile {
     background: lightblue;
     cursor: pointer;
@@ -65,12 +98,12 @@
     margin-left: 900px;
     margin-top: -50px;
   }
-  
+
   @media only screen and (max-width: 600px) {
     .text-right {
-      margin-left: 0; 
-      margin-top: 0;  
-      text-align: right; 
+      margin-left: 0;
+      margin-top: 0;
+      text-align: right;
     }
   }
 
@@ -81,8 +114,31 @@
     padding: 2px;
   }
 
-  
+    @media screen and (max-width: 768px) {
+      .card {
+        padding: 10px;
+        /* Adjust padding for smaller screens */
+      }
+    }
 
-  
+    .table-container {
+      overflow-x: auto;
+      /* Enable horizontal scrolling if needed */
+    }
 
-  
+    .mat-elevation-z8 {
+      width: 100%;
+      /* Make the table take full width */
+    }
+
+    @media screen and (max-width: 768px) {
+      .mat-elevation-z8 {
+        overflow-x: auto;
+        /* Enable horizontal scrolling for smaller screens */
+      }
+    }
+
+
+
+
+

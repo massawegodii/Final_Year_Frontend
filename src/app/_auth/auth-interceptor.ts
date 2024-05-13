@@ -1,22 +1,31 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { Observable, catchError, throwError } from "rxjs";
-import { UserAuthService } from "../_services/user-auth.service";
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, catchError, throwError } from 'rxjs';
+import { UserAuthService } from '../_services/UserAuthService';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(
-        private userAuthService: UserAuthService,
-        private router: Router
-      ) {}
+  constructor(
+    private userAuthService: UserAuthService,
+    private router: Router
+  ) {}
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (req.headers.get('No-Auth') === 'True') {
-            return next.handle(req.clone());
-          }
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    if (req.headers.get('No-Auth') === 'True') {
+      return next.handle(req.clone());
+    }
 
-          const token = this.userAuthService.getToken();
+    const token = this.userAuthService.getToken();
 
     if (token !== null) {
       req = this.addToken(req, token);
@@ -33,13 +42,13 @@ export class AuthInterceptor implements HttpInterceptor {
         return throwError('Some thing is wrong');
       })
     );
-    }
+  }
 
-    private addToken(request: HttpRequest<any>, token: string) {
-        return request.clone({
-          setHeaders: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      }
+  private addToken(request: HttpRequest<any>, token: string) {
+    return request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

@@ -8,6 +8,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class DashboardComponent implements OnInit{
 
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
+
+
   sideBarOpen = true;
 
   ngOnInit(): void {
@@ -16,7 +18,7 @@ export class DashboardComponent implements OnInit{
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
-  
+
   toggleSidebar() {
     this.toggleSidebarForMe.emit();
   }

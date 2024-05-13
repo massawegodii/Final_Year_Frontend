@@ -8,16 +8,17 @@
       data-target="#navbarColor02"
       aria-controls="navbarColor02"
       aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    &nbsp;
     <div class="collapse navbar-collapse" id="navbarColor02">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a style="color: white" (click)="addEmployee()"
-            >Add Employee <span class="sr-only">(current)</span></a
-          >
+          <a style="font-size: 18px; color: rgb(8, 168, 35)"
+            (click)="addEmployee()">Add Employee
+            <span
+              class="sr-only">(current)</span></a>
         </li>
       </ul>
 
@@ -27,8 +28,7 @@
           type="search"
           class="form-control mr-sm-2"
           placeholder="Search employee ..."
-          required
-        />
+          required />
       </form>
     </div>
   </nav>
@@ -44,9 +44,8 @@
                 <a>
                   <img
                     src="{{ user?.imageUrl }}"
-                    alt=""
-                    class="img-fluid w-60"
-                  />
+                    alt
+                    class="img-fluid w-60" />
                 </a>
               </div>
             </div>
@@ -60,8 +59,7 @@
 
           <ul class="list-group list-group-flush">
             <li
-              class="list-group-item d-flex justify-content-start align-items-center"
-            >
+              class="list-group-item d-flex justify-content-start align-items-center">
               <span class="flex-grow-1">{{ user?.email }}</span>
               <span class="ml-auto">
                 <mat-icon>email</mat-icon>
@@ -69,14 +67,14 @@
             </li>
             <li
               class="list-group-item d-flex justify-content-start align-items-center"
-              matTooltip="Click to Send Message 📲☎️"
+              matTooltip="Click to send message"
+              (click)="messagePhone()">
 
-              (click)="messagePhone()"
-              >
-
-              <span class="flex-grow-1 phone-number">{{ user?.phoneNumber }}</span>
+              <span class="flex-grow-1 phone-number">{{ user?.phoneNumber
+                }}</span>
               &nbsp;
-              <span (click)="copyPhoneNumber(user.phoneNumber)" class="ml-auto" matTooltip="Copy">
+              <span (click)="copyPhoneNumber(user.phoneNumber)" class="ml-auto"
+                matTooltip="Copy">
                 <mat-icon style="font-size: 20px">content_copy</mat-icon>
               </span>
               <span class="ml-auto">
@@ -87,25 +85,26 @@
 
           <div class="card-body">
             <div class="float-right btn-group btn-group-sm">
+              <!-- Block/Unblock icon -->
               <mat-slide-toggle
-                class="btn btn-info"
+                class="btn btn-info custom-slide-toggle"
+                (click)="getUserByUsername(user.userName)"
+                (change)="toggleUser(user)"
+                [checked]="isBlocked(user.userName)"
                 style="font-size: 10px"
-                matTooltip="Block user"
-              ></mat-slide-toggle>
+                matTooltip="{{ isBlocked(user.userName) ? 'Unblock user' : 'Block user' }}">
+              </mat-slide-toggle>
               &nbsp; &nbsp;
               <a
                 (click)="editDepartment(user)"
                 class="btn btn-primary tooltips"
-                matTooltip="Edit user"
-                ><i class="fa fa-pencil"></i>
+                matTooltip="Edit user"><i class="fa fa-pencil"></i>
               </a>
               &nbsp; &nbsp;
               <a
                 (click)="deleteEmployee(user.userName)"
                 class="btn btn-secondary tooltips"
-                matTooltip="Delete user"
-                ><i class="fa fa-times"></i
-              ></a>
+                matTooltip="Delete user"><i class="fa fa-times"></i></a>
             </div>
           </div>
         </div>
@@ -119,8 +118,7 @@
         [totalItems]="totalUsers"
         [itemsPerPage]="itemsPerPage"
         [currentPage]="currentPage"
-        (onclick)="changePage($event)"
-      ></app-pagination>
+        (onclick)="changePage($event)"></app-pagination>
     </div>
     <!-- Notification for no employees -->
     <div *ngIf="users?.length == 0" class="col-lg-12 col-md-12 col-xl-12">

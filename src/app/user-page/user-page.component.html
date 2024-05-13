@@ -1,44 +1,49 @@
 <div>
   <mat-toolbar class="toolbar">
     <div class="logo py-4">
-      <img src="./assets/img/111.png" alt="" />
+      <img src="./assets/img/logo_wcf.png" alt />
     </div>
     <div class="center-span">
       <p>Smart Asset Management System</p>
     </div>
     <span class="spacer"></span>
 
-    <a class="btn btn-outline-primary" (click)="openMyRequest()" routerLinkActive="active">My Request</a>
-    &nbsp; &nbsp; 
-    <button mat-icon-button matTooltip="Live Chat Room"  (click)="fetchData()">
-      <mat-icon matBadge="1" matBadgeColor="accent" style="color: green; font-size: 28px">forum</mat-icon>
+    <a class="btn btn-outline-primary" (click)="openMyRequest()"
+      routerLinkActive="active">My Request</a>
+    &nbsp; &nbsp;
+    <button mat-icon-button matTooltip="Live Chat Room" (click)="fetchData()">
+      <mat-icon matBadge="1" matBadgeColor="accent"
+        style="color: green; font-size: 28px">forum</mat-icon>
     </button>
 
-    <button mat-icon-button matTooltip="Manage Account" [matMenuTriggerFor]="beforeMenu">
-      <mat-icon style="color: green; font-size: 26.4px">account_circle</mat-icon>
+    <button mat-icon-button matTooltip="Manage Account"
+      [matMenuTriggerFor]="beforeMenu">
+      <mat-icon
+        style="color: green; font-size: 26.4px">account_circle</mat-icon>
     </button>
 
-      <mat-menu #menu="matMenu" #beforeMenu="matMenu" xPosition="before">
-        <button mat-menu-item (click)="handleChangePasswordAction()">
-          <mat-icon>password</mat-icon>
-          Change Password
-        </button>  
+    <mat-menu #menu="matMenu" #beforeMenu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="handleChangePasswordAction()">
+        <mat-icon>password</mat-icon>
+        Change Password
+      </button>
 
-        <button mat-menu-item matTooltip="Logout" (click)="logout()">
-          <mat-icon>logout</mat-icon> Logout
-        </button>  
-      </mat-menu>
+      <button mat-menu-item matTooltip="Logout" (click)="logout()">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </mat-menu>
   </mat-toolbar>
 </div>
 &nbsp; &nbsp; <br>
 
 <div class="container mt-3">
   <mat-card style="background-color: rgb(250, 246, 246);">
-    <mat-card-header>
+    <mat-card-header *ngIf="loggedUser">
       <div mat-card-avatar></div>
-      <mat-card-title>Welcome, </mat-card-title>
+      <mat-card-title>Welcome, {{loggedUser.userFirstName}} {{
+        loggedUser.userLastName }} 🖐️</mat-card-title>
     </mat-card-header>
-          
+
     <div class="text-right" (click)="requestAsset()">
       <a class="btn btn-primary">Request For Asset</a>
     </div>
@@ -53,27 +58,31 @@
   <div class="card mt-4 card border-info mb-20">
     <div *ngIf="assignDetails && assignDetails.length > 0">
       <div class="text-center mt-3">
-       <h2><span class="assign-text">Asset Assigned</span></h2>
+        <h2><span class="assign-text">Asset Assigned</span></h2>
       </div>
-          <!-- Table contents -->
+      <!-- Table contents -->
+      <div class="table-container">
         <table mat-table [dataSource]="assignDetails" class="mat-elevation-z8">
           <!-- productName Column -->
           &nbsp;
           <ng-container matColumnDef="Product Name">
             <th mat-header-cell *matHeaderCellDef>Product Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.productName
+              }}</td>
           </ng-container>
 
           <!-- productPrice Column -->
           <ng-container matColumnDef="Product Price">
             <th mat-header-cell *matHeaderCellDef>Product Price</th>
-            <td mat-cell *matCellDef="let element">{{ element.productPrice }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.productPrice
+              }}</td>
           </ng-container>
 
           <!-- productModel Column -->
           <ng-container matColumnDef="Product Model">
             <th mat-header-cell *matHeaderCellDef>Product Model</th>
-            <td mat-cell *matCellDef="let element">{{ element.productModel }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.productModel
+              }}</td>
           </ng-container>
 
           <!-- productCategory Column -->
@@ -95,41 +104,21 @@
           <!-- productSerialNo Column -->
           <ng-container matColumnDef="Date Assigned">
             <th mat-header-cell *matHeaderCellDef>Date Assign</th>
-            <td mat-cell *matCellDef="let element">{{ element.productDate }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.productDate
+              }}</td>
           </ng-container>
-
-          <!-- Image Column -->
-          <!-- <ng-container matColumnDef="Image">
-          <th mat-header-cell *matHeaderCellDef>Product Image</th>
-          <td mat-cell *matCellDef="let element">
-            <div class="card">
-              <mat-grid-list cols="1" rowHeight="5:1" gutterSize="10">
-                <mat-grid-tile *ngFor="let product of productDetails">
-                  <div class="row home-page">
-                    <ng-container *ngIf="product.productId === element.productId">
-                      <img *ngIf="product.productImages.length > 0" [src]="product.productImages[0].url" alt="Product Image">
-                      <div *ngIf="product.productImages.length === 0" class="empty-image"></div>
-                    </ng-container>
-                  </div>
-                </mat-grid-tile>
-              </mat-grid-list>
-            </div>
-          </td>
-        </ng-container> -->
-
           <!--  Button -->
           <ng-container matColumnDef="Actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let element">
-               <!-- QR Code button -->
-            <button
-            mat-icon-button
-            matTooltip="QR Code"
-            color="primary"
-            (click)="showQrCode(element)"
-          >
-            <mat-icon>qr_code</mat-icon>
-          </button>
+              <!-- QR Code button -->
+              <button
+                mat-icon-button
+                matTooltip="QR Code"
+                color="primary"
+                (click)="showQrCode(element)">
+                <mat-icon>qr_code</mat-icon>
+              </button>
 
               <button
                 mat-icon-button
@@ -137,8 +126,7 @@
                 color="accent"
                 (click)="
                   openReturnAssetDialog(element.productId, element.user.userName)
-                "
-              >
+                ">
                 <mat-icon>move_down</mat-icon>
               </button>
             </td>
@@ -147,6 +135,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
+      </div>
     </div>
     <div *ngIf="!assignDetails || assignDetails.length === 0">
       <h2 class="text-center">No assigned Asset available.</h2>

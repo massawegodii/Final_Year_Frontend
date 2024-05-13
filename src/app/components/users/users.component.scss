@@ -26,8 +26,8 @@ a {
 .card:focus {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #dbe0db; 
-  
+  background-color: #dbe0db;
+
 }
 
 
@@ -79,8 +79,8 @@ color: white;
 
 .image-container {
   display: inline-block;
-  padding: 5px; 
-  border-radius: 20px; 
+  padding: 5px;
+  border-radius: 20px;
   height: 20px;
 }
 
@@ -92,20 +92,22 @@ color: white;
 /* styles.css or your component-specific CSS file */
 .phone-number {
   font-size: 16px;
-  cursor: pointer; 
+  cursor: pointer;
   transition: font-size 0.3s, color 0.3s;
 }
 
 .phone-number:hover {
-  background-color: #1f9108; 
+  background-color: #1f9108;
   margin-bottom: 10px;
 }
 
 .copy-icon {
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .copy-icon:hover {
   background-color: #f0f0f0;
   margin-bottom: 10px;
 }
+
+

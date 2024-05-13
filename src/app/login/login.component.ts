@@ -6,7 +6,7 @@ import { UserService } from '../_services/user.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../_services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { UserAuthService } from '../_services/user-auth.service';
+import { UserAuthService } from '../_services/UserAuthService';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,6 @@ import { UserAuthService } from '../_services/user-auth.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-
   userPassword = true;
   loginForm: any = NgForm;
   responseMessage: any;
@@ -30,22 +29,19 @@ export class LoginComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      userName: [
-        null,
-      ],
+      userName: [null],
       userPassword: [null, [Validators.required]],
     });
   }
 
   login() {
-
     this.ngxService.start();
     var formData = this.loginForm.value;
 
     var data = {
       userName: formData.userName,
-      userPassword: formData.userPassword
-    }
+      userPassword: formData.userPassword,
+    };
 
     if (this.loginForm.invalid) {
       // Mark fields as touched to display errors
@@ -55,7 +51,6 @@ export class LoginComponent implements OnInit {
 
     this.userService.login(data).subscribe(
       (response: any) => {
-
         this.ngxService.stop();
         this.dialogRef.close();
         this.responseMessage = response?.message;
@@ -74,18 +69,19 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/userpage']);
         }
       },
-      (error:any)=>{
+      (error: any) => {
         console.log(error);
         this.ngxService.stop();
-        if(error.error?.message){
+        if (error.error?.message) {
           this.responseMessage = error.error?.message;
-        }
-        else {
+        } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(this.responseMessage, GlobalConstant.error);
-      })
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstant.error
+        );
+      }
+    );
   }
-
-
 }

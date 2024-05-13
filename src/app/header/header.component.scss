@@ -4,11 +4,11 @@ mat-toolbar {
     background: rgb(240, 243, 243);
     z-index: 1000;
   }
-  
+
   .mat-menu {
     background-color: black;
   }
-  
+
   ul {
     li {
       list-style: none;
@@ -24,23 +24,23 @@ mat-toolbar {
   }
   .user-image {
     border-radius: 80%;
-    width: 60px;
+    width: 50px;
     margin-left: -30px;
-    height: 60px;
+    height: 50px;
     &-icon {
       height: 17px;
       font-size: 15px;
     }
   }
-  
+
   ::ng-deep {
     .mat-menu-content {
       width: 160px;
       z-index: 1100;
     }
   }
-  
-    
+
+
   .demo-section + .demo-section {
     margin-top: 16px;
   }
@@ -49,5 +49,4 @@ mat-toolbar {
     margin-left: 890px;
     font-size: 50px;
   }
-  
-  
+

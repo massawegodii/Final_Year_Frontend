@@ -5,24 +5,32 @@
 .user-image {
     border-radius: 100%;
     width: 60px;
-    
+
     &-icon {
-      height: 20px;
-      font-size: 18px;
+      height: 25px;
+      font-size: 25px;
     }
   }
 
+
 .large-card {
-    width: 1120px; 
-    height: 90px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    background-color: rgb(252, 251, 251);
-    border: 1px solid #ccc;
+  width: 1120px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgb(252, 251, 251);
+  border: 1px solid #ccc;
+}
+
+@media screen and (max-width: 600px) {
+  .large-card {
+    max-width: 100%;
+    /* Make the card take full width on smaller screens */
   }
-  
+}
+
   .center-text {
     margin: 0;
   }
@@ -42,7 +50,7 @@ body {
 .header {
     padding: 60px;
     text-align: center;
-    background: #4e4ed1;
+    background: rgba(59, 130, 246, .50);
     color: rgb(255, 255, 255);
 }
 
@@ -115,8 +123,8 @@ body {
     width: 100%;
     padding: 6px;
     text-align: center;
-    color: white;
-    background: #4e4ed1;
+    color: rgb(7, 7, 7);
+    background: rgba(186, 211, 250, 0.5);
 }
 
 
@@ -165,7 +173,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #4e4ed1;
+    background-color: rgba(14, 105, 252, 0.5);
 }
 
 nav {
@@ -248,10 +256,10 @@ a {
 
 .bg-image {
     /* The image used */
-    background-image: url("/assets/img/logo3.jpg");
+    background-image: url("/assets/img/wcf.jpg");
     /* Add the blur effect */
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
     /* Full height */
     height: 110%;
     /* Center and scale the image nicely */
@@ -304,7 +312,7 @@ a {
 
 /* Style for each timeline item */
 .timeline li {
-    margin-bottom: 120px;
+    margin-bottom: 160px;
     position: relative;
 }
 
@@ -392,5 +400,7 @@ a {
         margin-top: 20px;
     }
 }
+
+
 
 

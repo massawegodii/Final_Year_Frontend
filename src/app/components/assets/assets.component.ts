@@ -22,7 +22,6 @@ import { DeleteAssetComponent } from '../extra/delete-asset/delete-asset.compone
 import { QrCodeComponent } from '../extra/qr-code/qr-code.component';
 import { QrcodeService } from '../../_services/qrcode.service';
 
-
 @Component({
   selector: 'app-assets',
   templateUrl: './assets.component.html',
@@ -55,7 +54,6 @@ export class AssetsComponent implements OnInit {
     'Actions',
   ];
 
-
   constructor(
     private dialog: MatDialog,
     private productService: ProductService,
@@ -63,9 +61,9 @@ export class AssetsComponent implements OnInit {
     private ngxService: NgxUiLoaderService,
     private imageProcessingService: ImageProcessingService,
     private statusService: StatusService,
-    private categoryService : CategoryService,
+    private categoryService: CategoryService,
     private departmentService: DepartmentService,
-    private qrcodeService: QrcodeService,
+    private qrcodeService: QrcodeService
   ) {}
 
   ngOnInit(): void {
@@ -114,156 +112,158 @@ export class AssetsComponent implements OnInit {
     });
   }
 
-
-
   handleCreateNewAssetAction() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '700px';
     this.dialog.open(AssetsNewComponent, dialogConfig);
   }
 
-
-
   // Calling the Select data
   statuses: Status[] = [];
-    getStatusName(productStatus: string): string {
-      if (!productStatus) {
-        return 'No Status';
-      }
-
-      const status = this.statuses.find((s) => s.name === productStatus);
-      return status ? status.name : 'No Status';
+  getStatusName(productStatus: string): string {
+    if (!productStatus) {
+      return 'No Status';
     }
 
-
-    categories: Category[] = [];
-    getCategoryName(productCategory: string): string {
-      if (!productCategory) {
-        return 'No Category';
-      }
-
-      const category = this.categories.find((c) => c.name === productCategory);
-      return category ? category.name : 'No Category';
-    }
-
-    departments: Department[] = [];
-    getDepartmentName(productDepartment: string): string {
-      if (!productDepartment) {
-        return 'No Department';
-      }
-
-      const department = this.departments.find((d) => d.name === productDepartment);
-      return department ? department.name : 'No Department';
-    }
-
-
-
-    public getAllDepartment() {
-      this.departmentService.getAllDepartment().subscribe((response: Department[]) => {
-        this.departments = response;
-        console.log(response);
-      }, (error) => {
-        console.log(error);
-      });
-    }
-
-
-    public getAllCategory() {
-      this.categoryService.getAllCategory().subscribe((response: Category[]) => {
-        this.categories = response;
-        console.log(response);
-      }, (error) => {
-        console.log(error);
-      });
-    }
-
-
-
-  public getAllStatus() {
-    this.statusService.getAllStatus().subscribe((response: Status[]) =>{
-      this.statuses = response;
-      console.log(response);
-    }, (error) => {
-      console.log(error);
-    });
+    const status = this.statuses.find((s) => s.name === productStatus);
+    return status ? status.name : 'No Status';
   }
 
-  public getAllProduct() {
-    this.getAllStatus();
-    this.productService.getAllProduct()
-    .pipe(
-      map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
-    )
-    .subscribe(
-      (response: Product[]) => {
-        console.log(response);
-        this.productDetails = response;
+  categories: Category[] = [];
+  getCategoryName(productCategory: string): string {
+    if (!productCategory) {
+      return 'No Category';
+    }
 
-        // Assigning the userName
-        this.productDetails = response.map(product => {
-          return {
-            ...product,
-            userName: product.user?.userName || 'Not Assigned'
-          };
-        });
-        this.ngxService.stop();
+    const category = this.categories.find((c) => c.name === productCategory);
+    return category ? category.name : 'No Category';
+  }
+
+  departments: Department[] = [];
+  getDepartmentName(productDepartment: string): string {
+    if (!productDepartment) {
+      return 'No Department';
+    }
+
+    const department = this.departments.find(
+      (d) => d.name === productDepartment
+    );
+    return department ? department.name : 'No Department';
+  }
+
+  public getAllDepartment() {
+    this.departmentService.getAllDepartment().subscribe(
+      (response: Department[]) => {
+        this.departments = response;
+        console.log(response);
       },
       (error) => {
-        this.ngxService.stop();
-        if (error.error?.message) {
-          this.responseMessage = error.error?.message;
-        } else {
-          this.responseMessage = GlobalConstant.genericError;
-        }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        console.log(error);
       }
     );
   }
 
+  public getAllCategory() {
+    this.categoryService.getAllCategory().subscribe(
+      (response: Category[]) => {
+        this.categories = response;
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
-  //Delete Asset in Admin
-    openDeleteAssetDialog(productId: any): void {
-      const dialogRef = this.dialog.open(DeleteAssetComponent);
+  public getAllStatus() {
+    this.statusService.getAllStatus().subscribe(
+      (response: Status[]) => {
+        this.statuses = response;
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.deleteProduct(productId);
-        }
-      });
-    }
-
-
-
-  public deleteProduct(productId: any) {
-      this.productService.deleteProductDetails(productId).subscribe(
-        (response) => {
-          this.getAllProduct();
+  public getAllProduct() {
+    this.productService
+      .getAllProduct()
+      .pipe(
+        map((x: Product[], i) =>
+          x.map((product: Product) =>
+            this.imageProcessingService.createImages(product)
+          )
+        )
+      )
+      .subscribe(
+        (response: Product[]) => {
           console.log(response);
+          this.productDetails = response;
+
+          // Assigning the userName
+          this.productDetails = response.map((product) => {
+            return {
+              ...product,
+              userName: product.user?.userName || 'Not Assigned',
+            };
+          });
+          this.ngxService.stop();
         },
-        (error: HttpErrorResponse) => {
-          console.log(error);
+        (error) => {
+          this.ngxService.stop();
+          if (error.error?.message) {
+            this.responseMessage = error.error?.message;
+          } else {
+            this.responseMessage = GlobalConstant.genericError;
+          }
+          this.snackbarService.openSnackBar(
+            this.responseMessage,
+            GlobalConstant.error
+          );
         }
       );
   }
 
+  //Delete Asset in Admin
+  openDeleteAssetDialog(productId: any): void {
+    const dialogRef = this.dialog.open(DeleteAssetComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteProduct(productId);
+      }
+    });
+  }
+
+  public deleteProduct(productId: any) {
+    this.productService.deleteProductDetails(productId).subscribe(
+      (response) => {
+        this.getAllProduct();
+        console.log(response);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+  }
 
   showImage(product: Product) {
     console.log(product);
     this.dialog.open(ShowImageDialogComponent, {
       data: {
-        image: product.productImages
+        image: product.productImages,
       },
       height: '400px',
-      width: '600px'
+      width: '600px',
     });
   }
 
   showQrCode(product: Product) {
     if (product.productId !== null && product.productId !== undefined) {
-      this.qrcodeService.generateQRCode(product.productId)
+      this.qrcodeService
+        .generateQRCode(product.productId)
         .subscribe((blob: Blob) => {
           const reader = new FileReader();
           reader.readAsDataURL(blob);
@@ -272,10 +272,10 @@ export class AssetsComponent implements OnInit {
               const base64data = reader.result.toString();
               this.dialog.open(QrCodeComponent, {
                 data: {
-                  image: base64data
+                  image: base64data,
                 },
                 height: '230px',
-                width: '200px'
+                width: '200px',
               });
             } else {
               console.error('Reader result is null.');
@@ -287,51 +287,54 @@ export class AssetsComponent implements OnInit {
     }
   }
 
-
   editProductDetails(productId: any) {
-    const product = this.productDetails.find(p => p.productId === productId);
+    const product = this.productDetails.find((p) => p.productId === productId);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '700px';
     dialogConfig.data = { product: product };
     const dialogRef = this.dialog.open(AssetEditComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getAllProduct();
       }
     });
   }
 
-
   shareProductToUser(productId: any) {
-    const product = this.productDetails.find(p => p.productId === productId);
+    const product = this.productDetails.find((p) => p.productId === productId);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '700px';
     dialogConfig.data = { product: product };
     const dialogRef = this.dialog.open(ShareComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getAllProduct();
       }
     });
   }
 
-
   applFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.toLowerCase().trim();
-    this.filteredProducts = this.productDetails.filter((product: Product) =>
-      product.productName.toLowerCase().includes(filterValue) ||
-      product.productDescription.toLowerCase().includes(filterValue) ||
-      product.productModel.toLowerCase().includes(filterValue) ||
-      product.productSerialNo.toString().toLowerCase().includes(filterValue) ||
-      product.productPrice.toString().toLowerCase().includes(filterValue) ||
-      product.productStatus.toString().toLowerCase().includes(filterValue) ||
-      product.productCategory.toString().toLowerCase().includes(filterValue) ||
-      product.productDepartment.toString().toLowerCase().includes(filterValue)
+    const filterValue = (event.target as HTMLInputElement).value
+      .toLowerCase()
+      .trim();
+    this.filteredProducts = this.productDetails.filter(
+      (product: Product) =>
+        product.productName.toLowerCase().includes(filterValue) ||
+        product.productDescription.toLowerCase().includes(filterValue) ||
+        product.productModel.toLowerCase().includes(filterValue) ||
+        product.productSerialNo
+          .toString()
+          .toLowerCase()
+          .includes(filterValue) ||
+        product.productPrice.toString().toLowerCase().includes(filterValue) ||
+        product.productStatus.toString().toLowerCase().includes(filterValue) ||
+        product.productCategory
+          .toString()
+          .toLowerCase()
+          .includes(filterValue) ||
+        product.productDepartment.toString().toLowerCase().includes(filterValue)
     );
   }
-
-
-
 }

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { DarkmodeService } from './_services/darkmode.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class AppComponent implements OnInit {
 
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
+
+  darkModeService: DarkmodeService = inject(DarkmodeService);
 
 
   ngOnInit(): void {
@@ -19,7 +22,7 @@ export class AppComponent implements OnInit {
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
-  
+
   toggleSidebar() {
     this.toggleSidebarForMe.emit();
   }
