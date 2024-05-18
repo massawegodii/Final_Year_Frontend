@@ -28,17 +28,23 @@
 
 <div class="wrapper sticky">
   <nav class="navbar-fixed-top">
-    <a routerLink="/" class="logo">
-      <img src="./assets/img/logo_wcf.png" alt class="user-image mr-1 p-3" />
+    <button mat-button style="color: rgb(238, 231, 231)" routerLink="/"
+      class="logo">
+      <img src="./assets/logo_wcf.png" style="height: 150px"
+        class="user-image mr-1 p-3" />
       Smart
       Asset Management System
-    </a>
+
+    </button>
     <ul>
-      <li class="mt-3">
-        <a style="color: black"
-          (click)="handleLoginAction() ">Login</a>
-        <a style="color: black;" (click)="handleForgotPasswordAction() ">Forgot
-          Password</a>
+      <li class="mt-2">
+        <button mat-button class="hover-button"
+          style="color: rgb(238, 231, 231)"
+          (click)="handleLoginAction() ">Login</button>
+        <button mat-button class="hover-button"
+          style="color: rgb(238, 231, 231)"
+          (click)="handleForgotPasswordAction() ">Forgot
+          Password</button>
       </li>
     </ul>
   </nav>

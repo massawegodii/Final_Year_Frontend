@@ -1,7 +1,7 @@
 <div>
   <mat-toolbar class="toolbar">
     <div class="logo py-4">
-      <img src="./assets/img/logo_wcf.png" alt />
+      <img src="./assets/logo_wcf.png" alt />
     </div>
     <div class="center-span">
       <p>Smart Asset Management System</p>
@@ -10,6 +10,9 @@
 
     <a class="btn btn-outline-primary" (click)="openMyRequest()"
       routerLinkActive="active">My Request</a>
+    &nbsp; &nbsp;
+    <a class="btn btn-outline-secondary"
+      routerLinkActive="active">Feedback</a>
     &nbsp; &nbsp;
     <button mat-icon-button matTooltip="Live Chat Room" (click)="fetchData()">
       <mat-icon matBadge="1" matBadgeColor="accent"

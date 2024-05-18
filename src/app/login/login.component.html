@@ -67,7 +67,8 @@
     mat-raised-button
     color="primary"
     type="submit"
-    (click)="login()">
+    (click)="login()"
+    [disabled]="!(loginForm.valid && loginForm.dirty)">
     <mat-icon>login</mat-icon>Login
   </button>
   <button mat-raised-button color="warn" mat-dialog-close>
