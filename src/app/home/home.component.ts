@@ -1,3 +1,4 @@
+import { DeleteScheduleComponent } from '../components/extra/delete-schedule/delete-schedule.component';
 import { Component, OnInit } from '@angular/core';
 import { Chat } from '../_model/chat_models';
 import { ChatService } from '../_services/chat.service';
@@ -5,6 +6,9 @@ import { DashboardService } from '../_services/dashboard.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SnackbarService } from '../_services/snackbar.service';
 import { GlobalConstant } from '../_constants/global-constant';
+import { MaintenanceService } from '../_services/maintenance.service';
+import { Maintanance } from '../_model/maintanance_model';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -17,19 +21,23 @@ export class HomeComponent implements OnInit {
 
   basicData: any;
   basicOptions: any;
+  p: number = 1;
+  itemsPerPage: number = 3;
+  totalItems: number = 21;
 
-  chatDetails: Chat[] = [];
-  displayedColumns: string[] = ['nickName', 'fullName', 'status'];
+  maintenanceDetails: Maintanance[] = [];
+  displayedColumns: string[] = ['Information', 'Date', 'Time', 'Actions'];
 
   constructor(
-    private chatService: ChatService,
     private dashboardService: DashboardService,
     private snackbarService: SnackbarService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private maintenanceService: MaintenanceService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.getAllChats();
+    this.getAllSchedule();
     this.ngxService.start();
     this.dashboardDetails();
 
@@ -95,6 +103,18 @@ export class HomeComponent implements OnInit {
     };
   }
 
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  get pages(): number[] {
+    const pagesArray: number[] = [];
+    for (let i = 1; i <= this.totalPages; i++) {
+      pagesArray.push(i);
+    }
+    return pagesArray;
+  }
+
   public dashboardDetails() {
     this.dashboardService.getDashboardDetails().subscribe(
       (response: any) => {
@@ -117,15 +137,34 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  public getAllChats() {
-    this.chatService.getAllChatUsers().subscribe(
-      (response: Chat[]) => {
-        this.chatDetails = response;
+  public getAllSchedule() {
+    this.maintenanceService.getAllSechedule().subscribe(
+      (response: Maintanance[]) => {
+        this.maintenanceDetails = response;
         console.log(response);
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  deleteSchedule(id: number) {
+    const dialogRef = this.dialog.open(DeleteScheduleComponent, {
+      width: '450px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.maintenanceService.deleteSchedule(id).subscribe(
+          (res) => {
+            this.getAllSchedule();
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+    });
   }
 }

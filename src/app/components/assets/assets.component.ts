@@ -337,4 +337,5 @@ export class AssetsComponent implements OnInit {
         product.productDepartment.toString().toLowerCase().includes(filterValue)
     );
   }
+  
 }

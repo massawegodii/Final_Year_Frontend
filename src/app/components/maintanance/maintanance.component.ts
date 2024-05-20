@@ -171,4 +171,8 @@ export class MaintananceComponent implements OnInit {
       }
     );
   }
+
+  closeAlert() {
+    this.alertMessage = '';
+  }
 }

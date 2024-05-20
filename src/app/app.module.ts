@@ -80,6 +80,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
+import { DeleteScheduleComponent } from './components/extra/delete-schedule/delete-schedule.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading ...',
@@ -132,6 +133,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MyRequestComponent,
     DeleteStatusComponent,
     MessagingComponent,
+    DeleteScheduleComponent,
   ],
   imports: [
     HttpClientModule,

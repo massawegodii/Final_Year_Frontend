@@ -16,4 +16,8 @@ export class MaintenanceService {
   public getAllSechedule() {
     return this.httpClient.get<Maintanance[]>("http://localhost:8080/maintenance/getAllSchedule");
   }
+
+   public deleteSchedule(id:number) {
+    return this.httpClient.delete("http://localhost:8080/maintenance/delete/" +id);
+  }
 }
