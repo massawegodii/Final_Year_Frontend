@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="chat-list mat-elevation-z5" style="margin-left: 20px">
+    <div>
+      <mat-form-field>
+        <input [formControl]="searchControl" matInput
+          placeholder="Search for users .."
+          [matAutocomplete]="p">
+      </mat-form-field>
+      <mat-autocomplete #p="matAutocomplete">
+        <mat-option *ngFor="let p of user" (click)="createChat(p)">
+          {{p.userName}}
+        </mat-option>
+      </mat-autocomplete>
+    </div>
+  </div>
+
+  <div class="message-list mat-elevation-z5">
+    <p>Message 1</p>
+  </div>
+</div>

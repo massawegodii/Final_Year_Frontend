@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../_services/user.service';
 import { UserAuthService } from '../_services/UserAuthService';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../components/extra/confirmation/confirmation.component';
 import { DarkmodeService } from '../_services/darkmode.service';
+import { ProfileComponent } from '../components/extra/profile/profile.component';
 
 @Component({
   selector: 'app-header',
@@ -12,6 +13,9 @@ import { DarkmodeService } from '../_services/darkmode.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild('offcanvasBody', { read: ViewContainerRef })
+  offcanvasBody!: ViewContainerRef;
+
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
 
   darkModeServices: DarkmodeService = inject(DarkmodeService);
@@ -25,7 +29,8 @@ export class HeaderComponent implements OnInit {
     private userAuthService: UserAuthService,
     private router: Router,
     public userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
   toggleSidebar() {
@@ -51,5 +56,12 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/']);
       }
     );
+  }
+
+  openProfile() {
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(ProfileComponent);
+    this.offcanvasBody.clear();
+    this.offcanvasBody.createComponent(componentFactory);
   }
 }

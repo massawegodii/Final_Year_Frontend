@@ -21,7 +21,6 @@ import { ProductDetail, Report } from '../../_model/report_models';
   styleUrl: './reports.component.scss',
 })
 export class ReportsComponent implements OnInit {
-
   responseMessage: any;
   productDetails: ProductDetail[] = [];
 
@@ -32,14 +31,13 @@ export class ReportsComponent implements OnInit {
     'Department',
     'Status',
     'Delete',
-
   ];
 
   categories: Category[] = [];
   statuses: Status[] = [];
   departments: Department[] = [];
   products: Product[] = [];
-  dataSource: any[] = []; 
+  dataSource: any[] = [];
   manageReportForm: any = FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -51,8 +49,6 @@ export class ReportsComponent implements OnInit {
     private statusService: StatusService,
     private ngxService: NgxUiLoaderService
   ) {}
-
-
 
   ngOnInit(): void {
     this.manageReportForm = this.formBuilder.group({
@@ -66,7 +62,10 @@ export class ReportsComponent implements OnInit {
       ],
       contactNumber: [
         null,
-        [Validators.required, Validators.pattern(GlobalConstant.contactNumberRegex)],
+        [
+          Validators.required,
+          Validators.pattern(GlobalConstant.contactNumberRegex),
+        ],
       ],
       email: [
         null,
@@ -74,24 +73,24 @@ export class ReportsComponent implements OnInit {
       ],
       productPrice: [0, [Validators.required]],
       productSerialNo: [null, [Validators.required]],
-      productCategory: [null, Validators.required], 
-      productName: [null, Validators.required], 
-      productStatus: [null, Validators.required], 
+      productCategory: [null, Validators.required],
+      productName: [null, Validators.required],
+      productStatus: [null, Validators.required],
     });
-  
+
     this.ngxService.start();
     this.getAllCategory();
     this.getAllDepartment();
     this.getAllProduct();
     this.getAllStatus();
   }
-  
-  
+
   validateSubmit() {
     const controls = this.manageReportForm.controls;
-    return Object.keys(controls).some(controlName => controls[controlName].invalid);
+    return Object.keys(controls).some(
+      (controlName) => controls[controlName].invalid
+    );
   }
-  
 
   add() {
     var formData = this.manageReportForm.value;
@@ -101,44 +100,44 @@ export class ReportsComponent implements OnInit {
       productCategory: formData.productCategory,
       productSerialNo: formData.productSerialNo,
       productPrice: formData.productPrice,
-      productStatus: formData.productStatus
+      productStatus: formData.productStatus,
     };
-  
+
     // Check if product already exists
     const isProductExist = this.productDetails.some((item) => {
       return item.productSerialNo === productDetail.productSerialNo;
     });
-  
+
     if (!isProductExist) {
       this.productDetails.push(productDetail);
-  
+
       // Update dataSource to display in the table
       this.dataSource = [...this.productDetails];
-  
+
       this.snackbarService.openSnackBar('Product added', 'success');
     } else {
-      this.snackbarService.openSnackBar(GlobalConstant.productExistError, GlobalConstant.error);
+      this.snackbarService.openSnackBar(
+        GlobalConstant.productExistError,
+        GlobalConstant.error
+      );
     }
   }
-  
-  
 
   handleDeleteAction(value: any, element: any) {
     this.dataSource.splice(value, 1);
     this.dataSource = [...this.dataSource];
   }
 
-
   handleSubmitAction() {
     var formData = this.manageReportForm.value;
-  
+
     var data = {
       name: formData.name,
       contactNumber: formData.contactNumber,
       email: formData.email,
-      productDetails: JSON.stringify(this.dataSource)
+      productDetails: JSON.stringify(this.dataSource),
     };
-  
+
     this.ngxService.start();
     this.reportService.generateReport(data).subscribe(
       (response: any) => {
@@ -146,8 +145,11 @@ export class ReportsComponent implements OnInit {
         this.manageReportForm.reset();
         this.productDetails = [];
         this.dataSource = [];
-  
-        this.snackbarService.openSnackBar('Report generated successfully!', 'success');
+
+        this.snackbarService.openSnackBar(
+          'Report generated successfully!',
+          'success'
+        );
       },
       (error) => {
         this.ngxService.stop();
@@ -159,19 +161,16 @@ export class ReportsComponent implements OnInit {
       }
     );
   }
-  
-  
 
   downloadFile(fileName: string) {
     var data = {
-      uuid : fileName
-    }
+      uuid: fileName,
+    };
     this.reportService.getPdf(data).subscribe((response: any) => {
       saveAs(response, fileName + '.pdf');
       this.ngxService.stop();
-    })
+    });
   }
-
 
   public getAllCategory() {
     this.categoryService.getAllCategory().subscribe(
@@ -184,7 +183,6 @@ export class ReportsComponent implements OnInit {
       }
     );
   }
-
 
   public getAllProduct() {
     this.productService.getAllProduct().subscribe(
@@ -207,7 +205,6 @@ export class ReportsComponent implements OnInit {
       }
     );
   }
-  
 
   public getAllDepartment() {
     this.departmentService.getAllDepartment().subscribe(
@@ -241,6 +238,4 @@ export class ReportsComponent implements OnInit {
       }
     );
   }
-
-  
 }

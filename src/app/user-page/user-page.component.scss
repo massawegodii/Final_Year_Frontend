@@ -134,9 +134,20 @@
     @media screen and (max-width: 768px) {
       .mat-elevation-z8 {
         overflow-x: auto;
-        /* Enable horizontal scrolling for smaller screens */
       }
     }
+
+  .custom-offcanvas-width {
+    width: 600px !important;
+  }
+
+    .navbar-brand {
+      flex: 1;
+      width: 520px;
+
+    }
+
+
 
 
 

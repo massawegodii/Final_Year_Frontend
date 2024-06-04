@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { Assign } from '../_model/assign_model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
@@ -18,6 +24,7 @@ import { MyRequestComponent } from '../components/my-request/my-request.componen
 import Swal from 'sweetalert2';
 import { UserService } from '../_services/user.service';
 import { User } from '../_model/users_model';
+import { TextMessageComponent } from '../components/extra/text-message/text-message.component';
 
 @Component({
   selector: 'app-user-page',
@@ -25,6 +32,9 @@ import { User } from '../_model/users_model';
   styleUrl: './user-page.component.scss',
 })
 export class UserPageComponent implements OnInit {
+  @ViewChild('offcanvasBody', { read: ViewContainerRef })
+  offcanvasBody!: ViewContainerRef;
+
   isIconBlinking: boolean = false;
 
   productDetails: Product[] = [];
@@ -53,7 +63,7 @@ export class UserPageComponent implements OnInit {
     private router: Router,
     private qrcodeService: QrcodeService,
     private userService: UserService,
-    private imageProcessingService: ImageProcessingService
+    private componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
   ngOnInit(): void {
@@ -209,5 +219,14 @@ export class UserPageComponent implements OnInit {
     dialogConfig.width = '750px';
     dialogConfig.position = { top: '50px' };
     this.dialog.open(MyRequestComponent, dialogConfig);
+  }
+
+  openTextComponent() {
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(
+        TextMessageComponent
+      );
+    this.offcanvasBody.clear();
+    this.offcanvasBody.createComponent(componentFactory);
   }
 }

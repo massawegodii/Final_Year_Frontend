@@ -1,10 +1,19 @@
-<mat-nav-list>
-  <div class="logo py-4">
-    <img src="./assets/img/1.png" alt />
+<mat-nav-list class="mt-5">
+
+  <div class="profile-card">
+    <div class="profile-header">
+      <img src="assets/img/image-placeholder.png"
+        class="profile-img">
+      <div class="profile-info">
+        <h4 class="profile-name">Godfrey, Admin</h4>
+        <span class="profile-status online"></span>
+        <span class="status-text">Online</span>
+      </div>
+    </div>
+    &nbsp; &nbsp;
+    <div class="section-header">
+    </div>
   </div>
-  <mat-divider></mat-divider>
-  &nbsp;
-  <!-- <h2 matSubheader>SAMS</h2> -->
 
   <a mat-list-item routerLinkActive="list-item-active"
     routerLink="/dashboard/home">
@@ -20,9 +29,8 @@
     routerLink="/dashboard/maintainance">
     <mat-icon>construction </mat-icon> <span>Maintenance</span>
   </a>
-  &nbsp;
-  <mat-divider></mat-divider>
-  &nbsp;
+  <div class="section-header">
+  </div>
   <a mat-list-item routerLinkActive="list-item-active"
     routerLink="/dashboard/reports">
     <mat-icon>picture_as_pdf</mat-icon> <span>Reports</span>

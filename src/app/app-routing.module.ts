@@ -14,6 +14,7 @@ import { StatusComponent } from './components/status/status.component';
 import { MaintananceComponent } from './components/maintanance/maintanance.component';
 import { AuthGuard } from './_auth/auth.guard';
 import { UserPageComponent } from './user-page/user-page.component';
+import { TextMessageComponent } from './components/extra/text-message/text-message.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -23,7 +24,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['User'] },
   },
-
 
   {
     path: 'dashboard',
@@ -42,6 +42,7 @@ const routes: Routes = [
       { path: 'maintainance', component: MaintananceComponent },
     ],
   },
+
   { path: 'forbidden', component: ForbidentComponent },
 ];
 

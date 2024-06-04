@@ -23,7 +23,8 @@
             loginForm.get('userName')?.touched &&
             loginForm.get('userName')?.invalid
           ">
-          <span *ngIf="loginForm.get('userName')?.hasError('required')">This is
+          <span *ngIf="loginForm.get('userName')?.hasError('required')">This
+            is
             field mandatory.</span>
           <span *ngIf="loginForm.get('userName')?.hasError('pattern')">This is
             field is invalid.</span>
@@ -54,7 +55,8 @@
             loginForm.get('userPassword')?.touched &&
             loginForm.get('userPassword')?.invalid
           ">
-          <span *ngIf="loginForm.get('userPassword')?.hasError('required')">This
+          <span
+            *ngIf="loginForm.get('userPassword')?.hasError('required')">This
             is field mandatory.</span>
         </mat-error>
       </mat-form-field>

@@ -1,14 +1,4 @@
-.logo {
-    padding: 2.6rem 1rem;
-    img {
-      width: 215px;
-      height: 150px;
-      margin-left: -5px;
-      display: block;
-      border-radius: 10%;
-    }
-  }
-  
+
   .mat-icon {
     vertical-align: center;
     margin-right: 1rem;
@@ -29,14 +19,14 @@
     color: rgb(223, 217, 217);
     font-size: 1.0rem;
     .mat-expansion-indicator {
-      color: white; 
+      color: white;
     }
   }
 
   span {
     color: rgb(223, 217, 217);
   }
- 
+
 
   h2 {
     color: #f2f3f8;
@@ -45,6 +35,57 @@
     font-weight: 600;
     letter-spacing: 1px;
   }
+
+  // staring here
+    .profile-card {
+      background-color: #1e2431;
+      color: white;
+      padding: 15px;
+      margin-top: -25px;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+
+    .profile-info {
+      margin-left: 15px;
+    }
+
+    .profile-name {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .profile-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .online {
+      background-color: #28a745;
+      /* Green color for online status */
+    }
+
+    .status-text {
+      vertical-align: middle;
+    }
+
+    .section-header {
+      margin-top: 5px;
+      border-top: 2px solid #444;
+      padding-top: 10px;
+    }
 
 
 

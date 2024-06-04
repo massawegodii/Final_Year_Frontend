@@ -1,0 +1,29 @@
+
+.container {
+  margin-top: -55px;
+  display: flex;
+  height: calc(95vh - 70px);
+}
+
+.chat-list {
+  width: 60%;
+  margin: 16px;
+  background-color: #e9eaf3;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.message-list {
+    width: 90%;
+    margin: 16px;
+    background-color: white;
+    border-radius: 8px;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+
+
+
+
