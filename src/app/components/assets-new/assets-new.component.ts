@@ -25,14 +25,15 @@ import { Department } from '../../_model/department-model';
 export class AssetsNewComponent implements OnInit {
   productForm: any = NgForm;
   responseMessage: any;
-  statuses: Status[] = []; 
-  categories: Category[] = []; 
-  departments: Department[] = []; 
+  statuses: Status[] = [];
+  categories: Category[] = [];
+  departments: Department[] = [];
   selectedStatus: string = '';
   selectedCategory: string = '';
   selectedDepartment: string = '';
 
-  
+  selectedName: Category[] = [];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
@@ -61,13 +62,12 @@ export class AssetsNewComponent implements OnInit {
     qrCode: '',
 
     user: {
-      userName: ''
-    }
+      userName: '',
+    },
   };
 
   ngOnInit(): void {
     this.productForm = this.formBuilder.group({
-      
       productName: [
         null,
         [Validators.required, Validators.pattern(GlobalConstant.nameRegex)],
@@ -88,8 +88,8 @@ export class AssetsNewComponent implements OnInit {
         null,
         [Validators.required, Validators.pattern(GlobalConstant.number)],
       ],
-      productImages: [null] ,
-      qrCode: [null] ,
+      productImages: [null],
+      qrCode: [null],
 
       user: this.formBuilder.group({
         userName: [null],
@@ -113,8 +113,8 @@ export class AssetsNewComponent implements OnInit {
         productImages: [],
 
         user: {
-          userName: product.user.userName
-        }
+          userName: product.user.userName,
+        },
       };
       // Patch the form values
       this.productForm.patchValue({
@@ -128,9 +128,8 @@ export class AssetsNewComponent implements OnInit {
         productDepartment: this.product.productDepartment,
 
         user: {
-          userName: this.product.user.userName
+          userName: this.product.user.userName,
         },
-
       });
     }
 
@@ -176,7 +175,6 @@ export class AssetsNewComponent implements OnInit {
     this.responseMessage = response?.message;
     this.snackbarService.openSnackBar(this.responseMessage, 'success');
     this.router.navigate(['/dashboard/assets']);
-    console.log(response);
     this.productForm.reset(response);
     this.product.productImages = [];
     window.location.reload();
@@ -189,9 +187,11 @@ export class AssetsNewComponent implements OnInit {
     } else {
       this.responseMessage = GlobalConstant.genericError;
     }
-    this.snackbarService.openSnackBar(this.responseMessage, GlobalConstant.error);
+    this.snackbarService.openSnackBar(
+      this.responseMessage,
+      GlobalConstant.error
+    );
   }
-
 
   prepareFormData(product: Product): FormData {
     const uploadImageData = new FormData();
@@ -228,53 +228,70 @@ export class AssetsNewComponent implements OnInit {
     this.product.productImages.splice(i, 1);
   }
 
-  
   fileDropped(filehandle: FileHandle) {
     this.product.productImages.push(filehandle);
   }
 
   public getAllStatus() {
-    this.statusService.getAllStatus().subscribe((response: Status[]) => {
-      this.statuses = response;
-      console.log(response);
-    }, (error) => {
-      console.log(error);
-    });
+    this.statusService.getAllStatus().subscribe(
+      (response: Status[]) => {
+        this.statuses = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
-    // Method to handle status selection
-    onStatusSelect(event: MatSelectChange) {
-      this.selectedStatus = event.value;
-    }
+  // Method to handle status selection
+  onStatusSelect(event: MatSelectChange) {
+    this.selectedStatus = event.value;
+  }
 
-
-
-    public getAllCategory() {
-      this.categoryService.getAllCategory().subscribe((response: Category[]) => {
+  public getAllCategory() {
+    this.categoryService.getAllCategory().subscribe(
+      (response: Category[]) => {
         this.categories = response;
-        console.log(response);
-      }, (error) => {
+      },
+      (error) => {
         console.log(error);
-      });
-    }
-  
-      // Method to handle category selection
-      onCategorySelect(event: MatSelectChange) {
-        this.selectedCategory = event.value;
       }
+    );
+  }
 
-
-      public getAllDepartment() {
-        this.departmentService.getAllDepartment().subscribe((response: Department[]) => {
-          this.departments = response;
-          console.log(response);
-        }, (error) => {
+  public getCategoryByName(name: string) {
+    if (name) {
+      this.categoryService.getCategoryByName(name).subscribe(
+        (response: Category[]) => {
+          this.selectedName = response;
+        },
+        (error) => {
           console.log(error);
-        });
-      }
-    
-        // Method to handle department selection
-        onDepartmentSelect(event: MatSelectChange) {
-          this.selectedDepartment = event.value;
         }
+      );
+    } else {
+      this.selectedName = [];
+    }
+  }
+
+  onCategorySelect(event: MatSelectChange) {
+    this.selectedCategory = event.value;
+    this.getCategoryByName(this.selectedCategory);
+  }
+
+  public getAllDepartment() {
+    this.departmentService.getAllDepartment().subscribe(
+      (response: Department[]) => {
+        this.departments = response;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  // Method to handle department selection
+  onDepartmentSelect(event: MatSelectChange) {
+    this.selectedDepartment = event.value;
+  }
 }

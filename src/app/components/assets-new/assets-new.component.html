@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar style="background-color: rgb(214, 211, 207);">
   <mat-toolbar-row fxLayout="row">
     <h1 style="text-align: center">Add Asset</h1>
     <span class="spacer"></span>
@@ -25,14 +25,14 @@
           required />
         <mat-error
           *ngIf="
-            productForm.controls['productId'].touched &&
-            productForm.controls['productId'].invalid
+            productForm.controls['productId']?.touched &&
+            productForm.controls['productId']?.invalid
           ">
           <span
-            *ngIf="productForm.controls['productId'].hasError('required')">This
+            *ngIf="productForm.controls['productId']?.hasError('required')">This
             is field mandatory.</span>
           <span
-            *ngIf="productForm.controls['productId'].hasError('pattern')">This
+            *ngIf="productForm.controls['productId']?.hasError('pattern')">This
             is field is invalid.</span>
         </mat-error>
       </mat-form-field>
@@ -49,14 +49,14 @@
         <mat-icon matSuffix>person_circle</mat-icon>
         <mat-error
           *ngIf="
-            productForm.controls['productName'].touched &&
-            productForm.controls['productName'].invalid
+            productForm.controls['productName']?.touched &&
+            productForm.controls['productName']?.invalid
           ">
           <span
-            *ngIf="productForm.controls['productName'].hasError('required')">This
+            *ngIf="productForm.controls['productName']?.hasError('required')">This
             is field mandatory.</span>
           <span
-            *ngIf="productForm.controls['productName'].hasError('pattern')">This
+            *ngIf="productForm.controls['productName']?.hasError('pattern')">This
             is field is invalid.</span>
         </mat-error>
       </mat-form-field>
@@ -76,14 +76,14 @@
         <mat-icon matSuffix>dialpad</mat-icon>
         <mat-error
           *ngIf="
-            productForm.controls['productSerialNo'].touched &&
-            productForm.controls['productSerialNo'].invalid
+            productForm.controls['productSerialNo']?.touched &&
+            productForm.controls['productSerialNo']?.invalid
           ">
           <span
-            *ngIf="productForm.controls['productSerialNo'].hasError('required')">This
+            *ngIf="productForm.controls['productSerialNo']?.hasError('required')">This
             is field mandatory.</span>
           <span
-            *ngIf="productForm.controls['productSerialNo'].hasError('required')">This
+            *ngIf="productForm.controls['productSerialNo']?.hasError('required')">This
             is field is invalid.</span>
         </mat-error>
       </mat-form-field>
@@ -119,14 +119,14 @@
         <mat-icon matSuffix>payments</mat-icon>
         <mat-error
           *ngIf="
-            productForm.controls['productPrice'].touched &&
-            productForm.controls['productPrice'].invalid
+            productForm.controls['productPrice']?.touched &&
+            productForm.controls['productPrice']?.invalid
           ">
           <span
-            *ngIf="productForm.controls['productPrice'].hasError('required')">This
+            *ngIf="productForm.controls['productPrice']?.hasError('required')">This
             is field mandatory.</span>
           <span
-            *ngIf="productForm.controls['productPrice'].hasError('required')">This
+            *ngIf="productForm.controls['productPrice']?.hasError('required')">This
             is field is invalid.</span>
         </mat-error>
       </mat-form-field>
@@ -134,16 +134,15 @@
       &nbsp;
 
       <mat-form-field class="custom-width" appearance="fill">
-        <mat-label>Category</mat-label>
+        <mat-label>Status</mat-label>
         <mat-select
-          [(value)]="selectedCategory"
-          (selectionChange)="onCategorySelect($event)"
-          name="productCategory"
-          required
-          [(ngModel)]="product.productCategory">
-          <mat-option *ngFor="let category of categories"
-            [value]="category.name">
-            {{ category.name }}
+          [(value)]="selectedStatus"
+          (selectionChange)="onStatusSelect($event)"
+          name="productStatus"
+          [(ngModel)]="product.productStatus"
+          required>
+          <mat-option *ngFor="let status of statuses" [value]="status.name">
+            {{ status.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -164,16 +163,16 @@
         <mat-icon matSuffix>description</mat-icon>
         <mat-error
           *ngIf="
-            productForm.controls['productDescription'].touched &&
-            productForm.controls['productDescription'].invalid
+            productForm.controls['productDescription']?.touched &&
+            productForm.controls['productDescription']?.invalid
           ">
           <span
             *ngIf="
-              productForm.controls['productDescription'].hasError('required')
+              productForm.controls['productDescription']?.hasError('required')
             ">This is field mandatory.</span>
           <span
             *ngIf="
-              productForm.controls['productDescription'].hasError('required')
+              productForm.controls['productDescription']?.hasError('required')
             ">This is field is invalid.</span>
         </mat-error>
       </mat-form-field>
@@ -190,34 +189,49 @@
         <mat-icon matSuffix>badge</mat-icon>
         <mat-error
           *ngIf="
-            productForm.controls['productModel'].touched &&
-            productForm.controls['productModel'].invalid
+            productForm.controls['productModel']?.touched &&
+            productForm.controls['productModel']?.invalid
           ">
           <span
-            *ngIf="productForm.controls['productModel'].hasError('required')">This
+            *ngIf="productForm.controls['productModel']?.hasError('required')">This
             is field mandatory.</span>
           <span
-            *ngIf="productForm.controls['productModel'].hasError('required')">This
+            *ngIf="productForm.controls['productModel']?.hasError('required')">This
             is field is invalid.</span>
         </mat-error>
       </mat-form-field>
-      &nbsp;
+    </div>
 
-      <mat-form-field class="custom-width" appearance="fill">
-        <mat-label>Status</mat-label>
+    <div class="select-form">
+      <mat-form-field class="mat-form">
+        <mat-label>Asset Type</mat-label>
         <mat-select
-          [(value)]="selectedStatus"
-          (selectionChange)="onStatusSelect($event)"
-          name="productStatus"
-          [(ngModel)]="product.productStatus"
+          [(ngModel)]="selectedCategory"
+          (selectionChange)="onCategorySelect($event)"
+          name="productCategory"
           required>
-          <mat-option *ngFor="let status of statuses" [value]="status.name">
-            {{ status.name }}
+          <mat-option *ngFor="let category of categories"
+            [value]="category.name">
+            {{ category.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      &nbsp;
+
+      <div *ngIf="selectedName.length > 0" class="secondary-select">
+        <div *ngFor="let category of selectedName">
+          <mat-form-field class="mat-form">
+            <mat-label>Select Category</mat-label>
+            <mat-select required>
+              <mat-option *ngFor="let option of category.categories"
+                [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
+
     &nbsp;
 
     <div fxFlex fxLayout="column">
@@ -256,8 +270,6 @@
         </div>
       </div>
     </div>
-
-    &nbsp;
     <mat-dialog-actions align="end">
       <button mat-raised-button color="primary" type="submit">
         <mat-icon>save</mat-icon>

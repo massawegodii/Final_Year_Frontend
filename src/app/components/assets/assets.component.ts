@@ -155,7 +155,6 @@ export class AssetsComponent implements OnInit {
     this.departmentService.getAllDepartment().subscribe(
       (response: Department[]) => {
         this.departments = response;
-        console.log(response);
       },
       (error) => {
         console.log(error);
@@ -167,7 +166,6 @@ export class AssetsComponent implements OnInit {
     this.categoryService.getAllCategory().subscribe(
       (response: Category[]) => {
         this.categories = response;
-        console.log(response);
       },
       (error) => {
         console.log(error);
@@ -179,7 +177,6 @@ export class AssetsComponent implements OnInit {
     this.statusService.getAllStatus().subscribe(
       (response: Status[]) => {
         this.statuses = response;
-        console.log(response);
       },
       (error) => {
         console.log(error);
@@ -199,7 +196,6 @@ export class AssetsComponent implements OnInit {
       )
       .subscribe(
         (response: Product[]) => {
-          console.log(response);
           this.productDetails = response;
 
           // Assigning the userName
@@ -241,7 +237,6 @@ export class AssetsComponent implements OnInit {
     this.productService.deleteProductDetails(productId).subscribe(
       (response) => {
         this.getAllProduct();
-        console.log(response);
       },
       (error: HttpErrorResponse) => {
         console.log(error);
@@ -337,5 +332,4 @@ export class AssetsComponent implements OnInit {
         product.productDepartment.toString().toLowerCase().includes(filterValue)
     );
   }
-  
 }

@@ -8,25 +8,23 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { CategoryService } from '../../_services/category.service';
 import { GlobalConstant } from '../../_constants/global-constant';
 
-
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
 })
-
 export class CategoryComponent implements OnInit {
-
   responseMessage: any;
-  displayedColumns: string[] = ['Id', 'Name', 'Actions'];
+  displayedColumns: string[] = ['Id', 'Asset Type', 'Actions'];
   dataSource: Category[] = [];
 
-  constructor(private dialog: MatDialog,
+  constructor(
+    private dialog: MatDialog,
     private ngxService: NgxUiLoaderService,
     private snackbarService: SnackbarService,
     private categoryService: CategoryService,
-    private router: Router){}
-
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.ngxService.start();
@@ -71,7 +69,6 @@ export class CategoryComponent implements OnInit {
     );
   }
 
-
   editCategory(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -89,7 +86,7 @@ export class CategoryComponent implements OnInit {
         this.categoryTable();
       }
     );
-  }
+  } 
 
   deleteCategory(id: any) {
     this.ngxService.start();
@@ -116,7 +113,8 @@ export class CategoryComponent implements OnInit {
             this.responseMessage,
             GlobalConstant.error
           );
-        });
+        }
+      );
     } else {
       console.log('Deletion canceled.');
       this.ngxService.stop();

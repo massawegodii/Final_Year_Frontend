@@ -1,55 +1,61 @@
-<mat-toolbar color="primary">
-    <mat-toolbar-row fxLayout="row">
-      <span class="custom-title">{{dialogData.action}} Category</span>
-      <span class="spacer"></span>
-      <button
-        class="mat-dialog-close custom-close-button"
-        mat-icon-button
-        mat-dialog-close
-      >
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
-  <mat-dialog-content class="mat-typography">
-    <form [formGroup]="categoryForm">
-      <div fxFlex fxLayout="column">
-          
-            <mat-form-field appearance="fill" fxFlex>
-                <mat-label>Category Name</mat-label>
-                <input matInput formControlName="name" required />
-                <mat-icon matSuffix>person</mat-icon>
-                <mat-error
-                *ngIf="
-                  categoryForm.controls['name'].touched &&
-                  categoryForm.controls['name'].invalid
-                "
-              >
-                <span *ngIf="categoryForm.controls['name'].hasError('required')"
-                  >This is field mandatory.</span
-                >
-                <span *ngIf="categoryForm.controls['name'].hasError('required')"
-                  >This is field is invalid.</span
-                >
-              </mat-error>
-              </mat-form-field>
-
-      </div>
-    </form>
-  </mat-dialog-content>
-  
-  <mat-dialog-actions align="end">
+<mat-toolbar>
+  <mat-toolbar-row fxLayout="row">
+    <span class="custom-title">{{dialogData.action}} Category</span>
+    <span class="spacer"></span>
     <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      (click)="handleSubmit()"
-      [disabled]="!(categoryForm.valid && categoryForm.dirty)"
-    >
-      <mat-icon>save</mat-icon>{{action}} Category
+      class="mat-dialog-close custom-close-button"
+      mat-icon-button
+      mat-dialog-close>
+      <mat-icon>close</mat-icon>
     </button>
-    <button mat-raised-button color="warn" mat-dialog-close>
-      <mat-icon>cancel</mat-icon>Close
-    </button>
-  </mat-dialog-actions>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="categoryForm">
+    <div fxFlex fxLayout="column">
+      <mat-form-field appearance="fill" fxFlex>
+        <mat-label>Category Name</mat-label>
+        <input matInput formControlName="name" required />
+        <mat-icon matSuffix>category</mat-icon>
+        <mat-error
+          *ngIf="categoryForm.controls['name'].touched && categoryForm.controls['name'].invalid">
+          <span *ngIf="categoryForm.controls['name'].hasError('required')">This
+            field is mandatory.</span>
+          <span *ngIf="categoryForm.controls['name'].hasError('pattern')">This
+            field is invalid.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" fxFlex>
+        <mat-label>Add Category</mat-label>
+        <input matInput formControlName="category" />
+        <button mat-icon-button matSuffix (click)="addCategory()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div *ngIf="categories.length">
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let cat of categories; let i = index"
+            (removed)="removeCategory(i)">
+            {{ cat }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" type="submit"
+    (click)="handleSubmit()" [disabled]="!categoryForm.valid">
+    <mat-icon>save</mat-icon>{{ action }}
+  </button>
+  <button mat-raised-button color="warn" mat-dialog-close>
+    <mat-icon>cancel</mat-icon>Close
+  </button>
+</mat-dialog-actions>

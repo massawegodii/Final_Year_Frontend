@@ -3,26 +3,40 @@ import { Injectable } from '@angular/core';
 import { Category } from '../_model/category-model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) { }
-  
   public addCategory(data: any) {
-    return this.httpClient.post<Category>("http://localhost:8080/category/add", data);
+    return this.httpClient.post<Category>(
+      'http://localhost:8080/category/add',
+      data
+    );
   }
 
   public getAllCategory() {
-    return this.httpClient.get<Category[]>("http://localhost:8080/category/getAllCategory");
+    return this.httpClient.get<Category[]>(
+      'http://localhost:8080/category/getAllCategory'
+    );
   }
-
 
   public updateCategory(data: any) {
-    return this.httpClient.post<Category[]>("http://localhost:8080/category/updateCategory", data);
+    return this.httpClient.post<Category[]>(
+      'http://localhost:8080/category/updateCategory',
+      data
+    );
   }
-  
-  public deleteCategory(id:number) {
-    return this.httpClient.delete("http://localhost:8080/category/deleteCategory/" +id);
+
+  public deleteCategory(id: number) {
+    return this.httpClient.delete(
+      'http://localhost:8080/category/deleteCategory/' + id
+    );
+  }
+
+  public getCategoryByName(name: string) {
+    return this.httpClient.get<any>(
+      'http://localhost:8080/category/getByName/' + name
+    );
   }
 }

@@ -86,6 +86,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { ProfileComponent } from './components/extra/profile/profile.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTreeModule } from '@angular/material/tree';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading ...',
@@ -154,9 +156,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatListModule,
     MatMenuModule,
     MatSidenavModule,
+    MatTreeModule,
     MatToolbarModule,
     MatExpansionModule,
     MatCardModule,
+    MatChipsModule,
     MatProgressBarModule,
     MatDialogModule,
     MatInputModule,
@@ -182,12 +186,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatAutocompleteModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp({
-        apiKey: 'AIzaSyBYRHE3SnJJbKwMqEekGuN7mgWEhGbjvvI',
-        authDomain: 'sams-chat-app-20920.firebaseapp.com',
-        projectId: 'sams-chat-app-20920',
-        storageBucket: 'sams-chat-app-20920.appspot.com',
-        messagingSenderId: '1020410639848',
-        appId: '1:1020410639848:web:eb30e38c8b04058272e05d',
+      apiKey: 'AIzaSyBYRHE3SnJJbKwMqEekGuN7mgWEhGbjvvI',
+      authDomain: 'sams-chat-app-20920.firebaseapp.com',
+      projectId: 'sams-chat-app-20920',
+      storageBucket: 'sams-chat-app-20920.appspot.com',
+      messagingSenderId: '1020410639848',
+      appId: '1:1020410639848:web:eb30e38c8b04058272e05d',
     }),
     NgxMaterialTimepickerModule.setOpts('en-KE'),
     ToastrModule.forRoot(),

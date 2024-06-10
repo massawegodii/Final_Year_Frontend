@@ -10,7 +10,7 @@ import { GlobalConstant } from '../../../_constants/global-constant';
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
-  styleUrl: './add-employee.component.scss'
+  styleUrl: './add-employee.component.scss',
 })
 export class AddEmployeeComponent implements OnInit {
   password = true;
@@ -18,23 +18,23 @@ export class AddEmployeeComponent implements OnInit {
   responseMessage: any;
   onAddDepartment = new EventEmitter();
   onEditDepartment = new EventEmitter();
-  dialogAction: any = "Add";
-  action: any = "Add";
-  
-  public users: User[] = []; 
+  dialogAction: any = 'Add';
+  action: any = 'Add';
+
+  public users: User[] = [];
   // Dissable the password Onedit
   isEditMode: boolean = false;
 
   role: Role[] = [];
   selectedUser: User | null = null; // Property to store the selected user for editing
- 
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private userServices: UserService,
     private formBuilder: FormBuilder,
     private snackbarService: SnackbarService,
     private ngxService: NgxUiLoaderService,
-    private dialogRef: MatDialogRef<AddEmployeeComponent>,
+    private dialogRef: MatDialogRef<AddEmployeeComponent>
   ) {
     this.role = [];
   }
@@ -62,13 +62,12 @@ export class AddEmployeeComponent implements OnInit {
         [Validators.required, Validators.pattern(GlobalConstant.emailRegex)],
       ],
 
-      userPassword: [null, [Validators.required]], 
+      userPassword: [null, [Validators.required]],
 
       role: [null, Validators.required],
 
-      imageUrl: [null, Validators.required]
+      imageUrl: [null, Validators.required],
     });
-
 
     this.getAllUsers();
 
@@ -76,10 +75,9 @@ export class AddEmployeeComponent implements OnInit {
       this.dialogAction = 'Edit';
       this.action = 'Update';
       this.addUserForm.patchValue(this.dialogData.data);
-      this.isEditMode = true; 
+      this.isEditMode = true;
     }
   }
-
 
   handleSubmit() {
     if (this.dialogAction === 'Edit') {
@@ -88,7 +86,6 @@ export class AddEmployeeComponent implements OnInit {
       this.add();
     }
   }
-
 
   edit() {
     var formData = this.addUserForm.value;
@@ -104,30 +101,31 @@ export class AddEmployeeComponent implements OnInit {
       role: formData.role,
     };
 
-      this.userServices.updateUsers(data).subscribe(
-        (response: any) => {
-          this.onAddDepartment.emit();
-          this.responseMessage = response?.message;
-          this.snackbarService.openSnackBar(this.responseMessage, 'success');
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        (error) => {
-          this.ngxService.stop();
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstant.genericError;
-          }
-          this.snackbarService.openSnackBar(
-            this.responseMessage,
-            GlobalConstant.error
-          );
+    this.userServices.updateUsers(data).subscribe(
+      (response: any) => {
+        this.onAddDepartment.emit();
+        this.responseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.responseMessage = response?.message;
+        this.dialogRef.close();
+        window.location.reload();
+      },
+      (error) => {
+        this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstant.genericError;
         }
-      );
-  } 
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstant.error
+        );
+      }
+    );
+  }
 
-    add() {
+  add() {
     const formData = this.addUserForm.value;
     const data = {
       userName: formData.userName,
@@ -139,67 +137,68 @@ export class AddEmployeeComponent implements OnInit {
       userPassword: formData.userPassword,
       role: formData.role,
     };
-      // Adding new user
-      this.userServices.addUser(data).subscribe(
-        (response: any) => {
-          window.location.reload();
-          this.ngxService.stop();
-          this.responseMessage = response?.message;
-          this.snackbarService.openSnackBar(this.responseMessage, 'success');
-          this.dialogRef.close();
-          this.addUserForm.reset();
-        },
-        (error) => {
-          this.ngxService.stop();
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstant.genericError;
-          }
-          this.snackbarService.openSnackBar(
-            this.responseMessage,
-            GlobalConstant.error
-          );
+    // Adding new user
+    this.userServices.addUser(data).subscribe(
+      (response: any) => {
+        window.location.reload();
+        this.ngxService.stop();
+        this.responseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.dialogRef.close();
+        this.addUserForm.reset();
+      },
+      (error) => {
+        this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstant.genericError;
         }
-    );}
-
-
-  public getAllUsers() {
-    return this.userServices.getAllUsers().subscribe((response: User[]) => {
-      console.log(response);
-      this.users = response;
-      this.ngxService.stop();
-
-       // Extract all roles dynamically
-       const roles: Role[] = [];
-       response.forEach(user => {
-         if (user.role && user.role.length > 0) {
-           user.role.forEach(role => {
-             // Check if the role is already in the roles array
-             const existingRole = roles.find(r => r.roleName === role.roleName);
-             if (!existingRole) {
-               roles.push(role);
-             }
-           });
-         }
-       });
-       
-       this.role = roles;
-    },
-    (error) => {
-      this.ngxService.stop();
-      if (error.error?.message) {
-        this.responseMessage = error.error?.message;
-      } else {
-        this.responseMessage = GlobalConstant.genericError;
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstant.error
+        );
       }
-      this.snackbarService.openSnackBar(
-        this.responseMessage,
-        GlobalConstant.error
-      );
-    }
     );
   }
 
+  public getAllUsers() {
+    return this.userServices.getAllUsers().subscribe(
+      (response: User[]) => {
+        console.log(response);
+        this.users = response;
+        this.ngxService.stop();
 
+        // Extract all roles dynamically
+        const roles: Role[] = [];
+        response.forEach((user) => {
+          if (user.role && user.role.length > 0) {
+            user.role.forEach((role) => {
+              // Check if the role is already in the roles array
+              const existingRole = roles.find(
+                (r) => r.roleName === role.roleName
+              );
+              if (!existingRole) {
+                roles.push(role);
+              }
+            });
+          }
+        });
+
+        this.role = roles;
+      },
+      (error) => {
+        this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstant.genericError;
+        }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstant.error
+        );
+      }
+    );
+  }
 }

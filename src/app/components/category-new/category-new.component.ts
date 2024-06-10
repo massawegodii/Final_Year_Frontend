@@ -2,7 +2,6 @@ import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../../_services/category.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SnackbarService } from '../../_services/snackbar.service';
 import { GlobalConstant } from '../../_constants/global-constant';
@@ -10,23 +9,25 @@ import { GlobalConstant } from '../../_constants/global-constant';
 @Component({
   selector: 'app-category-new',
   templateUrl: './category-new.component.html',
-  styleUrl: './category-new.component.scss'
+  styleUrls: ['./category-new.component.scss'],
 })
-export class CategoryNewComponent implements OnInit{
+export class CategoryNewComponent implements OnInit {
   responseMessage: any;
-  categoryForm: any = FormGroup;
+  categoryForm!: FormGroup;
+  categories: string[] = [];
   onAddCategory = new EventEmitter();
   onEditCategory = new EventEmitter();
-  dialogAction: any = "Add";
-  action: any = "Add";
+  dialogAction: string = 'Add';
+  action: string = 'Add';
 
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
-  private router: Router,
-  private categoryService: CategoryService,
-  private formBuilder: FormBuilder,
-  private snackbarService: SnackbarService,
-  private ngxService: NgxUiLoaderService,
-  private dialogRef: MatDialogRef<CategoryNewComponent>){}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    private categoryService: CategoryService,
+    private formBuilder: FormBuilder,
+    private snackbarService: SnackbarService,
+    private ngxService: NgxUiLoaderService,
+    private dialogRef: MatDialogRef<CategoryNewComponent>
+  ) {}
 
   ngOnInit(): void {
     this.categoryForm = this.formBuilder.group({
@@ -34,13 +35,32 @@ export class CategoryNewComponent implements OnInit{
         null,
         [Validators.required, Validators.pattern(GlobalConstant.nameRegex)],
       ],
+      category: [
+        null,
+        Validators.required,
+        ,
+        Validators.pattern(GlobalConstant.nameRegex),
+      ],
     });
 
     if (this.dialogData.action === 'Edit') {
       this.dialogAction = 'Edit';
       this.action = 'Update';
       this.categoryForm.patchValue(this.dialogData.data);
+      this.categories = this.dialogData.data.categories || [];
     }
+  }
+
+  addCategory(): void {
+    const category = this.categoryForm.get('category')?.value;
+    if (category && !this.categories.includes(category)) {
+      this.categories.push(category);
+      this.categoryForm.get('category')?.reset();
+    }
+  }
+
+  removeCategory(index: number): void {
+    this.categories.splice(index, 1);
   }
 
   handleSubmit() {
@@ -52,16 +72,17 @@ export class CategoryNewComponent implements OnInit{
   }
 
   add() {
-    var formData = this.categoryForm.value;
-    var data = {
+    const formData = this.categoryForm.value;
+    const data = {
       name: formData.name,
+      categories: this.categories,
     };
     this.categoryService.addCategory(data).subscribe(
       (response: any) => {
         this.dialogRef.close();
         this.onAddCategory.emit();
-        this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, "success");
+        this.responseMessage = response?.onmessage,
+        this.snackbarService.openSnackBar(this.responseMessage, 'success');
       },
       (error) => {
         this.ngxService.stop();
@@ -79,15 +100,16 @@ export class CategoryNewComponent implements OnInit{
   }
 
   edit() {
-    var formData = this.categoryForm.value;
-    var data = {
+    const formData = this.categoryForm.value;
+    const data = {
       id: this.dialogData.data.id,
       name: formData.name,
+      categories: this.categories,
     };
     this.categoryService.updateCategory(data).subscribe(
       (response: any) => {
         this.dialogRef.close();
-        this.onAddCategory.emit();
+        this.onEditCategory.emit();
         this.responseMessage = response?.message;
         this.snackbarService.openSnackBar(this.responseMessage, 'success');
       },
@@ -102,7 +124,7 @@ export class CategoryNewComponent implements OnInit{
           this.responseMessage,
           GlobalConstant.error
         );
-      });
+      }
+    );
   }
-
 }
