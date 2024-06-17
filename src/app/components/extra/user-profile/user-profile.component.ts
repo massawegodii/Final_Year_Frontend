@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../../../_services/user.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from '../../../_model/users_model';
 import { GlobalConstant } from '../../../_constants/global-constant';
+import { UserService } from '../../../_services/user.service';
+import { User } from '../../../_model/users_model';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss',
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrl: './user-profile.component.scss',
 })
-export class ProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit {
   profileForm!: FormGroup;
   responseMessage: any;
   loggedUser: User | null = null;
@@ -81,7 +81,7 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  public editProfile() {
+  public editUserProfile() {
     var formData = this.profileForm.value;
     var data = {
       userName: this.loggedUser?.userName,

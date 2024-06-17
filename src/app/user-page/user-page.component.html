@@ -14,38 +14,10 @@
     <a class="btn btn-outline-secondary"
       routerLinkActive="active">Feedback</a>
     &nbsp; &nbsp;
-    <!-- <button mat-icon-button matTooltip="Live Chat Room" (click)="fetchData()">
+    <button mat-icon-button matTooltip="Live Chat Room" (click)="fetchData()">
       <mat-icon matBadge="1" matBadgeColor="accent"
         style="color: green; font-size: 28px">forum</mat-icon>
-    </button> -->
-
-    <button (click)="openTextComponent()" mat-icon-button matTooltip="Message"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><mat-icon
-        style="color: green; font-size: 28px">forum</mat-icon></button>
-
-    <div class="offcanvas offcanvas-end custom-offcanvas-width"
-      data-bs-scroll="true"
-      data-bs-backdrop="false" tabindex="-1" id="offcanvasRight"
-      aria-labelledby="offcanvasRightLabel">
-      <div class="offcanvas-header">
-
-        <div class="offcanvas-header">
-          <nav class="navbar navbar-light bg-light" id="offcanvasRightLabel">
-            <div class="container-fluid">
-              <a class="navbar-brand">Messaging</a>
-              <button type="button" mat-icon-button mat-dialog-close
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"><mat-icon>close</mat-icon></button>
-            </div>
-          </nav>
-        </div>
-
-      </div>
-      <div class="offcanvas-body" #offcanvasBody>
-        <!-- Content will be loaded here -->
-      </div>
-    </div>
+    </button>
 
     <button mat-icon-button matTooltip="Manage Account"
       [matMenuTriggerFor]="beforeMenu">
@@ -54,6 +26,12 @@
     </button>
 
     <mat-menu #menu="matMenu" #beforeMenu="matMenu" xPosition="before">
+      <button (click)="openProfile()" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasRight"
+        aria-controls="offcanvasRight" mat-menu-item>
+        <mat-icon>admin_panel_settings</mat-icon>
+        Profile
+      </button>
       <button mat-menu-item (click)="handleChangePasswordAction()">
         <mat-icon>password</mat-icon>
         Change Password
@@ -176,4 +154,22 @@
       <h2 class="text-center">No assigned Asset available.</h2>
     </div>
   </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+
+    <h5 id="offcanvasRightLabel">
+
+      <div class="offcanvas-body" #offcanvasBody>
+        <!-- Content will be loaded here -->
+      </div>
+
+    </h5>
+    <button type="button" mat-icon-button mat-dialog-close
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"><mat-icon>close</mat-icon></button>
+  </div>
+
 </div>

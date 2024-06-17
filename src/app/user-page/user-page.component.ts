@@ -24,6 +24,8 @@ import { UserService } from '../_services/user.service';
 import { User } from '../_model/users_model';
 import { TextMessageComponent } from '../components/extra/text-message/text-message.component';
 import { ToastrService } from 'ngx-toastr';
+import { ProfileComponent } from '../components/extra/profile/profile.component';
+import { UserProfileComponent } from '../components/extra/user-profile/user-profile.component';
 
 @Component({
   selector: 'app-user-page',
@@ -220,6 +222,13 @@ export class UserPageComponent implements OnInit {
       this.componentFactoryResolver.resolveComponentFactory(
         TextMessageComponent
       );
+    this.offcanvasBody.clear();
+    this.offcanvasBody.createComponent(componentFactory);
+  }
+
+  openProfile() {
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(UserProfileComponent);
     this.offcanvasBody.clear();
     this.offcanvasBody.createComponent(componentFactory);
   }

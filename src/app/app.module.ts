@@ -91,6 +91,7 @@ import { ReportPageComponent } from './components/extra/report-page/report-page.
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { ProfileComponent } from './components/extra/profile/profile.component';
 import { UpdatesComponent } from './components/extra/updates/updates.component';
+import { UserProfileComponent } from './components/extra/user-profile/user-profile.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading ...',
@@ -148,6 +149,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ReportPageComponent,
     ProfileComponent,
     UpdatesComponent,
+    UserProfileComponent,
   ],
   imports: [
     HttpClientModule,

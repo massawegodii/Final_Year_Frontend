@@ -20,8 +20,8 @@
       <mat-form-field>
         <input
           type="text"
-          formControlName="userFirstName"
           required
+          formControlName="userFirstName"
           matInput
           placeholder="First Name" />
       </mat-form-field>
@@ -30,8 +30,8 @@
         <input
           type="text"
           matInput
-          required
           formControlName="userLastName"
+          required
           placeholder="Last Name" />
       </mat-form-field>
 
@@ -50,8 +50,8 @@
             <input
               type="text"
               matInput
-              required
               formControlName="userName"
+              required
               placeholder="Username" />
           </mat-form-field>
           &nbsp;
@@ -59,18 +59,17 @@
             <input
               type="number"
               matInput
-              required
               formControlName="phoneNumber"
+              required
               placeholder="Phone" />
           </mat-form-field>
         </div>
       </div>
     </div>
-    <button (click)="editProfile()" type="submit"
+    <button type="submit" (click)="editUserProfile()"
       class="btn btn-group-lg margin-top" mat-raised-button
       color="primary">
       Save
     </button>
   </form>
 </div>
-

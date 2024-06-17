@@ -36,7 +36,6 @@ export class AddEmployeeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private ngxService: NgxUiLoaderService,
     private toastr: ToastrService,
-    private authService: UserAuthService,
     private dialogRef: MatDialogRef<AddEmployeeComponent>
   ) {
     this.role = [];
