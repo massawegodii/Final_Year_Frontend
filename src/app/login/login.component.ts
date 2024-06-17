@@ -4,9 +4,8 @@ import { GlobalConstant } from '../_constants/global-constant';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../_services/user.service';
 import { Router } from '@angular/router';
-import { SnackbarService } from '../_services/snackbar.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { UserAuthService } from '../_services/UserAuthService';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -23,9 +22,8 @@ export class LoginComponent implements OnInit {
     private dialogRef: MatDialogRef<LoginComponent>,
     private userService: UserService,
     private router: Router,
-    private ngxService: NgxUiLoaderService,
-    private snackbarService: SnackbarService,
-    private userAuthService: UserAuthService
+    private userAuthService: UserAuthService,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -35,7 +33,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.ngxService.start();
     var formData = this.loginForm.value;
 
     var data = {
@@ -51,16 +48,15 @@ export class LoginComponent implements OnInit {
 
     this.userService.login(data).subscribe(
       (response: any) => {
-        this.ngxService.stop();
         this.dialogRef.close();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success('Sucessfully Login in your account!');
 
         this.userAuthService.setRoles(response.user.role);
         this.userAuthService.setToken(response.jwtToken);
 
-        console.log(response.user.role);
-        console.log(response.jwtToken);
+        // console.log(response.user.role);
+        // console.log(response.jwtToken);
 
         const role = response.user.role[0].roleName;
         if (role === 'Admin') {
@@ -71,16 +67,12 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         console.log(error);
-        this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.error('Invalid credentials!');
       }
     );
   }

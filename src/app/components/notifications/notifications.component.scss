@@ -5,9 +5,9 @@ table {
 
 th, td {
   border: 1px solid #ddd;
-  padding: 5px; 
+  padding: 5px;
   text-align: left;
-  line-height: 1.5; 
+  line-height: 1.5;
 }
 
 tr:nth-child(even) {
@@ -15,8 +15,8 @@ tr:nth-child(even) {
 }
 
 th {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #d3d6d3;
+  color: rgb(29, 28, 28);
 }
 
 td:hover {
@@ -44,21 +44,21 @@ td.touchable {
       content: attr(data-label);
       font-weight: bold;
       display: inline-block;
-      width: 100px; 
+      width: 100px;
     }
   }
 
-  
+
   .approved {
     background-color: green;
     color: white;
   }
-  
+
   .rejected {
     background-color: blue;
     color: white;
   }
-  
+
   .pending {
     background-color: red;
     color: white;
@@ -67,8 +67,7 @@ td.touchable {
   .sweet-alert-custom {
     z-index: 99999 !important;
   }
-  
-  
 
 
-  
+
+

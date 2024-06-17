@@ -8,6 +8,7 @@
           <span class="name">Asset</span>
         </div>
       </div>
+
       <!-- Hint users, bill come from getCount in backend -->
       <div class="circle-card component">
         <div class="circle" routerLink="/dashboard/users">
@@ -15,6 +16,7 @@
           <mat-icon>groups</mat-icon>
           <span class="name">Active Users</span>
         </div>
+
       </div>
       <div class="circle-card mantainance">
         <div class="circle" routerLink="/dashboard/maintainance">
@@ -26,7 +28,7 @@
           <span class="name">Mantainance</span>
         </div>
       </div>
-      <div class="circle-card report" routerLink="/dashboard/reports">
+      <div class="circle-card report" routerLink="/dashboard/reportpage">
         <div class="circle">
           <p class="number">
 
@@ -53,7 +55,7 @@
             <table
               mat-table
               [dataSource]="maintenanceDetails | paginate: {itemsPerPage: itemsPerPage, currentPage: p}"
-              class="mat-elevation-z8">
+              class="mat-elevation-z1">
               <!-- Information Column -->
               <ng-container matColumnDef="Information">
                 <th mat-header-cell *matHeaderCellDef>Information</th>
@@ -97,10 +99,10 @@
           <div *ngIf="!maintenanceDetails || maintenanceDetails.length === 0">
             <p class="text-center">No Information</p>
           </div>
-          <br>
+          <mat-divider></mat-divider>
           <!--  Pagination  -->
           <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination">
               <li class="page-item" [ngClass]="{ 'disabled': p === 1 }">
                 <a class="page-link" (click)="p = p - 1">Previous</a>
               </li>

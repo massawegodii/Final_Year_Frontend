@@ -85,9 +85,12 @@ import { TextMessageComponent } from './components/extra/text-message/text-messa
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { ProfileComponent } from './components/extra/profile/profile.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTreeModule } from '@angular/material/tree';
+import { ReportPageComponent } from './components/extra/report-page/report-page.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { ProfileComponent } from './components/extra/profile/profile.component';
+import { UpdatesComponent } from './components/extra/updates/updates.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading ...',
@@ -142,7 +145,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MessagingComponent,
     DeleteScheduleComponent,
     TextMessageComponent,
+    ReportPageComponent,
     ProfileComponent,
+    UpdatesComponent,
   ],
   imports: [
     HttpClientModule,
@@ -184,7 +189,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ClipboardModule,
     FullCalendarModule,
     MatAutocompleteModule,
+    AngularFireStorageModule,
     AngularFirestoreModule,
+
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyBYRHE3SnJJbKwMqEekGuN7mgWEhGbjvvI',
       authDomain: 'sams-chat-app-20920.firebaseapp.com',
@@ -193,8 +200,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
       messagingSenderId: '1020410639848',
       appId: '1:1020410639848:web:eb30e38c8b04058272e05d',
     }),
+
     NgxMaterialTimepickerModule.setOpts('en-KE'),
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    }),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   providers: [

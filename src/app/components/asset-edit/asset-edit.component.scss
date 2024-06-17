@@ -1,7 +1,7 @@
 :host {
     --custom-width: 300px;
   }
-  
+
   .custom-width {
     width: var(--custom-width);
   }
@@ -13,12 +13,12 @@
     text-align: center;
     cursor: pointer;
   }
-  
+
   .drag-icon {
     font-size: 48px;
     color: #ccc;
   }
-  
+
   .preview-image {
     max-width: 100%;
     margin-top: 20px;
@@ -67,4 +67,16 @@
     color: blue;
     cursor: pointer;
 }
-  
+
+.select-form {
+  display: flex;
+  align-items: center;
+}
+
+.secondary-select {
+  margin-left: 20px;
+}
+
+.mat-form {
+  width: 300px;
+}

@@ -6,7 +6,7 @@
       width="120"
       height="120"
       class="margin-top mat-elevation-z1"
-      [src]="'/assets/img/image-placeholder.png'" />
+      [src]=" '/assets/img/image-placeholder.png'" />
     <button mat-mini-fab (click)="inputField.click()">
       <mat-icon>edit</mat-icon>
     </button>
@@ -14,11 +14,13 @@
   <input #inputField hidden type="file" />
 
   &nbsp;
-  <form class="margin-top">
+  <form [formGroup]="profileForm"
+     class="margin-top">
     <div fxFlex fxLayout="column">
       <mat-form-field>
         <input
           type="text"
+          formControlName="userFirstName"
           matInput
           placeholder="First Name" />
       </mat-form-field>
@@ -27,6 +29,7 @@
         <input
           type="text"
           matInput
+          formControlName="userLastName"
           placeholder="Last Name" />
       </mat-form-field>
 
@@ -34,6 +37,7 @@
         <input
           type="text"
           matInput
+          formControlName="email"
           placeholder="Email" />
       </mat-form-field>
 
@@ -43,6 +47,7 @@
             <input
               type="text"
               matInput
+              formControlName="displayName"
               placeholder="Username" />
           </mat-form-field>
           &nbsp;
@@ -50,6 +55,7 @@
             <input
               type="number"
               matInput
+              formControlName="phoneNumber"
               placeholder="Phone" />
           </mat-form-field>
         </div>

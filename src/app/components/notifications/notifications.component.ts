@@ -25,7 +25,6 @@ export class NotificationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.ngxService.start();
     this.getAllRequest();
   }
 
@@ -33,11 +32,9 @@ export class NotificationsComponent implements OnInit {
     this.productService.getAllRequest().subscribe(
       (response: any) => {
         this.myRequests = response;
-        this.ngxService.stop();
         console.log(response);
       },
       (error) => {
-        this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {
@@ -59,13 +56,11 @@ export class NotificationsComponent implements OnInit {
   changeRequestStatus(id: number, status: string) {
     this.productService.changeRequestStatus(id, status).subscribe(
       (response: any) => {
-        this.ngxService.stop();
         this.getAllRequest();
         this.responseMessage = response?.message;
         this.snackbarService.openSnackBar(this.responseMessage, 'success');
       },
       (error) => {
-        this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {
@@ -84,7 +79,7 @@ export class NotificationsComponent implements OnInit {
       width: '380px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.productService.deleteRequest(id).subscribe(
           (res) => {
@@ -98,13 +93,14 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-
-    search() {
-    if(this.userName == "") {
+  search() {
+    if (this.userName == '') {
       this.ngOnInit();
-    }else {
-      this.myRequests = this.myRequests.filter(resp => {
-        return resp.user.userName.toLocaleLowerCase().match(this.userName.toLocaleLowerCase());
+    } else {
+      this.myRequests = this.myRequests.filter((resp) => {
+        return resp.user.userName
+          .toLocaleLowerCase()
+          .match(this.userName.toLocaleLowerCase());
       });
     }
   }

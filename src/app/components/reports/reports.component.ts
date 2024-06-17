@@ -78,7 +78,6 @@ export class ReportsComponent implements OnInit {
       productStatus: [null, Validators.required],
     });
 
-    this.ngxService.start();
     this.getAllCategory();
     this.getAllDepartment();
     this.getAllProduct();
@@ -138,7 +137,6 @@ export class ReportsComponent implements OnInit {
       productDetails: JSON.stringify(this.dataSource),
     };
 
-    this.ngxService.start();
     this.reportService.generateReport(data).subscribe(
       (response: any) => {
         this.downloadFile(response?.uuid);
@@ -152,7 +150,6 @@ export class ReportsComponent implements OnInit {
         );
       },
       (error) => {
-        this.ngxService.stop();
         let errorMessage = 'An error occurred';
         if (error.error?.message) {
           errorMessage = error.error.message;
@@ -168,7 +165,6 @@ export class ReportsComponent implements OnInit {
     };
     this.reportService.getPdf(data).subscribe((response: any) => {
       saveAs(response, fileName + '.pdf');
-      this.ngxService.stop();
     });
   }
 
@@ -213,7 +209,6 @@ export class ReportsComponent implements OnInit {
         console.log(response);
       },
       (error) => {
-        this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {

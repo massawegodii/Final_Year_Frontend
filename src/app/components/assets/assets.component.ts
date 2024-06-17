@@ -47,6 +47,7 @@ export class AssetsComponent implements OnInit {
     'Product Model',
     'Product Status',
     'Product Category',
+    'Asset Type',
     'Product Serial Number',
     'Product Department',
     'Date Assigned',
@@ -139,6 +140,17 @@ export class AssetsComponent implements OnInit {
     return category ? category.name : 'No Category';
   }
 
+  products: Product[] = [];
+  getProductType(productType: string): string {
+    if (!productType) {
+      return 'No Asset Type';
+    }
+
+    const assetType = this.products.find((p) => p.productType === productType);
+    console.log(assetType);
+    return assetType ? assetType.productType : 'No Asset Type';
+  }
+
   departments: Department[] = [];
   getDepartmentName(productDepartment: string): string {
     if (!productDepartment) {
@@ -197,6 +209,7 @@ export class AssetsComponent implements OnInit {
       .subscribe(
         (response: Product[]) => {
           this.productDetails = response;
+          this.products = response;
 
           // Assigning the userName
           this.productDetails = response.map((product) => {

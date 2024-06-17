@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../_services/user.service';
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../_services/snackbar.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { Role, User } from './../../_model/users_model';
 import {
@@ -55,7 +54,6 @@ export class UsersComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private snackbarService: SnackbarService,
-    private ngxService: NgxUiLoaderService,
     private dialog: MatDialog,
     private clipboard: Clipboard,
     private snackBar: MatSnackBar
@@ -90,8 +88,6 @@ export class UsersComponent implements OnInit {
 
       role: [null, Validators.required],
     });
-
-    this.ngxService.start();
 
     this.getAllUsers();
     this.getUserByUsername(this.userName);
@@ -141,7 +137,6 @@ export class UsersComponent implements OnInit {
       (response: User[]) => {
         // console.log(response);
         this.users = response;
-        this.ngxService.stop();
         this.totalUsers = response.length;
 
         // Extract all roles dynamically
@@ -163,7 +158,6 @@ export class UsersComponent implements OnInit {
         this.role = roles;
       },
       (error) => {
-        this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {

@@ -6,6 +6,8 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SnackbarService } from '../../../_services/snackbar.service';
 import { UserService } from '../../../_services/user.service';
 import { GlobalConstant } from '../../../_constants/global-constant';
+import { ToastrService } from 'ngx-toastr';
+import { UserAuthService } from '../../../_services/user-auth.service';
 
 @Component({
   selector: 'app-add-employee',
@@ -32,8 +34,9 @@ export class AddEmployeeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private userServices: UserService,
     private formBuilder: FormBuilder,
-    private snackbarService: SnackbarService,
     private ngxService: NgxUiLoaderService,
+    private toastr: ToastrService,
+    private authService: UserAuthService,
     private dialogRef: MatDialogRef<AddEmployeeComponent>
   ) {
     this.role = [];
@@ -105,7 +108,7 @@ export class AddEmployeeComponent implements OnInit {
       (response: any) => {
         this.onAddDepartment.emit();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success("Employee Updated Successfully")
         this.responseMessage = response?.message;
         this.dialogRef.close();
         window.location.reload();
@@ -117,13 +120,14 @@ export class AddEmployeeComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.error(
           this.responseMessage,
           GlobalConstant.error
         );
       }
     );
   }
+
 
   add() {
     const formData = this.addUserForm.value;
@@ -143,7 +147,7 @@ export class AddEmployeeComponent implements OnInit {
         window.location.reload();
         this.ngxService.stop();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success('Successfully Registered!');
         this.dialogRef.close();
         this.addUserForm.reset();
       },
@@ -154,7 +158,7 @@ export class AddEmployeeComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.error(
           this.responseMessage,
           GlobalConstant.error
         );
@@ -194,7 +198,7 @@ export class AddEmployeeComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.error(
           this.responseMessage,
           GlobalConstant.error
         );

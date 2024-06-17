@@ -3,50 +3,43 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DepartmentsNewComponent } from '../departments-new/departments-new.component';
 import { DepartmentService } from '../../_services/department.service';
 import { Router } from '@angular/router';
-import { SnackbarService } from '../../_services/snackbar.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Department } from '../../_model/department-model';
 import { GlobalConstant } from '../../_constants/global-constant';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-departments',
   templateUrl: './departments.component.html',
-  styleUrl: './departments.component.scss'
+  styleUrl: './departments.component.scss',
 })
-export class DepartmentsComponent implements OnInit{
+export class DepartmentsComponent implements OnInit {
   responseMessage: any;
   displayedColumns: string[] = ['Department Id', 'Department Name', 'Actions'];
   dataSource: Department[] = [];
 
   constructor(
     private dialog: MatDialog,
-    private ngxService: NgxUiLoaderService,
-    private snackbarService: SnackbarService,
     private departmentService: DepartmentService,
-    private router: Router){}
+    private router: Router,
+    private toastr: ToastrService,
+  ) {}
 
   ngOnInit(): void {
-    this.ngxService.start();
     this.departmentTable();
   }
-
-
 
   public departmentTable() {
     this.departmentService.getAllDepartment().subscribe(
       (response: Department[]) => {
-        this.ngxService.stop();
         this.dataSource = response;
       },
       (error) => {
-        this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.info(
           this.responseMessage,
           GlobalConstant.error
         );
@@ -71,7 +64,6 @@ export class DepartmentsComponent implements OnInit{
     );
   }
 
-
   editDepartment(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -92,7 +84,6 @@ export class DepartmentsComponent implements OnInit{
   }
 
   deleteDepartment(id: any) {
-    this.ngxService.start();
     const isConfirmed = window.confirm(
       'Are you sure you want to delete this User?'
     );
@@ -100,28 +91,24 @@ export class DepartmentsComponent implements OnInit{
     if (isConfirmed) {
       this.departmentService.deleteDepartment(id).subscribe(
         (response: any) => {
-          this.ngxService.stop();
           this.responseMessage = response?.message;
-          this.snackbarService.openSnackBar(this.responseMessage, 'success');
+          this.toastr.success('Department deleted successfully');
           this.departmentTable();
         },
         (error) => {
-          this.ngxService.stop();
           if (error.error?.message) {
             this.responseMessage = error.error?.message;
           } else {
             this.responseMessage = GlobalConstant.genericError;
           }
-          this.snackbarService.openSnackBar(
+          this.toastr.info(
             this.responseMessage,
             GlobalConstant.error
           );
-        });
+        }
+      );
     } else {
       console.log('Deletion canceled.');
-      this.ngxService.stop();
     }
   }
-
-
 }

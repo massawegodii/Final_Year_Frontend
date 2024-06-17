@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarOptions, EventInput } from '@fullcalendar/core';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MaintenanceService } from '../../_services/maintenance.service';
-import { SnackbarService } from '../../_services/snackbar.service';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { AlertService } from '../../_services/alert.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-maintanance',
@@ -22,7 +22,7 @@ export class MaintananceComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private mantainanceService: MaintenanceService,
-    private snackbarService: SnackbarService,
+    private toastr: ToastrService,
     private alertService: AlertService
   ) {}
 
@@ -123,7 +123,7 @@ export class MaintananceComponent implements OnInit {
       const selectedTime = this.maintenanceForm.value.selectedTime;
 
       const data = {
-        selectedDate: selectedDate.toISOString().slice(0, 10), // Format as "yyyy-MM-dd"
+        selectedDate: selectedDate.toISOString().slice(0, 10),
         selectedTime: selectedTime.slice(0, 5),
         note: note,
       };
@@ -136,7 +136,7 @@ export class MaintananceComponent implements OnInit {
           this.maintenanceForm.reset();
           this.getAllSchedule();
           this.responseMessage = response?.message;
-          this.snackbarService.openSnackBar(this.responseMessage, 'success');
+          this.toastr.success('Maintenance Schedule added successfully.');
           window.location.reload();
         },
         (error) => {
@@ -145,7 +145,7 @@ export class MaintananceComponent implements OnInit {
           } else {
             this.responseMessage = GlobalConstant.genericError;
           }
-          this.snackbarService.openSnackBar(
+          this.toastr.error(
             this.responseMessage,
             GlobalConstant.error
           );
@@ -153,7 +153,7 @@ export class MaintananceComponent implements OnInit {
       );
     } else {
       this.maintenanceForm.markAllAsTouched();
-      console.log('Form submission failed');
+      // console.log('Form submission failed');
     }
   }
 

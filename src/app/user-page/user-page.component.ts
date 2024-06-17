@@ -8,9 +8,7 @@ import {
 import { Assign } from '../_model/assign_model';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { ImageProcessingService } from '../_services/image-processing.service';
 import { ProductService } from '../_services/product.service';
-import { SnackbarService } from '../_services/snackbar.service';
 import { GlobalConstant } from '../_constants/global-constant';
 import { UserAuthService } from '../_services/user-auth.service';
 import { Router } from '@angular/router';
@@ -25,6 +23,7 @@ import Swal from 'sweetalert2';
 import { UserService } from '../_services/user.service';
 import { User } from '../_model/users_model';
 import { TextMessageComponent } from '../components/extra/text-message/text-message.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-page',
@@ -57,12 +56,12 @@ export class UserPageComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private productService: ProductService,
-    private snackbarService: SnackbarService,
     private ngxService: NgxUiLoaderService,
     private userAuthService: UserAuthService,
     private router: Router,
     private qrcodeService: QrcodeService,
     private userService: UserService,
+    private toastr: ToastrService,
     private componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
@@ -87,10 +86,7 @@ export class UserPageComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
       }
     );
   }
@@ -135,7 +131,7 @@ export class UserPageComponent implements OnInit {
         this.getAllAssign();
         this.ngxService.start();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success('Asset returned successfully!');
         // console.log(response);
       },
       (error) => {
@@ -145,10 +141,7 @@ export class UserPageComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
       }
     );
   }
@@ -197,6 +190,7 @@ export class UserPageComponent implements OnInit {
       (response) => {
         dialogRef.close();
         this.userAuthService.clear();
+        this.toastr.success('You have logout in your account!');
         this.router.navigate(['/']);
       }
     );

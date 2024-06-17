@@ -1,8 +1,8 @@
+import { ProductService } from './../../_services/product.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ProductService } from '../../_services/product.service';
 import { SnackbarService } from '../../_services/snackbar.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Product } from '../../_model/product_model';
@@ -25,11 +25,15 @@ export class AssetEditComponent implements OnInit {
   responseMessage: any;
   selectedUser: Product | null = null;
   statuses: Status[] = [];
+  products: Product[] = [];
   categories: Category[] = [];
   departments: Department[] = [];
   selectedStatus: string = '';
   selectedCategory: string = '';
+  selectedProduct: string = '';
   selectedDepartment: string = '';
+
+  selectedName: Category[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -41,6 +45,7 @@ export class AssetEditComponent implements OnInit {
     private statusService: StatusService,
     private categoryService: CategoryService,
     private departmentService: DepartmentService,
+    private productService: ProductService,
     private dialogRef: MatDialogRef<AssetEditComponent>
   ) {}
 
@@ -54,12 +59,13 @@ export class AssetEditComponent implements OnInit {
     productStatus: '',
     productDepartment: '',
     productCategory: '',
+    productType: '',
     qrCode: '',
     productImages: [],
 
     user: {
-      userName: ''
-    }
+      userName: '',
+    },
   };
 
   ngOnInit(): void {
@@ -87,9 +93,10 @@ export class AssetEditComponent implements OnInit {
       ],
       qrCode: [null],
       productImages: [null],
-      productStatus: [this.product.productStatus, Validators.required], 
-      productCategory: [this.product.productCategory, Validators.required], 
+      productStatus: [this.product.productStatus, Validators.required],
+      productCategory: [this.product.productCategory, Validators.required],
       productDepartment: [this.product.productDepartment, Validators.required],
+      productType: [this.product.productType, Validators.required],
 
       user: this.formBuilder.group({
         userName: [this.product.user.userName, Validators.required],
@@ -108,13 +115,14 @@ export class AssetEditComponent implements OnInit {
         productSerialNo: product.productSerialNo,
         productStatus: product.productStatus,
         productCategory: product.productCategory,
+        productType: product.productType,
         productDepartment: product.productDepartment,
         productImages: product.productImages,
         qrCode: product.qrCode,
 
         user: {
-          userName: product.user.userName
-        }
+          userName: product.user.userName,
+        },
       };
       // Patch the form values
       this.productForm.patchValue({
@@ -126,16 +134,18 @@ export class AssetEditComponent implements OnInit {
         productSerialNo: this.product.productSerialNo,
         productStatus: this.product.productStatus,
         productCategory: this.product.productCategory,
+        productType: this.product.productType,
         productDepartment: this.product.productDepartment,
 
         user: {
-          userName: this.product.user.userName
+          userName: this.product.user.userName,
         },
       });
     }
     this.getAllStatus();
     this.getAllCategory();
     this.getAllDepartment();
+    this.getAllProduct();
   }
 
   handleSubmit() {
@@ -170,7 +180,17 @@ export class AssetEditComponent implements OnInit {
     this.statusService.getAllStatus().subscribe(
       (response: Status[]) => {
         this.statuses = response;
-        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  public getAllProduct() {
+    this.productService.getAllProduct().subscribe(
+      (response: any) => {
+        this.product = response;
       },
       (error) => {
         console.log(error);
@@ -183,11 +203,14 @@ export class AssetEditComponent implements OnInit {
     this.selectedStatus = event.value;
   }
 
+  onProductSelect(event: MatSelectChange) {
+    this.selectedProduct = event.value;
+  }
+
   public getAllCategory() {
     this.categoryService.getAllCategory().subscribe(
       (response: Category[]) => {
         this.categories = response;
-        console.log(response);
       },
       (error) => {
         console.log(error);
@@ -195,8 +218,24 @@ export class AssetEditComponent implements OnInit {
     );
   }
 
+  public getCategoryByName(name: string) {
+    if (name) {
+      this.categoryService.getCategoryByName(name).subscribe(
+        (response: Category[]) => {
+          this.selectedName = response;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.selectedName = [];
+    }
+  }
+
   // Method to handle category selection
   onCategorySelect(event: MatSelectChange) {
+    this.getCategoryByName(this.selectedCategory);
     this.selectedCategory = event.value;
   }
 
@@ -204,7 +243,6 @@ export class AssetEditComponent implements OnInit {
     this.departmentService.getAllDepartment().subscribe(
       (response: Department[]) => {
         this.departments = response;
-        console.log(response);
       },
       (error) => {
         console.log(error);

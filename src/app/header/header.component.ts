@@ -1,4 +1,13 @@
-import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewContainerRef,
+  inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../_services/user.service';
 import { UserAuthService } from '../_services/UserAuthService';
@@ -6,6 +15,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../components/extra/confirmation/confirmation.component';
 import { DarkmodeService } from '../_services/darkmode.service';
 import { ProfileComponent } from '../components/extra/profile/profile.component';
+import { ToastrService } from 'ngx-toastr';
+import { UpdatesComponent } from '../components/extra/updates/updates.component';
 
 @Component({
   selector: 'app-header',
@@ -30,6 +41,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     public userService: UserService,
     private dialog: MatDialog,
+    private toastr: ToastrService,
     private componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
@@ -53,6 +65,7 @@ export class HeaderComponent implements OnInit {
       (response) => {
         dialogRef.close();
         this.userAuthService.clear();
+        this.toastr.success('You have logout in your account!');
         this.router.navigate(['/']);
       }
     );
@@ -63,5 +76,13 @@ export class HeaderComponent implements OnInit {
       this.componentFactoryResolver.resolveComponentFactory(ProfileComponent);
     this.offcanvasBody.clear();
     this.offcanvasBody.createComponent(componentFactory);
+  }
+
+  updateAction() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '750px';
+    dialogConfig.height = '500px';
+    dialogConfig.position = { top: '0' };
+    this.dialog.open(UpdatesComponent, dialogConfig);
   }
 }

@@ -8,14 +8,15 @@ export interface Product {
   productPrice: number;
   productModel: string;
   productSerialNo: number;
-  productStatus: string,
-  productCategory:string,
-  productDepartment: string,
+  productStatus: string;
+  productType: string;
+  productCategory: string;
+  productDepartment: string;
   qrCode: string;
-  productImages: FileHandle[],
+  productImages: FileHandle[];
   user: {
-    userName: string
-}
-[key: string]: any;
+    userName: string;
+  };
+  [key: string]: any;
 }
 

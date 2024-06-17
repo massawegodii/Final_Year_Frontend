@@ -4,29 +4,30 @@ import { DepartmentService } from '../../_services/department.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { SnackbarService } from '../../_services/snackbar.service';
 import { GlobalConstant } from '../../_constants/global-constant';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-departments-new',
   templateUrl: './departments-new.component.html',
-  styleUrl: './departments-new.component.scss'
+  styleUrl: './departments-new.component.scss',
 })
-export class DepartmentsNewComponent implements OnInit{
+export class DepartmentsNewComponent implements OnInit {
   responseMessage: any;
   departmentForm: any = FormGroup;
   onAddDepartment = new EventEmitter();
   onEditDepartment = new EventEmitter();
-  dialogAction: any = "Add";
-  action: any = "Add";
-  
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
-  private router: Router,
-  private departmentService: DepartmentService,
-  private formBuilder: FormBuilder,
-  private snackbarService: SnackbarService,
-  private ngxService: NgxUiLoaderService,
-  private dialogRef: MatDialogRef<DepartmentsNewComponent>){}
+  dialogAction: any = 'Add';
+  action: any = 'Add';
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    private departmentService: DepartmentService,
+    private formBuilder: FormBuilder,
+    private ngxService: NgxUiLoaderService,
+    private toastr: ToastrService,
+    private dialogRef: MatDialogRef<DepartmentsNewComponent>
+  ) {}
 
   ngOnInit(): void {
     this.departmentForm = this.formBuilder.group({
@@ -61,7 +62,7 @@ export class DepartmentsNewComponent implements OnInit{
         this.dialogRef.close();
         this.onAddDepartment.emit();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, "success");
+        this.toastr.success('Department added successfully');
       },
       (error) => {
         this.ngxService.stop();
@@ -70,10 +71,7 @@ export class DepartmentsNewComponent implements OnInit{
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
       }
     );
   }
@@ -89,7 +87,7 @@ export class DepartmentsNewComponent implements OnInit{
         this.dialogRef.close();
         this.onAddDepartment.emit();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success('Department Updated successfully');
       },
       (error) => {
         this.ngxService.stop();
@@ -98,11 +96,8 @@ export class DepartmentsNewComponent implements OnInit{
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
-      });
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
+      }
+    );
   }
-
 }

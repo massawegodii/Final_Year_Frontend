@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { UserAuthService } from './UserAuthService';
 import { User } from '../_model/users_model';
-import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,8 @@ export class UserService implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    private userAuthService: UserAuthService
+    private userAuthService: UserAuthService,
+    private firestore: AngularFirestore
   ) {}
 
   public login(data: any) {
@@ -34,6 +35,7 @@ export class UserService implements OnInit {
       }
     );
   }
+
 
   public getAllUsers() {
     return this.httpClient.get<User[]>(
@@ -72,10 +74,11 @@ export class UserService implements OnInit {
     return this.httpClient.get<User[]>('http://localhost:8080/user/loggedUser');
   }
 
-  public blockUser(userName: any)  {
+  public blockUser(userName: any) {
     if (userName) {
       return this.httpClient.post(
-        `http://localhost:8080/user/block/${userName}`, {}
+        `http://localhost:8080/user/block/${userName}`,
+        {}
       );
     } else {
       return throwError('userName is undefined or null');
@@ -85,7 +88,8 @@ export class UserService implements OnInit {
   public unblockUser(userName: any) {
     if (userName) {
       return this.httpClient.post(
-        `http://localhost:8080/user/unblock/${userName}`,{}
+        `http://localhost:8080/user/unblock/${userName}`,
+        {}
       );
     } else {
       return throwError('userName is undefined or null');

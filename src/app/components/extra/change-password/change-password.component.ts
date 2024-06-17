@@ -5,6 +5,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SnackbarService } from '../../../_services/snackbar.service';
 import { UserService } from '../../../_services/user.service';
 import { GlobalConstant } from '../../../_constants/global-constant';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-change-password',
@@ -20,8 +21,8 @@ export class ChangePasswordComponent implements OnInit {
     private router: Router,
     private userServices: UserService,
     private formBuilder: FormBuilder,
-    private snackbarService: SnackbarService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +51,7 @@ export class ChangePasswordComponent implements OnInit {
       (response: any) => {
         this.ngxService.stop();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success("Password changed successfully!")
         // this.router.navigate(['/userpage']);
         this.changePasswordForm.reset();
       },
@@ -61,7 +62,7 @@ export class ChangePasswordComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.error(
           this.responseMessage,
           GlobalConstant.error
         );

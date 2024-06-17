@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from '../../../_services/message.service';
-import { GlobalConstant } from '../../../_constants/global-constant';
-import { SnackbarService } from '../../../_services/snackbar.service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-messaging',
@@ -17,15 +15,14 @@ export class MessagingComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private formBuilder: FormBuilder,
-    private snackbarService: SnackbarService,
-    private snackBar: MatSnackBar,
+    private toastr: ToastrService,
     private dialogRef: MatDialogRef<MessagingComponent>
   ) {}
 
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
       phoneNumber: ['', Validators.required],
-      message: ['', Validators.required]
+      message: ['', Validators.required],
     });
   }
 
@@ -52,18 +49,10 @@ export class MessagingComponent implements OnInit {
         this.messageForm.reset();
         this.dialogRef.close();
         this.dialogRef.close();
-        this.snackBar.open('Message sent successfully 📤', '', {
-          duration: 4000, 
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar'] 
-        });
+        this.toastr.success('Message sent successfully 📤', '', {});
       },
       (error) => {
-        this.snackBar.open('Message sent Failed! Try again📲', '', {
-          duration: 4000, 
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar'] 
-        });
+        this.toastr.error('Message sent Failed! Try again', '', {});
         this.dialogRef.close();
         console.log(error);
       }

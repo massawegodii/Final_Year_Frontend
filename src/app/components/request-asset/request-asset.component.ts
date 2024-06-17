@@ -7,6 +7,7 @@ import { Department } from '../../_model/department-model';
 import { DepartmentService } from '../../_services/department.service';
 import { SnackbarService } from '../../_services/snackbar.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 const today = new Date();
 const month = today.getMonth();
@@ -26,11 +27,11 @@ export class RequestAssetComponent implements OnInit {
     private formBuilder: FormBuilder,
     private ngxService: NgxUiLoaderService,
     private departmentService: DepartmentService,
-    private snackbarService: SnackbarService,
+    private toastr: ToastrService,
     private dialogRef: MatDialogRef<RequestAssetComponent>
   ) {}
 
-  
+
   ngOnInit(): void {
     this.requestForm = this.formBuilder.group({
       name: [
@@ -64,8 +65,8 @@ export class RequestAssetComponent implements OnInit {
       (response: any) => {
         this.dialogRef.close();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, "success");
-      
+        this.toastr.success('Request Sent successfully');
+
     },
     (error) => {
       this.ngxService.stop();
@@ -74,7 +75,7 @@ export class RequestAssetComponent implements OnInit {
       } else {
         this.responseMessage = GlobalConstant.genericError;
       }
-      this.snackbarService.openSnackBar(
+      this.toastr.error(
         this.responseMessage,
         GlobalConstant.error
       );
@@ -94,7 +95,7 @@ export class RequestAssetComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.error(
           this.responseMessage,
           GlobalConstant.error
         );

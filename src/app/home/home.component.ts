@@ -1,14 +1,11 @@
 import { DeleteScheduleComponent } from '../components/extra/delete-schedule/delete-schedule.component';
 import { Component, OnInit } from '@angular/core';
-import { Chat } from '../_model/chat_models';
-import { ChatService } from '../_services/chat.service';
 import { DashboardService } from '../_services/dashboard.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { SnackbarService } from '../_services/snackbar.service';
 import { GlobalConstant } from '../_constants/global-constant';
 import { MaintenanceService } from '../_services/maintenance.service';
 import { Maintanance } from '../_model/maintanance_model';
 import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -22,23 +19,21 @@ export class HomeComponent implements OnInit {
   basicData: any;
   basicOptions: any;
   p: number = 1;
-  itemsPerPage: number = 3;
-  totalItems: number = 21;
+  itemsPerPage: number = 30;
+  totalItems: number = 60;
 
   maintenanceDetails: Maintanance[] = [];
   displayedColumns: string[] = ['Information', 'Date', 'Time', 'Actions'];
 
   constructor(
     private dashboardService: DashboardService,
-    private snackbarService: SnackbarService,
-    private ngxService: NgxUiLoaderService,
     private maintenanceService: MaintenanceService,
+    private toastr: ToastrService,
     private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.getAllSchedule();
-    this.ngxService.start();
     this.dashboardDetails();
 
     const documentStyle = getComputedStyle(document.documentElement);
@@ -46,8 +41,8 @@ export class HomeComponent implements OnInit {
     const textColorSecondary = documentStyle.getPropertyValue(
       '--text-color-secondary'
     );
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
     this.basicData = {
       labels: ['Assets', 'Total Employees', 'Maintenance', 'Reports'],
       datasets: [
@@ -118,21 +113,16 @@ export class HomeComponent implements OnInit {
   public dashboardDetails() {
     this.dashboardService.getDashboardDetails().subscribe(
       (response: any) => {
-        this.ngxService.stop();
         this.data = response;
         console.log(response);
       },
       (error) => {
-        this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
       }
     );
   }
@@ -159,6 +149,7 @@ export class HomeComponent implements OnInit {
         this.maintenanceService.deleteSchedule(id).subscribe(
           (res) => {
             this.getAllSchedule();
+            this.toastr.success('Maintenance deleted successfully!');
           },
           (error) => {
             console.log(error);

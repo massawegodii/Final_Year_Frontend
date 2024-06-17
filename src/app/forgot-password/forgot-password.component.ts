@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { SnackbarService } from '../_services/snackbar.service';
 import { UserService } from '../_services/user.service';
 import { GlobalConstant } from '../_constants/global-constant';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.scss'
+  styleUrl: './forgot-password.component.scss',
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: any = FormGroup;
   responseMessage: any;
 
-  constructor(private router: Router,
+  constructor(
     private userServices: UserService,
     private formBuilder: FormBuilder,
-    private snackbarService: SnackbarService,
-    private ngxService: NgxUiLoaderService) {}
+    private toastr: ToastrService,
+    private ngxService: NgxUiLoaderService
+  ) {}
 
   ngOnInit(): void {
     this.forgotPasswordForm = this.formBuilder.group({
@@ -41,8 +41,7 @@ export class ForgotPasswordComponent implements OnInit {
       (response: any) => {
         this.ngxService.stop();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
-        // this.router.navigate(['/userpage']);
+        this.toastr.success('Check your mail for Credentials');
         this.forgotPasswordForm.reset();
       },
       (error) => {
@@ -52,12 +51,8 @@ export class ForgotPasswordComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.success(this.responseMessage, GlobalConstant.error);
       }
     );
   }
-
 }

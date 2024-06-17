@@ -5,10 +5,8 @@ import { Category } from '../../../_model/category-model';
 import { Department } from '../../../_model/department-model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { CategoryService } from '../../../_services/category.service';
 import { DepartmentService } from '../../../_services/department.service';
-import { SnackbarService } from '../../../_services/snackbar.service';
 import { StatusService } from '../../../_services/status.service';
 import { Assign } from './../../../_model/assign_model';
 import { GlobalConstant } from '../../../_constants/global-constant';
@@ -16,16 +14,14 @@ import { MatSelectChange } from '@angular/material/select';
 import { ProductService } from '../../../_services/product.service';
 import { User } from '../../../_model/users_model';
 import { UserService } from '../../../_services/user.service';
-import { Product } from '../../../_model/product_model';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
-  styleUrl: './share.component.scss'
+  styleUrl: './share.component.scss',
 })
 export class ShareComponent implements OnInit {
-
   assignForm!: FormGroup;
   responseMessage: any;
   selectedUser: Assign | null = null;
@@ -38,19 +34,18 @@ export class ShareComponent implements OnInit {
   selectedCategory: string = '';
   selectedDepartment: string = '';
 
-  
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any,
-  private router: Router,
-  private formBuilder: FormBuilder,
-  private snackbarService: SnackbarService,
-  private ngxService: NgxUiLoaderService,
-  private statusService: StatusService,
-  private categoryService: CategoryService,
-  private departmentService: DepartmentService,
-  private userService: UserService,
-  private productService: ProductService,
-  private dialogRef: MatDialogRef<ShareComponent>){}
-
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private statusService: StatusService,
+    private categoryService: CategoryService,
+    private departmentService: DepartmentService,
+    private userService: UserService,
+    private productService: ProductService,
+    private toastr: ToastrService,
+    private dialogRef: MatDialogRef<ShareComponent>
+  ) {}
 
   product: Assign = {
     productId: null,
@@ -64,7 +59,6 @@ export class ShareComponent implements OnInit {
     productCategory: '',
     productImages: [],
     userName: '',
-
   };
 
   ngOnInit(): void {
@@ -91,11 +85,10 @@ export class ShareComponent implements OnInit {
         [Validators.required, Validators.pattern(GlobalConstant.number)],
       ],
       productImages: [null],
-      productStatus: [this.product.productStatus, Validators.required], 
-      userName: [[null], Validators.required], 
-      productCategory: [this.product.productCategory, Validators.required], 
+      productStatus: [this.product.productStatus, Validators.required],
+      userName: [[null], Validators.required],
+      productCategory: [this.product.productCategory, Validators.required],
       productDepartment: [this.product.productDepartment, Validators.required],
-      
     });
 
     if (this.data && this.data.product) {
@@ -135,29 +128,24 @@ export class ShareComponent implements OnInit {
   }
 
   handleSubmit() {
-    this.ngxService.start();
     const formData = this.assignForm.value;
 
     this.productService.assignToUser(formData).subscribe(
       (response: any) => {
-        this.ngxService.stop();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success('Asset assigned successfully to the user');
         this.dialogRef.close();
         this.router.navigate(['/dashboard/assets']);
         window.location.reload();
       },
       (error) => {
-        this.ngxService.stop();
+        this.toastr.error();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.error(this.responseMessage, GlobalConstant.error);
       }
     );
   }
@@ -191,7 +179,6 @@ export class ShareComponent implements OnInit {
     );
   }
 
-  
   // Method to handle userName selection
   onAssignUserNameSelect(event: MatSelectChange) {
     this.selectedUserName = event.value;
@@ -230,5 +217,4 @@ export class ShareComponent implements OnInit {
   onDepartmentSelect(event: MatSelectChange) {
     this.selectedDepartment = event.value;
   }
-
 }

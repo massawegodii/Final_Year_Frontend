@@ -1,10 +1,11 @@
 <div class="container mt-3">
-  <h2>Status Approval</h2>
+  <h2>Request Approval</h2>
 
   <nav class="navbar">
-    <input class="form-control" name="userName" [(ngModel)]="userName" (ngModelChange)="search()" 
-      type="text" placeholder="Enter username to search" 
-      style="width: 300px; margin-left: auto; display: block;"> 
+    <input class="form-control" name="userName" [(ngModel)]="userName"
+      (ngModelChange)="search()"
+      type="text" placeholder="Enter username to search"
+      style="width: 300px; margin-left: auto; display: block;">
   </nav>
 
   <div class="card mt-2">
@@ -44,8 +45,7 @@
                 [ngStyle]="{
                             'cursor': 'pointer',
                             'text-align': 'center',
-                        }"
-              >
+                        }">
                 {{ myRequest.statusAsset }}
               </button>
             </td>
@@ -55,25 +55,23 @@
               <button
                 class="btn btn-primary btn-sm"
                 style="margin-left: 10px"
-                (click)="changeRequestStatus(myRequest.id, 'Approved')"
-              >
+                (click)="changeRequestStatus(myRequest.id, 'Approved')">
                 Approve
               </button>
               <button
-               
                 class="btn btn-danger btn-sm"
                 style="margin-left: 10px"
-                (click)="changeRequestStatus(myRequest.id, 'Rejected')"
-              >
+                (click)="changeRequestStatus(myRequest.id, 'Rejected')">
                 Reject
               </button>
 
               &nbsp;
 
               <button mat-icon-button
-              (click)="deleteRequest(myRequest.id)"
-              matTooltip="Delete Request">
-              <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 20px;"></i>
+                (click)="deleteRequest(myRequest.id)"
+                matTooltip="Delete Request">
+                <i class="fa fa-trash" aria-hidden="true"
+                  style="color: red; font-size: 20px;"></i>
               </button>
             </td>
           </tr>

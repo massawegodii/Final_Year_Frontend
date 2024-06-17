@@ -58,6 +58,7 @@ export class AssetsNewComponent implements OnInit {
     productStatus: '',
     productDepartment: '',
     productCategory: '',
+    productType: '',
     productImages: [],
     qrCode: '',
 
@@ -108,6 +109,7 @@ export class AssetsNewComponent implements OnInit {
         productSerialNo: product.productSerialNo,
         productStatus: product.productStatus,
         productCategory: product.productCategory,
+        productType: product.productType,
         productDepartment: product.productDepartment,
         qrCode: product.qrCode,
         productImages: [],
@@ -125,6 +127,7 @@ export class AssetsNewComponent implements OnInit {
         productSerialNo: this.product.productSerialNo,
         productStatus: this.product.productStatus,
         productCategory: this.product.productCategory,
+        productType: this.product.productType,
         productDepartment: this.product.productDepartment,
 
         user: {

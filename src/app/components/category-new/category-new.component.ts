@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../../_services/category.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { SnackbarService } from '../../_services/snackbar.service';
 import { GlobalConstant } from '../../_constants/global-constant';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category-new',
@@ -24,8 +24,8 @@ export class CategoryNewComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     private categoryService: CategoryService,
     private formBuilder: FormBuilder,
-    private snackbarService: SnackbarService,
     private ngxService: NgxUiLoaderService,
+    private toastr: ToastrService,
     private dialogRef: MatDialogRef<CategoryNewComponent>
   ) {}
 
@@ -81,8 +81,8 @@ export class CategoryNewComponent implements OnInit {
       (response: any) => {
         this.dialogRef.close();
         this.onAddCategory.emit();
-        this.responseMessage = response?.onmessage,
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        (this.responseMessage = response?.onmessage),
+          this.toastr.success('Category added successfully');
       },
       (error) => {
         this.ngxService.stop();
@@ -91,7 +91,7 @@ export class CategoryNewComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.info(
           this.responseMessage,
           GlobalConstant.error
         );
@@ -111,7 +111,7 @@ export class CategoryNewComponent implements OnInit {
         this.dialogRef.close();
         this.onEditCategory.emit();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success('Category updated successfully');
       },
       (error) => {
         this.ngxService.stop();
@@ -120,7 +120,7 @@ export class CategoryNewComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.info(
           this.responseMessage,
           GlobalConstant.error
         );
