@@ -91,10 +91,7 @@ export class CategoryNewComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.toastr.info(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
       }
     );
   }
@@ -120,10 +117,7 @@ export class CategoryNewComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.toastr.info(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
       }
     );
   }

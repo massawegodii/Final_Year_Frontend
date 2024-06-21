@@ -3,7 +3,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CategoryNewComponent } from '../category-new/category-new.component';
 import { Category } from '../../_model/category-model';
 import { Router } from '@angular/router';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { CategoryService } from '../../_services/category.service';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { ToastrService } from 'ngx-toastr';

@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="container table-container mt-3" >
   <h1 style="font-weight: bold">Assets</h1>
 
   <div style="display: flex; justify-content: flex-end">
@@ -6,29 +6,40 @@
       mat-raised-button
       color="primary"
       (click)="handleCreateNewAssetAction()">
-      <mat-icon>add_circle</mat-icon> Create New
+      <mat-icon>add_circle</mat-icon> Add New
     </button>
     &nbsp;
     <button mat-raised-button color="accent" routerLink="/dashboard/reportpage">
-      <mat-icon>print</mat-icon> Print Report
+      <mat-icon>collections</mat-icon> Report
     </button>
   </div>
-  <button class="btn btn-primary btn-sm">All
-    Assets</button>
-  &nbsp;
-  <!-- <button class="btn btn-secondary btn-sm">All Assign</button>
-  &nbsp;
-  <button class="btn btn-info btn-sm">All UnAssign</button> -->
 
-  <!-- <nav class="navbar">
-    <input class="form-control" name="productName" [(ngModel)]="productName" (ngModelChange)="search()" type="text"
-    placeholder="Enter Name to search">
-  </nav> -->
+  <span>
+    <select name="status"
+      [(ngModel)]="allAssets"
+      class="btn btn-primary">
+      <option value="all" [disabled]="allAssets === 'all'">All Assets</option>
+      <option value="assign" [disabled]="allAssets === 'assign'">Assign
+        Assets</option>
+      <option value="unassign" [disabled]="allAssets === 'unassign'">UnAssign
+        Assets</option>
+    </select>
+  </span>
+
+  &nbsp; &nbsp;
+
   <div class="card mt-2">
     <mat-form-field>
       <mat-label>Filter Data</mat-label>
       <input matInput #input (keyup)="applFilter($event)" />
     </mat-form-field>
+
+    <!-- Showing the loader  -->
+    <ng-container *ngIf="!productDetails.length">
+      <div class="col-md-12 single-note-item text-center">
+        <div class="spinner-border text-info" role="status"></div>
+      </div>
+    </ng-container>
 
     <div class="table-container">
       <table
@@ -195,14 +206,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-        <!-- Row shown when there is no matching data. -->
-        <!-- <tr class="mat-row" *matNoDataRow="let item; when: 'filteredProducts'">
-          <td class="mat-cell" colspan="8">
-            <h2>No data matching the filter</h2>
-            "{{ input.value }}"
-          </td>
-        </tr> -->
-        <tr class="mat-row" *matNoDataRow>
+        <tr class="mat-row" *ngIf="productDetails.length === 0 && !isLoading"
+          [ngClass]="{ 'd-none': productDetails.length > 0 || isLoading }">
           <td class="mat-cell" colspan="12">
             <h2>No data matching the filter</h2>
             "{{ input.value }}"
@@ -213,7 +218,8 @@
   </div>
   <br>
   <!--  Pagination  -->
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation example"
+    *ngIf="productDetails.length > 0 && !isLoading">
     <ul class="pagination">
       <li class="page-item" [ngClass]="{ 'disabled': p === 1 }">
         <a class="page-link" (click)="p = p - 1">Previous</a>

@@ -3,8 +3,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AssetsNewComponent } from '../assets-new/assets-new.component';
 import { ProductService } from '../../_services/product.service';
 import { Product } from '../../_model/product_model';
-import { SnackbarService } from '../../_services/snackbar.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ShowImageDialogComponent } from '../show-image-dialog/show-image-dialog.component';
@@ -21,6 +19,8 @@ import { ShareComponent } from '../extra/share/share.component';
 import { DeleteAssetComponent } from '../extra/delete-asset/delete-asset.component';
 import { QrCodeComponent } from '../extra/qr-code/qr-code.component';
 import { QrcodeService } from '../../_services/qrcode.service';
+import { ToastrService } from 'ngx-toastr';
+import { LoadingService } from '../../_services/loading.service';
 
 @Component({
   selector: 'app-assets',
@@ -34,7 +34,8 @@ export class AssetsComponent implements OnInit {
   p: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 50;
-  // productName: any;
+  isLoading = false;
+  allAssets: string = 'all';
 
   // Pass to get userName
   selectedUserName: string = '';
@@ -58,13 +59,13 @@ export class AssetsComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private productService: ProductService,
-    private snackbarService: SnackbarService,
-    private ngxService: NgxUiLoaderService,
     private imageProcessingService: ImageProcessingService,
     private statusService: StatusService,
     private categoryService: CategoryService,
     private departmentService: DepartmentService,
-    private qrcodeService: QrcodeService
+    private qrcodeService: QrcodeService,
+    private toastr: ToastrService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +73,6 @@ export class AssetsComponent implements OnInit {
     this.getAllStatus();
     this.getAllCategory();
     this.getAllDepartment();
-    this.ngxService.start();
   }
 
   get totalPages(): number {
@@ -86,16 +86,6 @@ export class AssetsComponent implements OnInit {
     }
     return pagesArray;
   }
-
-  // search() {
-  //   if(this.productName == "") {
-  //     this.ngOnInit();
-  //   }else {
-  //     this.productDetails = this.productDetails.filter(resp => {
-  //       return resp.productName.toLocaleLowerCase().match(this.productName.toLocaleLowerCase());
-  //     });
-  //   }
-  // }
 
   key: string = '';
   reverse: boolean = false;
@@ -116,6 +106,10 @@ export class AssetsComponent implements OnInit {
   handleCreateNewAssetAction() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '700px';
+    dialogConfig.height = '500px';
+    dialogConfig.data = {
+      refreshProducts: () => this.getAllProduct(),
+    };
     this.dialog.open(AssetsNewComponent, dialogConfig);
   }
 
@@ -197,19 +191,23 @@ export class AssetsComponent implements OnInit {
   }
 
   public getAllProduct() {
+    this.isLoading = true;
     this.productService
       .getAllProduct()
       .pipe(
-        map((x: Product[], i) =>
-          x.map((product: Product) =>
-            this.imageProcessingService.createImages(product)
-          )
+        map(
+          (x: Product[], i) =>
+            x.map((product: Product) =>
+              this.imageProcessingService.createImages(product)
+            ),
+          this.loadingService.simulateLoading
         )
       )
       .subscribe(
         (response: Product[]) => {
           this.productDetails = response;
           this.products = response;
+          this.isLoading = false;
 
           // Assigning the userName
           this.productDetails = response.map((product) => {
@@ -218,19 +216,15 @@ export class AssetsComponent implements OnInit {
               userName: product.user?.userName || 'Not Assigned',
             };
           });
-          this.ngxService.stop();
         },
         (error) => {
-          this.ngxService.stop();
           if (error.error?.message) {
+            this.isLoading = false;
             this.responseMessage = error.error?.message;
           } else {
             this.responseMessage = GlobalConstant.genericError;
           }
-          this.snackbarService.openSnackBar(
-            this.responseMessage,
-            GlobalConstant.error
-          );
+          this.toastr.warning(this.responseMessage, GlobalConstant.error);
         }
       );
   }

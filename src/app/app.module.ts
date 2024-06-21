@@ -92,6 +92,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { ProfileComponent } from './components/extra/profile/profile.component';
 import { UpdatesComponent } from './components/extra/updates/updates.component';
 import { UserProfileComponent } from './components/extra/user-profile/user-profile.component';
+import { GeneralReportComponent } from './components/extra/general-report/general-report.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading ...',
@@ -150,6 +151,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ProfileComponent,
     UpdatesComponent,
     UserProfileComponent,
+    GeneralReportComponent,
   ],
   imports: [
     HttpClientModule,
@@ -205,7 +207,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 
     NgxMaterialTimepickerModule.setOpts('en-KE'),
     ToastrModule.forRoot({
-      timeOut: 4000,
+      timeOut: 5000,
       positionClass: 'toast-top-center',
       preventDuplicates: true,
     }),

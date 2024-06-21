@@ -86,13 +86,13 @@ export class StatusNewComponent implements OnInit {
         this.toastr.success('Status Updated successfully!');
       },
       (error) => {
-        this.toastr.info();
+        this.toastr.warning();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.toastr.info(this.responseMessage, GlobalConstant.error);
+        this.toastr.warning(this.responseMessage, GlobalConstant.error);
       }
     );
   }

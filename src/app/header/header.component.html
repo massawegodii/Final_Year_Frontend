@@ -1,12 +1,13 @@
 <mat-toolbar class="border-bottom border-info-subtle">
-  <mat-toolbar-row class="justify-content-between">
+  <mat-toolbar-row>
     <button mat-icon-button (click)="toggleSidebar()">
       <mat-icon>menu</mat-icon>
     </button>
 
-    <button mat-icon-button class="matBadge">
+    <button mat-icon-button
+      style="margin-left: auto; margin-right: 0px; display: flex;">
       <mat-icon matBadge
-        style="color: green; font-size: 30px;">message</mat-icon>
+        style="color: green; font-size: 33px;">forum</mat-icon>
     </button>
 
     <!-- <button mat-icon-button class="matBadge" matTooltip="Live Chat Room"
@@ -20,12 +21,10 @@
         <li>
           <button
             mat-button
-            matTooltip="Click to check options"
+            matTooltip="options"
             [matMenuTriggerFor]="menu"
             class="user mt-2 d-flex align-items-center">
-
             <img src="./assets/img/logo2.jpg" alt class="user-image mr-1 p-2" />
-
           </button>
           <mat-menu #menu="matMenu">
             <button (click)="openProfile()" data-bs-toggle="offcanvas"

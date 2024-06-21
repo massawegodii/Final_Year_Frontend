@@ -14,4 +14,8 @@ export class ReportPageComponent implements OnInit {
   singleReport() {
     this.router.navigateByUrl('/dashboard/reports');
   }
+
+  generalReport() {
+    this.router.navigateByUrl('/dashboard/generalreport');
+  }
 }

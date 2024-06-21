@@ -15,6 +15,7 @@ import { MaintananceComponent } from './components/maintanance/maintanance.compo
 import { AuthGuard } from './_auth/auth.guard';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ReportPageComponent } from './components/extra/report-page/report-page.component';
+import { GeneralReportComponent } from './components/extra/general-report/general-report.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
       { path: 'status', component: StatusComponent },
       { path: 'maintainance', component: MaintananceComponent },
       { path: 'reportpage', component: ReportPageComponent },
+      { path: 'generalreport', component: GeneralReportComponent },
     ],
   },
 

@@ -1,9 +1,10 @@
-<div class="container mt-5">
+<div class="container mt-5 report-container">
   <div class="row">
     <div class="col-md-6 mb-4">
       <div class="card h-150">
         <div class="card-body d-flex flex-column justify-content-between">
-          <p class="card-text text-center mt-3">Report for Assets processing
+          <p class="card-text text-center mt-3" style="font-weight: 400;">Report
+            for Assets processing
             manually depending on person need.</p>
           <div class="center-button text-center">
             <button (click)="singleReport()"
@@ -15,10 +16,12 @@
     <div class="col-md-6 mb-4">
       <div class="card h-150">
         <div class="card-body d-flex flex-column justify-content-between">
-          <p class="card-text text-center mt-3">General Reports for all Asset
+          <p class="card-text text-center mt-3"
+            style="font-weight: 400;">General Reports for all Asset
             registered.</p>
           <div class="center-button text-center">
-            <button class="btn btn-primary mt-3">General Reports</button>
+            <button (click)="generalReport()"
+              class="btn btn-primary mt-3">General Reports</button>
           </div>
         </div>
       </div>
@@ -29,7 +32,8 @@
     <div class="col-md-6 mb-4">
       <div class="card h-150">
         <div class="card-body d-flex flex-column justify-content-between">
-          <p class="card-text text-center mt-3">Report for Notification
+          <p class="card-text text-center mt-3" style="font-weight: 400;">Report
+            for Notification
             Scheduling during Maintenance.</p>
           <div class="center-button text-center">
             <button class="btn btn-primary mt-3">Maintenance Report</button>
@@ -40,7 +44,8 @@
     <div class="col-md-6 mb-4">
       <div class="card h-150">
         <div class="card-body d-flex flex-column justify-content-between">
-          <p class="card-text text-center mt-3">Report for all active users
+          <p class="card-text text-center mt-3" style="font-weight: 400;">Report
+            for all active users
             registered in the system.</p>
           <div class="center-button text-center">
             <button class="btn btn-primary mt-3">User's Report</button>

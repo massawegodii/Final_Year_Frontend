@@ -3,9 +3,7 @@ import { Product } from '../../_model/product_model';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductService } from '../../_services/product.service';
-import { SnackbarService } from '../../_services/snackbar.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FileHandle } from '../../_model/file-handle';
@@ -16,6 +14,7 @@ import { CategoryService } from '../../_services/category.service';
 import { DepartmentService } from '../../_services/department.service';
 import { Category } from '../../_model/category-model';
 import { Department } from '../../_model/department-model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-assets-new',
@@ -39,13 +38,12 @@ export class AssetsNewComponent implements OnInit {
     private router: Router,
     private productServices: ProductService,
     private formBuilder: FormBuilder,
-    private snackbarService: SnackbarService,
     private dialogRef: MatDialogRef<AssetsNewComponent>,
-    private ngxService: NgxUiLoaderService,
     private sanitizer: DomSanitizer,
     private statusService: StatusService,
     private categoryService: CategoryService,
-    private departmentService: DepartmentService
+    private departmentService: DepartmentService,
+    private toastr: ToastrService
   ) {}
 
   product: Product = {
@@ -143,7 +141,6 @@ export class AssetsNewComponent implements OnInit {
 
   addProduct(productForm: NgForm) {
     const formData = this.prepareFormData(this.product);
-    this.ngxService.start();
 
     if (this.data && this.data.product && this.data.product.productId) {
       // If product ID exists, update the product
@@ -173,27 +170,25 @@ export class AssetsNewComponent implements OnInit {
   }
 
   private handleSuccess(response: any) {
-    this.ngxService.stop();
     this.dialogRef.close(response);
     this.responseMessage = response?.message;
-    this.snackbarService.openSnackBar(this.responseMessage, 'success');
+    this.toastr.success('Asset recorded successfully!');
     this.router.navigate(['/dashboard/assets']);
     this.productForm.reset(response);
     this.product.productImages = [];
-    window.location.reload();
+    // Call the refresh function passed in the data
+    if (this.data && this.data.refreshProducts) {
+      this.data.refreshProducts();
+    }
   }
 
   private handleError(error: any) {
-    this.ngxService.stop();
     if (error.error?.message) {
       this.responseMessage = error.error?.message;
     } else {
       this.responseMessage = GlobalConstant.genericError;
     }
-    this.snackbarService.openSnackBar(
-      this.responseMessage,
-      GlobalConstant.error
-    );
+    this.toastr.error(this.responseMessage, GlobalConstant.error);
   }
 
   prepareFormData(product: Product): FormData {

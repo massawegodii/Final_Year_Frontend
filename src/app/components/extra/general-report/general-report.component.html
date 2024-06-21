@@ -1,0 +1,105 @@
+
+<div style="display: flex;">
+  <div style="margin-left: auto; margin-right: 30px; display: flex;" class="mt-4">
+    <button mat-raised-button color="accent">
+      <mat-icon>collections</mat-icon> Report
+    </button>
+  </div>
+</div>
+
+
+<div class="table-container mt-2">
+  <!-- Showing the loader  -->
+  <ng-container *ngIf="!productDetails.length">
+    <div class="col-md-12 single-note-item text-center">
+      <div class="spinner-border text-info" role="status"></div>
+    </div>
+  </ng-container>
+  &nbsp;
+
+  <table mat-table [dataSource]="productDetails"
+    class="mat-elevation-z8 table table-hover">
+
+    <ng-container matColumnDef="Id">
+      <th mat-header-cell *matHeaderCellDef>Number
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.productId }}</td>
+    </ng-container>
+
+    <!-- Product Name Column -->
+    <ng-container matColumnDef="Product Name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
+    </ng-container>
+
+    <!-- productDescription Column -->
+    <ng-container matColumnDef="Product Description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.productDescription }}
+      </td>
+    </ng-container>
+
+    <!-- productPrice Column -->
+    <ng-container matColumnDef="Product Price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element">{{ element.productPrice }}</td>
+    </ng-container>
+
+    <!-- productModel Column -->
+    <ng-container matColumnDef="Product Model">
+      <th mat-header-cell *matHeaderCellDef> Model </th>
+      <td mat-cell *matCellDef="let element">{{ element.productModel }}</td>
+    </ng-container>
+
+    <!-- productStatus Column -->
+    <ng-container matColumnDef="Product Status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element">
+        {{ getStatusName(element.productStatus) }}
+      </td>
+    </ng-container>
+
+    <!-- Asset Type Column -->
+    <ng-container matColumnDef="Asset Type">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell *matCellDef="let element">
+        {{ getProductType(element.productType) }}
+      </td>
+    </ng-container>
+
+    <!-- Category Column -->
+    <ng-container matColumnDef="Product Category">
+      <th mat-header-cell *matHeaderCellDef> Category </th>
+      <td mat-cell *matCellDef="let element">
+        {{ getCategoryName(element.productCategory) }}
+      </td>
+    </ng-container>
+
+    <!-- Product Department Column -->
+    <ng-container matColumnDef="Product Department">
+      <th mat-header-cell *matHeaderCellDef> Department </th>
+      <td mat-cell *matCellDef="let element">
+        {{ getDepartmentName(element.productDepartment) }}
+      </td>
+    </ng-container>
+
+    <!-- productSerialNo Column -->
+    <ng-container matColumnDef="Product Serial Number">
+      <th mat-header-cell *matHeaderCellDef>Serial Number </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.productSerialNo }}
+      </td>
+    </ng-container>
+
+    <!-- productDate Column -->
+    <ng-container matColumnDef="Date Assigned">
+      <th mat-header-cell *matHeaderCellDef>Date Assign</th>
+      <td mat-cell *matCellDef="let element">{{ element.productDate }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>
