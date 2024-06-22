@@ -110,6 +110,7 @@ export class AssetsComponent implements OnInit {
     dialogConfig.data = {
       refreshProducts: () => this.getAllProduct(),
     };
+
     this.dialog.open(AssetsNewComponent, dialogConfig);
   }
 
@@ -216,6 +217,7 @@ export class AssetsComponent implements OnInit {
               userName: product.user?.userName || 'Not Assigned',
             };
           });
+          this.filterProduct();
         },
         (error) => {
           if (error.error?.message) {
@@ -227,6 +229,22 @@ export class AssetsComponent implements OnInit {
           this.toastr.warning(this.responseMessage, GlobalConstant.error);
         }
       );
+  }
+
+  filterProduct(event?: Event) {
+    const filterValue = this.allAssets;
+
+    if (filterValue === 'all') {
+      this.filteredProducts = this.productDetails;
+    } else if (filterValue === 'assign') {
+      this.filteredProducts = this.productDetails.filter(
+        (product: Product) => product['userName'] !== 'Not Assigned'
+      );
+    } else if (filterValue === 'unassign') {
+      this.filteredProducts = this.productDetails.filter(
+        (product: Product) => product['userName'] === 'Not Assigned'
+      );
+    }
   }
 
   //Delete Asset in Admin
@@ -293,28 +311,23 @@ export class AssetsComponent implements OnInit {
     const product = this.productDetails.find((p) => p.productId === productId);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '700px';
-    dialogConfig.data = { product: product };
-    const dialogRef = this.dialog.open(AssetEditComponent, dialogConfig);
+    dialogConfig.data = {
+      product: product,
+      refreshProducts: () => this.getAllProduct(),
+    };
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.getAllProduct();
-      }
-    });
+    this.dialog.open(AssetEditComponent, dialogConfig);
   }
 
   shareProductToUser(productId: any) {
     const product = this.productDetails.find((p) => p.productId === productId);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '700px';
-    dialogConfig.data = { product: product };
-    const dialogRef = this.dialog.open(ShareComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.getAllProduct();
-      }
-    });
+    dialogConfig.data = {
+      product: product,
+      refreshProducts: () => this.getAllProduct(),
+    };
+    this.dialog.open(ShareComponent, dialogConfig);
   }
 
   applFilter(event: Event) {

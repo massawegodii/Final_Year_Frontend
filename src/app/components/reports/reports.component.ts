@@ -14,6 +14,7 @@ import { ProductService } from '../../_services/product.service';
 import { Status } from '../../_model/status_model';
 import { StatusService } from '../../_services/status.service';
 import { ProductDetail, Report } from '../../_model/report_models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-reports',
@@ -42,12 +43,12 @@ export class ReportsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private reportService: ReportService,
-    private snackbarService: SnackbarService,
     private departmentService: DepartmentService,
     private categoryService: CategoryService,
     private productService: ProductService,
     private statusService: StatusService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -113,9 +114,9 @@ export class ReportsComponent implements OnInit {
       // Update dataSource to display in the table
       this.dataSource = [...this.productDetails];
 
-      this.snackbarService.openSnackBar('Product added', 'success');
+      this.toastr.success('Product added', 'success');
     } else {
-      this.snackbarService.openSnackBar(
+      this.toastr.warning(
         GlobalConstant.productExistError,
         GlobalConstant.error
       );
@@ -144,7 +145,7 @@ export class ReportsComponent implements OnInit {
         this.productDetails = [];
         this.dataSource = [];
 
-        this.snackbarService.openSnackBar(
+        this.toastr.success(
           'Report generated successfully!',
           'success'
         );
@@ -154,7 +155,7 @@ export class ReportsComponent implements OnInit {
         if (error.error?.message) {
           errorMessage = error.error.message;
         }
-        this.snackbarService.openSnackBar(errorMessage, 'error');
+        this.toastr.warning(errorMessage, 'error');
       }
     );
   }
@@ -194,7 +195,7 @@ export class ReportsComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.warning(
           this.responseMessage,
           GlobalConstant.error
         );
@@ -214,7 +215,7 @@ export class ReportsComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
+        this.toastr.warning(
           this.responseMessage,
           GlobalConstant.error
         );

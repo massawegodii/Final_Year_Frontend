@@ -12,6 +12,8 @@ import { Status } from '../../../_model/status_model';
 import { ImageProcessingService } from '../../../_services/image-processing.service';
 import { ToastrService } from 'ngx-toastr';
 import { LoadingService } from '../../../_services/loading.service';
+import { ReportService } from '../../../_services/report.service';
+import saveAs from 'file-saver';
 
 @Component({
   selector: 'app-general-report',
@@ -43,7 +45,8 @@ export class GeneralReportComponent implements OnInit {
     private imageProcessingService: ImageProcessingService,
     private departmentService: DepartmentService,
     private toastr: ToastrService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private reportService: ReportService
   ) {}
 
   ngOnInit(): void {
@@ -167,5 +170,18 @@ export class GeneralReportComponent implements OnInit {
           this.toastr.warning(this.responseMessage, GlobalConstant.error);
         }
       );
+  }
+
+  downloadReport(): void {
+    this.reportService.generateProductPdf().subscribe(
+      (response) => {
+        this.toastr.success('Report generated successfully.');
+        const blob = new Blob([response], { type: 'application/pdf' });
+        saveAs(blob, 'SAMS.pdf');
+      },
+      (error) => {
+        this.toastr.warning('Error occurs while generating a report.');
+      }
+    );
   }
 }

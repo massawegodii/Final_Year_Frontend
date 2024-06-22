@@ -84,15 +84,16 @@
     &nbsp;
 
     <div fxFlex fxLayout="column">
-      &nbsp;
       <mat-form-field class="custom-width" appearance="fill">
-        <mat-label>Assign To</mat-label>
-        <input matInput autocomplete="off" />
-        <mat-icon matSuffix>keyboard_double_arrow_up</mat-icon>
-        <mat-error>
-          <span>This is field mandatory.</span>
-          <span>This is field is invalid.</span>
-        </mat-error>
+        <mat-label>Status</mat-label>
+        <mat-select
+          formControlName="productStatus"
+          (selectionChange)="onStatusSelect($event)"
+          required>
+          <mat-option *ngFor="let status of statuses" [value]="status.name">
+            {{ status.name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       &nbsp;
 
@@ -165,57 +166,40 @@
     </div>
 
     <div fxFlex fxLayout="column">
-      <mat-form-field class="custom-width" appearance="fill">
-        <mat-label>Status</mat-label>
-        <mat-select
-          formControlName="productStatus"
-          (selectionChange)="onStatusSelect($event)"
-          required>
-          <mat-option *ngFor="let status of statuses" [value]="status.name">
-            {{ status.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      &nbsp;
 
-      <!-- <mat-form-field class="mat-form">
-        <mat-label>Asset Type</mat-label>
-        <mat-select
-          (selectionChange)="onCategorySelect($event)"
-          formControlName="productCategory"
-          required>
-          <mat-option *ngFor="let category of categories"
-            [value]="category.name">
-            {{ category.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
-      <mat-form-field class="mat-form">
-        <mat-label>Asset Type</mat-label>
-        <mat-select (selectionChange)="onCategorySelect($event)"
-          formControlName="productCategory" required>
-          <mat-option *ngFor="let category of categories"
-            [value]="category.name">
-            {{ category.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+      <div class="select-form">
+        <mat-form-field class="mat-form">
+          <mat-label>Asset Type</mat-label>
+          <mat-select
+            [(ngModel)]="selectedCategory"
+            [(ngModel)]="product.productCategory"
+            (selectionChange)="onCategorySelect($event)"
+            formControlName="productCategory"
+            required>
+            <mat-option *ngFor="let category of categories"
+              [value]="category.name">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-    <div fxFlex fxLayout="column">
-      <mat-form-field class="mat-form">
-        <mat-label>Select Category</mat-label>
-        <mat-select formControlName="productType"
-          (selectionChange)="onProductSelect($event)"
-          required>
-          <mat-option *ngFor="let product of products"
-            [value]="product.productType">
-            {{ product.productType }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <div *ngIf="selectedName.length > 0" class="secondary-select">
+          <div *ngFor="let category of selectedName">
+            <mat-form-field class="mat-form">
+              <mat-label>Select Category</mat-label>
+              <mat-select formControlName="productType"
+                [(ngModel)]="product.productType"
+                required>
+                <mat-option *ngFor="let option of category.categories"
+                  [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
     </div>
-    &nbsp;
   </form>
 
   &nbsp;
@@ -225,7 +209,7 @@
       color="primary"
       type="submit"
       (click)="handleSubmit()"
-      [disabled]="!(productForm.valid && productForm.dirty)">
+      [disabled]="!productForm.valid">
       <mat-icon>update</mat-icon>
       Update
     </button>

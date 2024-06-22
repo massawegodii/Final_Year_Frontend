@@ -136,7 +136,10 @@ export class ShareComponent implements OnInit {
         this.toastr.success('Asset assigned successfully to the user');
         this.dialogRef.close();
         this.router.navigate(['/dashboard/assets']);
-        window.location.reload();
+        // Call the refresh function passed in the data
+        if (this.data && this.data.refreshProducts) {
+          this.data.refreshProducts();
+        }
       },
       (error) => {
         this.toastr.error();

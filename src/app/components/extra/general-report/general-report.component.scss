@@ -39,3 +39,14 @@ th {
   max-height: auto;
   overflow-y: auto;
 }
+
+
+button {
+  border-radius: 50px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+  background-color: #ff4081;
+  transform: scale(1.05);
+}

@@ -1,4 +1,4 @@
-<div class="container table-container mt-3" >
+<div class="container table-container mt-3">
   <h1 style="font-weight: bold">Assets</h1>
 
   <div style="display: flex; justify-content: flex-end">
@@ -15,8 +15,9 @@
   </div>
 
   <span>
-    <select name="status"
+    <select
       [(ngModel)]="allAssets"
+      (change)="filterProduct($event)"
       class="btn btn-primary">
       <option value="all" [disabled]="allAssets === 'all'">All Assets</option>
       <option value="assign" [disabled]="allAssets === 'assign'">Assign

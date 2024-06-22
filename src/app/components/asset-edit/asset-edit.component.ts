@@ -14,6 +14,7 @@ import { Status } from '../../_model/status_model';
 import { CategoryService } from '../../_services/category.service';
 import { DepartmentService } from '../../_services/department.service';
 import { StatusService } from '../../_services/status.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-asset-edit',
@@ -40,12 +41,11 @@ export class AssetEditComponent implements OnInit {
     private router: Router,
     public productServices: ProductService,
     private formBuilder: FormBuilder,
-    private snackbarService: SnackbarService,
-    private ngxService: NgxUiLoaderService,
     private statusService: StatusService,
     private categoryService: CategoryService,
     private departmentService: DepartmentService,
     private productService: ProductService,
+    private toastr: ToastrService,
     private dialogRef: MatDialogRef<AssetEditComponent>
   ) {}
 
@@ -91,16 +91,10 @@ export class AssetEditComponent implements OnInit {
         null,
         [Validators.required, Validators.pattern(GlobalConstant.number)],
       ],
-      qrCode: [null],
-      productImages: [null],
       productStatus: [this.product.productStatus, Validators.required],
       productCategory: [this.product.productCategory, Validators.required],
       productDepartment: [this.product.productDepartment, Validators.required],
       productType: [this.product.productType, Validators.required],
-
-      user: this.formBuilder.group({
-        userName: [this.product.user.userName, Validators.required],
-      }),
     });
 
     if (this.data && this.data.product) {
@@ -136,10 +130,6 @@ export class AssetEditComponent implements OnInit {
         productCategory: this.product.productCategory,
         productType: this.product.productType,
         productDepartment: this.product.productDepartment,
-
-        user: {
-          userName: this.product.user.userName,
-        },
       });
     }
     this.getAllStatus();
@@ -149,29 +139,26 @@ export class AssetEditComponent implements OnInit {
   }
 
   handleSubmit() {
-    this.ngxService.start();
     const formData = this.productForm.value;
 
     this.productServices.updateAssets(formData).subscribe(
       (response: any) => {
-        this.ngxService.stop();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success('Asset Updated Successfully.');
         this.dialogRef.close();
         this.router.navigate(['/dashboard/assets']);
-        window.location.reload();
+        // Call the refresh function passed in the data
+        if (this.data && this.data.refreshProducts) {
+          this.data.refreshProducts();
+        }
       },
       (error) => {
-        this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.error(this.responseMessage, GlobalConstant.error);
       }
     );
   }

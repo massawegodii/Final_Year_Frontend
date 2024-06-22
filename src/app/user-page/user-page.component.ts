@@ -192,7 +192,7 @@ export class UserPageComponent implements OnInit {
       (response) => {
         dialogRef.close();
         this.userAuthService.clear();
-        this.toastr.success('You have logout in your account!');
+        this.toastr.success('You have logout in your account! Welcome to SAMS');
         this.router.navigate(['/']);
       }
     );

@@ -5,8 +5,7 @@
     <button
       class="mat-dialog-close custom-close-button"
       mat-icon-button
-      mat-dialog-close
-    >
+      mat-dialog-close>
       <mat-icon>close</mat-icon>
     </button>
   </mat-toolbar-row>
@@ -22,8 +21,7 @@
           matInput
           formControlName="productId"
           autocomplete="off"
-          readonly
-        />
+          readonly />
       </mat-form-field>
       &nbsp;
 
@@ -33,21 +31,19 @@
           matInput
           formControlName="productName"
           autocomplete="off"
-          readonly
-        />
+          readonly />
         <mat-icon matSuffix>person_circle</mat-icon>
         <mat-error
           *ngIf="
             assignForm.controls['productName'].touched &&
             assignForm.controls['productName'].invalid
-          "
-        >
-          <span *ngIf="assignForm.controls['productName'].hasError('required')"
-            >This is field mandatory.</span
-          >
-          <span *ngIf="assignForm.controls['productName'].hasError('pattern')"
-            >This is field is invalid.</span
-          >
+          ">
+          <span
+            *ngIf="assignForm.controls['productName'].hasError('required')">This
+            is field mandatory.</span>
+          <span
+            *ngIf="assignForm.controls['productName'].hasError('pattern')">This
+            is field is invalid.</span>
         </mat-error>
       </mat-form-field>
       &nbsp;
@@ -58,25 +54,33 @@
           matInput
           formControlName="productPrice"
           autocomplete="off"
-          readonly
-        />
+          readonly />
         <mat-icon matSuffix>payments</mat-icon>
         <mat-error
           *ngIf="
             assignForm.controls['productPrice'].touched &&
             assignForm.controls['productPrice'].invalid
-          "
-        >
-          <span *ngIf="assignForm.controls['productPrice'].hasError('required')"
-            >This is field mandatory.</span
-          >
-          <span *ngIf="assignForm.controls['productPrice'].hasError('required')"
-            >This is field is invalid.</span
-          >
+          ">
+          <span
+            *ngIf="assignForm.controls['productPrice'].hasError('required')">This
+            is field mandatory.</span>
+          <span
+            *ngIf="assignForm.controls['productPrice'].hasError('required')">This
+            is field is invalid.</span>
         </mat-error>
       </mat-form-field>
       &nbsp;
-
+      <mat-form-field class="custom-width" appearance="fill">
+        <mat-label>Department</mat-label>
+        <mat-select
+          formControlName="productDepartment"
+          required>
+          <mat-option *ngFor="let department of departments"
+            [value]="department.name">
+            {{ department.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
     <div fxFlex fxLayout="column">
@@ -87,43 +91,38 @@
           matInput
           formControlName="productSerialNo"
           autocomplete="off"
-          readonly
-        />
+          readonly />
         <mat-icon matSuffix>dialpad</mat-icon>
         <mat-error
           *ngIf="
             assignForm.controls['productSerialNo'].touched &&
             assignForm.controls['productSerialNo'].invalid
-          "
-        >
+          ">
           <span
-            *ngIf="assignForm.controls['productSerialNo'].hasError('required')"
-            >This is field mandatory.</span
-          >
+            *ngIf="assignForm.controls['productSerialNo'].hasError('required')">This
+            is field mandatory.</span>
           <span
-            *ngIf="assignForm.controls['productSerialNo'].hasError('required')"
-            >This is field is invalid.</span
-          >
+            *ngIf="assignForm.controls['productSerialNo'].hasError('required')">This
+            is field is invalid.</span>
         </mat-error>
       </mat-form-field>
       &nbsp;
 
       <mat-form-field class="custom-width" appearance="fill">
         <mat-label>Username</mat-label>
-        <mat-select 
-           formControlName="userName"
-           (selectionChange)="onAssignUserNameSelect($event)"
+        <mat-select
+          formControlName="userName"
+          (selectionChange)="onAssignUserNameSelect($event)"
           [(value)]="selectedUserName"
-          required
-        >
-          <mat-option  *ngFor="let user of users" [value]="user.userName">
+          required>
+          <mat-option *ngFor="let user of users" [value]="user.userName">
             {{ user.userName }}
           </mat-option>
         </mat-select>
       </mat-form-field>
       &nbsp;
     </div>
-    
+
     &nbsp;
 
     <div fxFlex fxLayout="column">
@@ -135,30 +134,24 @@
           formControlName="productDescription"
           placeholder="Enter your notes here"
           autocomplete="off"
-          readonly
-        ></textarea>
+          readonly></textarea>
         <mat-icon matSuffix>description</mat-icon>
         <mat-error
           *ngIf="
             assignForm.controls['productDescription'].touched &&
             assignForm.controls['productDescription'].invalid
-          "
-        >
+          ">
           <span
             *ngIf="
               assignForm.controls['productDescription'].hasError('required')
-            "
-            >This is field mandatory.</span
-          >
+            ">This is field mandatory.</span>
           <span
             *ngIf="
               assignForm.controls['productDescription'].hasError('required')
-            "
-            >This is field is invalid.</span
-          >
+            ">This is field is invalid.</span>
         </mat-error>
       </mat-form-field>
-      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      &nbsp; &nbsp; &nbsp; 
 
       <mat-form-field class="custom-width" appearance="fill">
         <mat-label>Model</mat-label>
@@ -166,21 +159,19 @@
           matInput
           formControlName="productModel"
           autocomplete="off"
-          readonly
-        />
+          readonly />
         <mat-icon matSuffix>badge</mat-icon>
         <mat-error
           *ngIf="
             assignForm.controls['productModel'].touched &&
             assignForm.controls['productModel'].invalid
-          "
-        >
-          <span *ngIf="assignForm.controls['productModel'].hasError('required')"
-            >This is field mandatory.</span
-          >
-          <span *ngIf="assignForm.controls['productModel'].hasError('required')"
-            >This is field is invalid.</span
-          >
+          ">
+          <span
+            *ngIf="assignForm.controls['productModel'].hasError('required')">This
+            is field mandatory.</span>
+          <span
+            *ngIf="assignForm.controls['productModel'].hasError('required')">This
+            is field is invalid.</span>
         </mat-error>
       </mat-form-field>
       &nbsp;
@@ -195,8 +186,7 @@
       color="primary"
       type="submit"
       (click)="handleSubmit()"
-      [disabled]="!(assignForm.valid && assignForm.dirty)"
-    >
+      [disabled]="!(assignForm.valid && assignForm.dirty)">
       <mat-icon>rocket_launch</mat-icon>
       Assign
     </button>
