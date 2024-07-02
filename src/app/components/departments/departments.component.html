@@ -2,7 +2,7 @@
   <h1 style="font-weight: bold">Department</h1>
 
   <div style="display: flex; justify-content: flex-end">
-    <button mat-raised-button color="primary"  (click)="addDepartment()">
+    <button mat-raised-button color="primary" (click)="addDepartment()">
       <mat-icon>domain_add</mat-icon> Create New
     </button>
   </div>
@@ -32,8 +32,7 @@
               mat-icon-button
               matTooltip="Edit"
               color="primary"
-              (click)="editDepartment(element)"
-            >
+              (click)="editDepartment(element)">
               <mat-icon>edit</mat-icon>
             </button>
 
@@ -41,8 +40,7 @@
               mat-icon-button
               matTooltip="Delete"
               color="warn"
-              (click)="deleteDepartment(element.id)"
-            >
+              (click)="deleteDepartment(element.id)">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-cell>

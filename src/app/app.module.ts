@@ -100,7 +100,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   textPosition: 'center-center',
   bgsColor: '#00FF00',
   fgsColor: '#00FF00',
-  fgsType: SPINNER.squareJellyBox,
+  fgsType: SPINNER.ballSpin,
   fgsSize: 100,
   hasProgressBar: false,
 };

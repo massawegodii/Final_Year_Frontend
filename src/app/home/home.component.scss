@@ -116,3 +116,95 @@ table {
   transform: translateY(4px);
   transition: transform 0.1s ease;
 }
+
+
+.auth-log-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.auth-log-table th,
+.auth-log-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.auth-log-table th {
+  background-color: #f2f2f2;
+  color: #333333;
+}
+
+.auth-log-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.auth-log-table tbody tr:hover {
+  background-color: #e2e2e2;
+}
+
+
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 10%;
+  width: 30%;
+}
+
+.close {
+  color: #aaa;
+  float: left;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.auth-log-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.auth-log-table th,
+.auth-log-table td {
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.auth-log-table th {
+  background-color: #f2f2f2;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.auth-log-table td {
+  border-bottom: 1px solid #ddd;
+}
+
+.auth-log-table th,
+.auth-log-table td:last-child {
+  position: relative;
+}
+
+
+

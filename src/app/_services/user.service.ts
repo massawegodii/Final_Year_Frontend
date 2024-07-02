@@ -3,6 +3,8 @@ import { Injectable, OnInit } from '@angular/core';
 import { UserAuthService } from './UserAuthService';
 import { User } from '../_model/users_model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
+import { UserEvents } from '../_model/user-event';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +37,6 @@ export class UserService implements OnInit {
       }
     );
   }
-
 
   public getAllUsers() {
     return this.httpClient.get<User[]>(
@@ -83,6 +84,10 @@ export class UserService implements OnInit {
     } else {
       return throwError('userName is undefined or null');
     }
+  }
+
+  public getUserEvents(): Observable<UserEvents[]> {
+    return this.httpClient.get<UserEvents[]>('http://localhost:8080/authLogs');
   }
 
   public unblockUser(userName: any) {

@@ -180,7 +180,12 @@ export class GeneralReportComponent implements OnInit {
         saveAs(blob, 'SAMS.pdf');
       },
       (error) => {
-        this.toastr.warning('Error occurs while generating a report.');
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstant.genericError;
+        }
+        this.toastr.warning(this.responseMessage);
       }
     );
   }

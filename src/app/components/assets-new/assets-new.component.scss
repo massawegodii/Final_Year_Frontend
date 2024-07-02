@@ -86,3 +86,13 @@
 mat-dialog-actions {
   margin-top: -70px;
 }
+
+.button-hover:hover {
+  background-color: #1976d2;
+  color: white;
+}
+
+.button-hover-warn:hover {
+  background-color: #d32f2f;
+  color: white;
+}

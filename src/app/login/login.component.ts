@@ -6,6 +6,7 @@ import { UserService } from '../_services/user.service';
 import { Router } from '@angular/router';
 import { UserAuthService } from '../_services/UserAuthService';
 import { ToastrService } from 'ngx-toastr';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
     private dialogRef: MatDialogRef<LoginComponent>,
     private userService: UserService,
     private router: Router,
+    private ngxLoader: NgxUiLoaderService,
     private userAuthService: UserAuthService,
     private toastr: ToastrService
   ) {}
@@ -34,6 +36,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     var formData = this.loginForm.value;
+    this.ngxLoader.start();
 
     var data = {
       userName: formData.userName,
@@ -41,7 +44,6 @@ export class LoginComponent implements OnInit {
     };
 
     if (this.loginForm.invalid) {
-      // Mark fields as touched to display errors
       this.loginForm.markAllAsTouched();
       return;
     }
@@ -49,14 +51,12 @@ export class LoginComponent implements OnInit {
     this.userService.login(data).subscribe(
       (response: any) => {
         this.dialogRef.close();
+        this.ngxLoader.stop();
         this.responseMessage = response?.message;
         this.toastr.success('Sucessfully Login in your account!');
 
         this.userAuthService.setRoles(response.user.role);
         this.userAuthService.setToken(response.jwtToken);
-
-        // console.log(response.user.role);
-        // console.log(response.jwtToken);
 
         const role = response.user.role[0].roleName;
         if (role === 'Admin') {
@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         console.log(error);
+        this.ngxLoader.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {

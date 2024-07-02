@@ -87,6 +87,10 @@ export class AssetsNewComponent implements OnInit {
         null,
         [Validators.required, Validators.pattern(GlobalConstant.number)],
       ],
+      productStatus: [null],
+      productCategory: [null],
+      productType: [null],
+      productDepartment: [null],
       productImages: [null],
       qrCode: [null],
 
@@ -188,7 +192,7 @@ export class AssetsNewComponent implements OnInit {
     } else {
       this.responseMessage = GlobalConstant.genericError;
     }
-    this.toastr.error(this.responseMessage, GlobalConstant.error);
+    this.toastr.error('Invalid some field are empty.');
   }
 
   prepareFormData(product: Product): FormData {

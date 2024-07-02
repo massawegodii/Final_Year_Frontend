@@ -6,6 +6,8 @@ import { MaintenanceService } from '../_services/maintenance.service';
 import { Maintanance } from '../_model/maintanance_model';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../_services/user.service';
+import { UserEvents } from '../_model/user-event';
 
 @Component({
   selector: 'app-home',
@@ -22,12 +24,18 @@ export class HomeComponent implements OnInit {
   itemsPerPage: number = 30;
   totalItems: number = 60;
 
+  authLogs: any[] = [];
+
+  selectedUserTimestamps: any[] = [];
+  showTimestamps: boolean = false;
+
   maintenanceDetails: Maintanance[] = [];
   displayedColumns: string[] = ['Information', 'Date', 'Time', 'Actions'];
 
   constructor(
     private dashboardService: DashboardService,
     private maintenanceService: MaintenanceService,
+    private userService: UserService,
     private toastr: ToastrService,
     private dialog: MatDialog
   ) {}
@@ -35,67 +43,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getAllSchedule();
     this.dashboardDetails();
-
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-    const textColorSecondary = documentStyle.getPropertyValue(
-      '--text-color-secondary'
-    );
-
-    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-    this.basicData = {
-      labels: ['Assets', 'Total Employees', 'Maintenance', 'Reports'],
-      datasets: [
-        {
-          label: 'SAMS GRAPH',
-          data: [540, 325, 702, 620],
-          backgroundColor: [
-            'rgba(0, 27, 240, 0.8)',
-            'rgba(3, 107, 3, 0.76)',
-            'rgba(151, 171, 7, 0.76)',
-            'rgba(201, 6, 160, 0.81)',
-          ],
-          borderColor: [
-            'rgb(255, 159, 64)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-
-    this.basicOptions = {
-      plugins: {
-        legend: {
-          labels: {
-            color: textColor,
-          },
-        },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-        x: {
-          ticks: {
-            color: textColorSecondary,
-          },
-          grid: {
-            color: surfaceBorder,
-            drawBorder: false,
-          },
-        },
-      },
-    };
+    this.getUserEvents();
   }
 
   get totalPages(): number {
@@ -114,7 +62,6 @@ export class HomeComponent implements OnInit {
     this.dashboardService.getDashboardDetails().subscribe(
       (response: any) => {
         this.data = response;
-        console.log(response);
       },
       (error) => {
         if (error.error?.message) {
@@ -131,7 +78,6 @@ export class HomeComponent implements OnInit {
     this.maintenanceService.getAllSechedule().subscribe(
       (response: Maintanance[]) => {
         this.maintenanceDetails = response;
-        console.log(response);
       },
       (error) => {
         console.log(error);
@@ -157,5 +103,51 @@ export class HomeComponent implements OnInit {
         );
       }
     });
+  }
+
+  public getUserEvents(): void {
+    this.userService.getUserEvents().subscribe(
+      (response: any) => {
+        const groupedLogs = response.reduce((acc: any, log: any) => {
+          if (!acc[log.username]) {
+            acc[log.username] = {
+              username: log.username,
+              ipAddress: log.ipAddress,
+              attemptCount: 0,
+              success: log.success,
+              timestamp: log.timestamp,
+              timestamps: [],
+            };
+          }
+          acc[log.username].attemptCount += 1;
+          acc[log.username].timestamps.push(log.timestamp); 
+
+          // Update the success status and timestamp if it's the latest attempt
+          if (new Date(log.timestamp) > new Date(acc[log.username].timestamp)) {
+            acc[log.username].success = log.success;
+            acc[log.username].timestamp = log.timestamp;
+          }
+          return acc;
+        }, {});
+
+        this.authLogs = Object.values(groupedLogs).sort(
+          (a: any, b: any) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        );
+        console.log(this.authLogs);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  public viewAllTimestamps(log: any): void {
+    this.selectedUserTimestamps = log.timestamps;
+    this.showTimestamps = true;
+  }
+
+  public closeTimestamps(): void {
+    this.showTimestamps = false;
   }
 }

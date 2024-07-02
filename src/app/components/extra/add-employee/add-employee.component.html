@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div class="container mt-3">
   <div class="modal-header">
     <h2 style="font-weight: bold; text-align: center">
       {{ dialogData.action }} Employee
@@ -8,13 +8,13 @@
       <span aria-hidden="true">&times;</span>
     </a>
   </div>
-  <div class="modal-body">
+  <div class="container">
     <form [formGroup]="addUserForm">
       <div class="row">
         <div class="col-md-6">
+          &nbsp;
           <div class="form-group">
             <input
-              matInput
               class="form-control"
               formControlName="userFirstName"
               placeholder="First Name"
@@ -34,7 +34,7 @@
                 field is invalid.</span>
             </mat-error>
           </div>
-
+          &nbsp;
           <div class="form-group">
             <input
               type="text"
@@ -55,7 +55,7 @@
                 field is invalid.</span>
             </mat-error>
           </div>
-
+          &nbsp; &nbsp;
           <div class="form-group">
             <input
               type="email"
@@ -76,6 +76,7 @@
                 is invalid.</span>
             </mat-error>
           </div>
+          &nbsp;
           <div class="form-group">
             <select class="form-select" formControlName="role">
               <mat-select disableRipple>Role</mat-select>
@@ -98,6 +99,7 @@
         </div>
 
         <div class="col-md-6">
+          &nbsp;
           <div class="form-group">
             <input
               matInput
@@ -120,7 +122,7 @@
                 field is invalid.</span>
             </mat-error>
           </div>
-
+          &nbsp;
           <div class="form-group">
             <input
               type="text"
@@ -142,7 +144,7 @@
                 field is invalid.</span>
             </mat-error>
           </div>
-
+          &nbsp;
           <div class="form-group">
             <input
               type="password"
@@ -166,7 +168,7 @@
                 field is invalid.</span>
             </mat-error>
           </div>
-
+          &nbsp;
           <div class="form-group">
             <input
               type="text"
@@ -189,6 +191,7 @@
           </div>
         </div>
       </div>
+      &nbsp; &nbsp;
       <div class="modal-footer">
         <button
           (click)="handleSubmit()"
@@ -198,6 +201,7 @@
           {{ action }} changes
         </button>
       </div>
+      &nbsp; &nbsp;
     </form>
   </div>
 </div>

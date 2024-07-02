@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Department } from '../../_model/department-model';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteStatusComponent } from '../extra/delete-status/delete-status.component';
 
 @Component({
   selector: 'app-departments',
@@ -21,7 +22,7 @@ export class DepartmentsComponent implements OnInit {
     private dialog: MatDialog,
     private departmentService: DepartmentService,
     private router: Router,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -39,10 +40,7 @@ export class DepartmentsComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.toastr.info(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
       }
     );
   }
@@ -84,31 +82,28 @@ export class DepartmentsComponent implements OnInit {
   }
 
   deleteDepartment(id: any) {
-    const isConfirmed = window.confirm(
-      'Are you sure you want to delete this User?'
-    );
+    const dialogRef = this.dialog.open(DeleteStatusComponent);
 
-    if (isConfirmed) {
-      this.departmentService.deleteDepartment(id).subscribe(
-        (response: any) => {
-          this.responseMessage = response?.message;
-          this.toastr.success('Department deleted successfully');
-          this.departmentTable();
-        },
-        (error) => {
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstant.genericError;
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.departmentService.deleteDepartment(id).subscribe(
+          (response: any) => {
+            this.responseMessage = response?.message;
+            this.toastr.success('Department deleted successfully');
+            this.departmentTable();
+          },
+          (error) => {
+            if (error.error?.message) {
+              this.responseMessage = error.error?.message;
+            } else {
+              this.responseMessage = GlobalConstant.genericError;
+            }
+            this.toastr.info(this.responseMessage, GlobalConstant.error);
           }
-          this.toastr.info(
-            this.responseMessage,
-            GlobalConstant.error
-          );
-        }
-      );
-    } else {
-      console.log('Deletion canceled.');
-    }
+        );
+      } else {
+        console.log('Deletion canceled.');
+      }
+    });
   }
 }

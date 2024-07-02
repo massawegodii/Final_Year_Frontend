@@ -53,24 +53,6 @@ export class HeaderComponent implements OnInit {
     window.open('http://localhost:8080/', '_blank');
   }
 
-  public logout() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      message: 'Logout',
-      confirmation: true,
-    };
-
-    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
-    const sub = dialogRef.componentInstance.onEmitterStatusChange.subscribe(
-      (response) => {
-        dialogRef.close();
-        this.userAuthService.clear();
-        this.toastr.success('You have logout in your account! Welcome to SAMS');
-        this.router.navigate(['/']);
-      }
-    );
-  }
-
   openProfile() {
     const componentFactory =
       this.componentFactoryResolver.resolveComponentFactory(ProfileComponent);
@@ -84,5 +66,39 @@ export class HeaderComponent implements OnInit {
     dialogConfig.height = '500px';
     dialogConfig.position = { top: '0' };
     this.dialog.open(UpdatesComponent, dialogConfig);
+  }
+
+  public logout() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'Logout',
+      confirmation: true,
+    };
+
+    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitterStatusChange.subscribe(
+      (response) => {
+        dialogRef.close();
+        this.clearCacheAndSession();
+        this.userAuthService.clear();
+        this.toastr.success('You have logout in your account! Welcome to SAMS');
+        this.router.navigate(['/']);
+      }
+    );
+  }
+
+  private clearCacheAndSession() {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.clearCookies();
+  }
+
+  private clearCookies() {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+      const eqPos = cookie.indexOf('=');
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+    }
   }
 }

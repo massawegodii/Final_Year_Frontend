@@ -1,6 +1,6 @@
 <mat-toolbar>
   <mat-toolbar-row fxLayout="row">
-    <span class="custom-title">{{dialogData.action}} Category</span>
+    <span class="custom-title">{{dialogData.action}} Asset</span>
     <span class="spacer"></span>
     <button
       class="mat-dialog-close custom-close-button"
@@ -15,7 +15,7 @@
   <form [formGroup]="categoryForm">
     <div fxFlex fxLayout="column">
       <mat-form-field appearance="fill" fxFlex>
-        <mat-label>Category Name</mat-label>
+        <mat-label>Asset Name</mat-label>
         <input matInput formControlName="name" required />
         <mat-icon matSuffix>category</mat-icon>
         <mat-error

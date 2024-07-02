@@ -1,0 +1,65 @@
+
+/* Modal Header */
+.modal-header {
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
+}
+
+.modal-header .modal-title {
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.modal-header a {
+  background-color: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 24px;
+  text-decoration: none;
+}
+
+.modal-header a:hover {
+  color: #555;
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body p {
+  font-size: 18px;
+  margin: 0;
+}
+
+/* Modal Footer */
+.modal-footer {
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 20px;
+}
+
+.modal-footer .btn {
+  margin-left: 10px;
+}
+
+.modal-footer .btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+.modal-footer .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+.modal-footer .btn-secondary:hover,
+.modal-footer .btn-danger:hover {
+  opacity: 0.8;
+}

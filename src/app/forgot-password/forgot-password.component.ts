@@ -51,7 +51,7 @@ export class ForgotPasswordComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.toastr.success(this.responseMessage, GlobalConstant.error);
+        this.toastr.error(this.responseMessage);
       }
     );
   }

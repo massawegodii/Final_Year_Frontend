@@ -65,7 +65,8 @@ export class AssetsComponent implements OnInit {
     private departmentService: DepartmentService,
     private qrcodeService: QrcodeService,
     private toastr: ToastrService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private toastrServices: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -79,12 +80,16 @@ export class AssetsComponent implements OnInit {
     return Math.ceil(this.totalItems / this.itemsPerPage);
   }
 
-  get pages(): number[] {
-    const pagesArray: number[] = [];
-    for (let i = 1; i <= this.totalPages; i++) {
-      pagesArray.push(i);
+  goToPreviousPage(): void {
+    if (this.p > 1) {
+      this.p--;
     }
-    return pagesArray;
+  }
+
+  goToNextPage(): void {
+    if (this.p < this.totalPages) {
+      this.p++;
+    }
   }
 
   key: string = '';
@@ -262,6 +267,7 @@ export class AssetsComponent implements OnInit {
     this.productService.deleteProductDetails(productId).subscribe(
       (response) => {
         this.getAllProduct();
+        this.toastrServices.success('Asset Deleted Successfully!');
       },
       (error: HttpErrorResponse) => {
         console.log(error);

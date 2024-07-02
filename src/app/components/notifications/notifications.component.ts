@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ProductService } from '../../_services/product.service';
-import { SnackbarService } from '../../_services/snackbar.service';
 import { Request } from '../../_model/request-asset';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { DeleteStatusComponent } from '../extra/delete-status/delete-status.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-notifications',
@@ -19,9 +18,8 @@ export class NotificationsComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private ngxService: NgxUiLoaderService,
-    private snackbarService: SnackbarService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -40,10 +38,7 @@ export class NotificationsComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.error(this.responseMessage, GlobalConstant.error);
       }
     );
   }
@@ -58,7 +53,7 @@ export class NotificationsComponent implements OnInit {
       (response: any) => {
         this.getAllRequest();
         this.responseMessage = response?.message;
-        this.snackbarService.openSnackBar(this.responseMessage, 'success');
+        this.toastr.success(this.responseMessage);
       },
       (error) => {
         if (error.error?.message) {
@@ -66,10 +61,7 @@ export class NotificationsComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.snackbarService.openSnackBar(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.error(this.responseMessage, GlobalConstant.error);
       }
     );
   }

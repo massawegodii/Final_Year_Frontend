@@ -1,21 +1,99 @@
-.input-with-icon {
-    position: relative;
-  }
-  
-  .input-with-icon input {
-    padding-right: 35px; /* Adjust as needed to accommodate the icon */
-  }
-  
-  .input-with-icon button {
-    position: absolute;
-    color: green;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-    z-index: 1;
-  }
-  
+
+
 .success-snackbar {
   background-color: #4caf50; /* Green */
   color: white;
+}
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+}
+
+.card-header {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  padding-right: 40px;
+  /* space for the icon button */
+}
+
+.input-with-icon button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+textarea.form-control {
+  resize: none;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+button[type="submit"]:disabled {
+  background-color: #007bff;
+  border-color: #007bff;
+  opacity: 0.65;
+}
+
+button[type="button"] {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+button[type="button"]:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+button mat-icon {
+  vertical-align: middle;
+}
+
+button[mat-dialog-close] {
+  background-color: #f44336;
+  border-color: #f44336;
+  color: white;
+}
+
+button[mat-dialog-close]:hover {
+  background-color: #d32f2f;
+  border-color: #c62828;
+}
+
+button[mat-dialog-close] mat-icon {
+  vertical-align: middle;
 }

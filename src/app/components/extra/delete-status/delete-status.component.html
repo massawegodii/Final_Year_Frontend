@@ -1,15 +1,17 @@
-<div class="card" style="background-color: rgb(202, 240, 202);">
-  <h1 class="text-center" mat-dialog-title>Confirmation</h1>
+<div class="container">
+  <div>
+    <h1 class="text-center" mat-dialog-title>Confirmation</h1>
+  </div>
+  <hr>
+  <mat-dialog-content>
+    <h4>Are you sure you want to delete?</h4>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="accent" [mat-dialog-close]="true">
+      <mat-icon>delete_forever</mat-icon> Delete
+    </button>
+    <button mat-raised-button color="primary" mat-dialog-close>
+      <mat-icon>close</mat-icon> Cancel
+    </button>
+  </mat-dialog-actions>
 </div>
-<span class="spacer"></span>
-<mat-dialog-content>
-<h4>Are you sure you want to delete the Status?</h4>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-<button mat-raised-button color="accent" [mat-dialog-close]="true">
-  <mat-icon>delete</mat-icon> Delete
-</button>
-<button mat-raised-button color="primary" mat-dialog-close>
-  <mat-icon>close</mat-icon> Cancel
-</button>
-</mat-dialog-actions>

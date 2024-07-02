@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { ViewStatusComponent } from '../extra/view-status/view-status.component';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteStatusComponent } from '../extra/delete-status/delete-status.component';
 
 @Component({
   selector: 'app-status',
@@ -86,32 +87,29 @@ export class StatusComponent implements OnInit {
   }
 
   public deleteStatus(id: any) {
-    const isConfirmed = window.confirm(
-      'Are you sure you want to delete this User?'
-    );
+    const dialogRef = this.dialog.open(DeleteStatusComponent);
 
-    if (isConfirmed) {
-      this.statusService.deleteStatus(id).subscribe(
-        (response: any) => {
-          this.responseMessage = response?.message;
-          this.toastr.success("Status deleted Successfully!")
-          this.tableStatus();
-        },
-        (error) => {
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstant.genericError;
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.statusService.deleteStatus(id).subscribe(
+          (response: any) => {
+            this.responseMessage = response?.message;
+            this.toastr.success('Status deleted Successfully!');
+            this.tableStatus();
+          },
+          (error) => {
+            if (error.error?.message) {
+              this.responseMessage = error.error?.message;
+            } else {
+              this.responseMessage = GlobalConstant.genericError;
+            }
+            this.toastr.info(this.responseMessage, GlobalConstant.error);
           }
-          this.toastr.info(
-            this.responseMessage,
-            GlobalConstant.error
-          );
-        }
-      );
-    } else {
-      console.log('Deletion canceled.');
-    }
+        );
+      } else {
+        console.log('Deletion canceled.');
+      }
+    });
   }
 
   viewStatusList(id: number): void {

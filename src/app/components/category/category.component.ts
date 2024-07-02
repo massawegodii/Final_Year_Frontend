@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../../_services/category.service';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteStatusComponent } from '../extra/delete-status/delete-status.component';
 
 @Component({
   selector: 'app-category',
@@ -81,28 +82,27 @@ export class CategoryComponent implements OnInit {
   }
 
   deleteCategory(id: any) {
-    const isConfirmed = window.confirm(
-      'Are you sure you want to delete this User?'
-    );
-
-    if (isConfirmed) {
-      this.categoryService.deleteCategory(id).subscribe(
-        (response: any) => {
-          this.responseMessage = response?.message;
-          this.toastr.success('Category deleted successfully!');
-          this.categoryTable();
-        },
-        (error) => {
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstant.genericError;
+    const dialogRef = this.dialog.open(DeleteStatusComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.categoryService.deleteCategory(id).subscribe(
+          (response: any) => {
+            this.responseMessage = response?.message;
+            this.toastr.success('Category deleted successfully!');
+            this.categoryTable();
+          },
+          (error) => {
+            if (error.error?.message) {
+              this.responseMessage = error.error?.message;
+            } else {
+              this.responseMessage = GlobalConstant.genericError;
+            }
+            this.toastr.info(this.responseMessage, GlobalConstant.error);
           }
-          this.toastr.info(this.responseMessage, GlobalConstant.error);
-        }
-      );
-    } else {
-      console.log('Deletion canceled.');
-    }
+        );
+      } else {
+        console.log('Deletion canceled.');
+      }
+    });
   }
 }

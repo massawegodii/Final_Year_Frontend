@@ -133,7 +133,7 @@ export class ShareComponent implements OnInit {
     this.productService.assignToUser(formData).subscribe(
       (response: any) => {
         this.responseMessage = response?.message;
-        this.toastr.success('Asset assigned successfully to the user');
+        this.toastr.success(this.responseMessage);
         this.dialogRef.close();
         this.router.navigate(['/dashboard/assets']);
         // Call the refresh function passed in the data
