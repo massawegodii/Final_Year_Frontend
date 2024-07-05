@@ -27,9 +27,7 @@
             <img src="./assets/img/logo2.jpg" alt class="user-image mr-1 p-2" />
           </button>
           <mat-menu #menu="matMenu">
-            <button (click)="openProfile()" data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasRight"
-              aria-controls="offcanvasRight" mat-menu-item>
+            <button routerLink="/dashboard/profile" mat-menu-item>
               <mat-icon>admin_panel_settings</mat-icon>
               Profile
             </button>

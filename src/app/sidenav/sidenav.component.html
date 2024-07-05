@@ -4,8 +4,8 @@
     <div class="profile-header">
       <img [src]="loggedUser?.imageUrl || 'assets/img/image-placeholder.png'"
         class="profile-img">
-      <div class="profile-info" *ngIf="loggedUser">
-        <h4 class="profile-name">{{loggedUser.userFirstName}}, Admin</h4>
+      <div class="profile-info">
+        <h4 class="profile-name">{{loggedUser?.userFirstName}}, Admin</h4>
         <span class="profile-status online"></span>
         <span class="status-text">Online</span>
       </div>

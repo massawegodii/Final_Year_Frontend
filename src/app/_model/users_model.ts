@@ -6,7 +6,10 @@ export interface User {
   userPassword: string;
   imageUrl: string;
   phoneNumber: string;
+  jobTitle: string;
+  bio: string;
   role: Role[];
+  roleName?: string;
 }
 
 export interface Role {

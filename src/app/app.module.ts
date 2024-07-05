@@ -93,6 +93,8 @@ import { ProfileComponent } from './components/extra/profile/profile.component';
 import { UpdatesComponent } from './components/extra/updates/updates.component';
 import { UserProfileComponent } from './components/extra/user-profile/user-profile.component';
 import { GeneralReportComponent } from './components/extra/general-report/general-report.component';
+import { UserReportComponent } from './components/extra/user-report/user-report.component';
+import { ProfileSettingsComponent } from './components/extra/profile-settings/profile-settings.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading ...',
@@ -152,6 +154,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     UpdatesComponent,
     UserProfileComponent,
     GeneralReportComponent,
+    UserReportComponent,
+    ProfileSettingsComponent,
   ],
   imports: [
     HttpClientModule,

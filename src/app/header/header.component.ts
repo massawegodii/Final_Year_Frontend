@@ -53,12 +53,12 @@ export class HeaderComponent implements OnInit {
     window.open('http://localhost:8080/', '_blank');
   }
 
-  openProfile() {
-    const componentFactory =
-      this.componentFactoryResolver.resolveComponentFactory(ProfileComponent);
-    this.offcanvasBody.clear();
-    this.offcanvasBody.createComponent(componentFactory);
-  }
+  // openProfile() {
+  //   const componentFactory =
+  //     this.componentFactoryResolver.resolveComponentFactory(ProfileComponent);
+  //   this.offcanvasBody.clear();
+  //   this.offcanvasBody.createComponent(componentFactory);
+  // }
 
   updateAction() {
     const dialogConfig = new MatDialogConfig();

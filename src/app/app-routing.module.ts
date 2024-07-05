@@ -16,6 +16,8 @@ import { AuthGuard } from './_auth/auth.guard';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ReportPageComponent } from './components/extra/report-page/report-page.component';
 import { GeneralReportComponent } from './components/extra/general-report/general-report.component';
+import { UserReportComponent } from './components/extra/user-report/user-report.component';
+import { ProfileSettingsComponent } from './components/extra/profile-settings/profile-settings.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -43,6 +45,8 @@ const routes: Routes = [
       { path: 'maintainance', component: MaintananceComponent },
       { path: 'reportpage', component: ReportPageComponent },
       { path: 'generalreport', component: GeneralReportComponent },
+      { path: 'usereport', component: UserReportComponent },
+      { path: 'profile', component: ProfileSettingsComponent },
     ],
   },
 

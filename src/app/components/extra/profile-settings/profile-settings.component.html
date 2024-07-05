@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="profile-container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <img [src]="loggedUser?.imageUrl || '/assets/img/image-placeholder.png'"
+          class="profile-pic">
+        <div class="profile-info">
+          <h4>{{loggedUser?.userFirstName}} {{loggedUser?.userLastName}}</h4>
+          <p>Since July 25, 2024</p>
+        </div>
+      </div>
+      <div class="profile-nav">
+        <ul>
+          <li><a class="ponter active"><mat-icon>person</mat-icon>
+              Profile</a></li>
+          <li><a class="ponter"><mat-icon>key</mat-icon> Password</a></li>
+          <li><a class="ponter"><mat-icon>security</mat-icon>
+              Authorization</a></li>
+          <li><a class="ponter"><mat-icon>settings</mat-icon> Account</a></li>
+          <li><a class="ponter"><mat-icon>lock</mat-icon>
+              Authentication</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="profile-body">
+      <h3>Profile Settings</h3>
+      <form [formGroup]="profileForm" class="profile-form">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" formControlName="userFirstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" formControlName="userLastName" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" formControlName="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" formControlName="phoneNumber" required>
+        </div>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" formControlName="userName" required>
+        </div>
+        <div class="form-group">
+          <label>Job Title</label>
+          <input type="text" formControlName="jobTitle">
+        </div>
+        <div class="form-group form-group-full">
+          <label>Bio</label>
+          <textarea formControlName="bio"></textarea>
+        </div>
+        <button (click)="editProfile()" type="submit"
+          class="btn-update">Update</button>
+      </form>
+    </div>
+  </div>
+</div>
