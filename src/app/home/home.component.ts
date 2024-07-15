@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../_services/user.service';
 import { UserEvents } from '../_model/user-event';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -105,6 +106,29 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  public deleteUserLogging() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you really want to clear user logging activity?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUserTracking().subscribe(
+          (response) => {
+            this.getUserEvents();
+            this.toastr.success('User Logging activity cleared!');
+          },
+          (error) => {
+            this.toastr.warning('Something went wrong');
+          }
+        );
+      }
+    });
+  }
+
   public getUserEvents(): void {
     this.userService.getUserEvents().subscribe(
       (response: any) => {
@@ -120,7 +144,7 @@ export class HomeComponent implements OnInit {
             };
           }
           acc[log.username].attemptCount += 1;
-          acc[log.username].timestamps.push(log.timestamp); 
+          acc[log.username].timestamps.push(log.timestamp);
 
           // Update the success status and timestamp if it's the latest attempt
           if (new Date(log.timestamp) > new Date(acc[log.username].timestamp)) {

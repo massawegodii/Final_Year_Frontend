@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { UserAuthService } from './UserAuthService';
 import { User } from '../_model/users_model';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { UserEvents } from '../_model/user-event';
 
@@ -18,8 +17,7 @@ export class UserService implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    private userAuthService: UserAuthService,
-    private firestore: AngularFirestore
+    private userAuthService: UserAuthService
   ) {}
 
   public login(data: any) {
@@ -73,6 +71,10 @@ export class UserService implements OnInit {
 
   public getCurrentUser() {
     return this.httpClient.get<User[]>('http://localhost:8080/user/loggedUser');
+  }
+
+  public deleteUserTracking() {
+    return this.httpClient.delete('http://localhost:8080/user/all');
   }
 
   public blockUser(userName: any) {

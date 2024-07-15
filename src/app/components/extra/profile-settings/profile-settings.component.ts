@@ -11,7 +11,13 @@ import { User } from '../../../_model/users_model';
   styleUrl: './profile-settings.component.scss',
 })
 export class ProfileSettingsComponent implements OnInit {
+  currentView: string = 'profile';
+  isLoading: boolean = false;
   profileForm!: FormGroup;
+  passwordForm!: FormGroup;
+  applicationForm!: FormGroup;
+  mfaEnabled = false;
+  activityLogsEnabled = true;
   responseMessage: any;
   loggedUser: User | null = null;
 
@@ -51,6 +57,17 @@ export class ProfileSettingsComponent implements OnInit {
       bio: [null, Validators.required],
 
       imageUrl: [null, Validators.required],
+    });
+
+    this.passwordForm = this.formBuilder.group({
+      currentPassword: [''],
+      newPassword: [''],
+      confirmPassword: [''],
+    });
+
+    this.applicationForm = this.formBuilder.group({
+      accountActive: [false],
+      accountUnlocked: [false],
     });
 
     this.profileDetails();
@@ -136,5 +153,25 @@ export class ProfileSettingsComponent implements OnInit {
         this.toastr.error(this.responseMessage, GlobalConstant.error);
       }
     );
+  }
+
+  setView(view: string) {
+    this.currentView = view;
+  }
+
+  changePassword() {
+    // Implement password change logic here
+  }
+
+  updateApplicationSettings() {
+    this.isLoading = true;
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 2000);
+  }
+
+  toggleMFA() {
+    this.mfaEnabled = !this.mfaEnabled;
   }
 }

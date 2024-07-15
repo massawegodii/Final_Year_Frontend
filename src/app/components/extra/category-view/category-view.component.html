@@ -1,0 +1,15 @@
+
+<div class="container">
+  <h1>Category List</h1>
+  <ul class="scrollable-list">
+    <li *ngFor="let category of data.categories">
+      <div class="list-item">
+          <li *ngFor="let subCategory of category.categories">
+            {{ subCategory }}
+            <mat-icon class="item-actions" style="color: green;">check_circle</mat-icon>
+          </li>
+      </div>
+    </li>
+  </ul>
+</div>
+

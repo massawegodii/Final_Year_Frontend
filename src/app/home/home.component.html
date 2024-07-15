@@ -48,43 +48,72 @@
         <div class="card">
           <div class="card-body text-center">
             <h2 class="card-title">Account Activity</h2>
-            <p class="card-text">Latest activities on your account</p>
+
+            <div class="activity-header">
+              <p class="card-text">Latest activities on your account</p>
+
+              <button (click)="deleteUserLogging()" mat-raised-button
+                matTooltip="clear activity"
+                style="display: flex; justify-content: center; align-items: center;">
+                <mat-icon class="icon">delete_sweep</mat-icon>
+              </button>
+
+            </div>
+
           </div>
-          <div class="table-wrapper">
-          <table class="auth-log-table">
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>IP Address</th>
-                <th>Attempt</th>
-                <th>Type</th>
-                <th>Time</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let log of authLogs">
-                <td>{{ log.username }}</td>
-                <td>{{ log.ipAddress }}</td>
-                <td>{{ log.attemptCount }}</td>
-                <td style="text-align: center;">
-                  <button
-                    [ngClass]="{'btn-success': log.success, 'btn-danger': !log.success}"
-                    class="btn"
-                    disabled
-                    style="padding: 1px 5px; font-size: 0.8rem;">{{ log.success
-                    ? 'Success' : 'Failed' }}</button>
-                </td>
-                <td>{{ log.timestamp }}</td>
-                <td>
-                  <button class="btn btn-primary"
-                    style="padding: 1px 5px; font-size: 0.8rem;"
-                    (click)="viewAllTimestamps(log)" data-toggle="modal"
-                    data-target="#exampleModal">View All</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+            <div class="table-wrapper">
+              <div *ngIf="authLogs && authLogs.length > 0">
+              <table class="auth-log-table">
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>IP Address</th>
+                    <th>Attempt</th>
+                    <th>Type</th>
+                    <th>Time</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let log of authLogs">
+                    <td>{{ log.username }}</td>
+                    <td>{{ log.ipAddress }}</td>
+                    <td>{{ log.attemptCount }}</td>
+                    <td style="text-align: center;">
+                      <button
+                        [ngClass]="{'btn-success': log.success, 'btn-danger': !log.success}"
+                        class="btn"
+                        disabled
+                        style="padding: 1px 5px; font-size: 0.8rem;">{{
+                        log.success
+                        ? 'Success' : 'Failed' }}</button>
+                    </td>
+                    <td>{{ log.timestamp }}</td>
+                    <td>
+                      <button class="btn btn-primary"
+                        style="padding: 1px 5px; font-size: 0.8rem;"
+                        (click)="viewAllTimestamps(log)" data-toggle="modal"
+                        data-target="#exampleModal">View All</button>
+                    </td>
+                  </tr>
+                </tbody>
+
+              </table>
+            </div>
+
+          <!-- No Activity Message -->
+          <div
+            *ngIf="!authLogs || authLogs.length === 0">
+            <p class="text-center" style="text-align: center;">
+              <span style="display: inline-flex; align-items: center;">
+                <mat-icon
+                  style="margin-right: 8px; color: rgb(101, 238, 101)">info_outline</mat-icon>
+                No
+                Logged user
+              </span>
+            </p>
+          </div>
           </div>
 
           <div *ngIf="showTimestamps" class="modal" (click)="closeTimestamps()">
@@ -92,7 +121,7 @@
               <p mat-raised-button color="warn" mat-dialog-close
                 class="button-hover">
               </p>
-              <h2>All Timestamps  {{ selectedUserTimestamps[0]?.username
+              <h2>All Timestamps {{ selectedUserTimestamps[0]?.username
                 }}</h2>
               <ul>
                 <li *ngFor="let timestamp of selectedUserTimestamps">

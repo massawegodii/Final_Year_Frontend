@@ -21,7 +21,7 @@ export class WelcomeComponent implements OnInit{
     dialogConfig.width = '550px';
     this.dialog.open(ForgotPasswordComponent, dialogConfig);
   }
-  
+
 
   handleLoginAction() {
     const dialogConfig = new MatDialogConfig();

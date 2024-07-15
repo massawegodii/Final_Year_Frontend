@@ -11,51 +11,134 @@
       </div>
       <div class="profile-nav">
         <ul>
-          <li><a class="ponter active"><mat-icon>person</mat-icon>
+          <li><a (click)="setView('profile')" class="ponter active"
+              [class.active]="currentView === 'profile'"><mat-icon>person</mat-icon>
               Profile</a></li>
-          <li><a class="ponter"><mat-icon>key</mat-icon> Password</a></li>
-          <li><a class="ponter"><mat-icon>security</mat-icon>
+          <li><a (click)="setView('password')" class="ponter" class="pointer"
+              [class.active]="currentView === 'password'"><mat-icon>key</mat-icon>
+              Password</a></li>
+          <li><a (click)="setView('authorization')" class="ponter"
+              [class.active]="currentView === 'authorization'"><mat-icon>security</mat-icon>
               Authorization</a></li>
-          <li><a class="ponter"><mat-icon>settings</mat-icon> Account</a></li>
-          <li><a class="ponter"><mat-icon>lock</mat-icon>
-              Authentication</a></li>
+          <li><a (click)="setView('authentication')" class="ponter"
+              [class.active]="currentView === 'authentication'"><mat-icon>lock</mat-icon>
+              Application</a></li>
         </ul>
       </div>
     </div>
     <div class="profile-body">
-      <h3>Profile Settings</h3>
-      <form [formGroup]="profileForm" class="profile-form">
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" formControlName="userFirstName" required>
+      <div *ngIf="currentView === 'profile'">
+        <h3>Profile Settings</h3>
+        <form [formGroup]="profileForm" class="profile-form">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" formControlName="userFirstName" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" formControlName="userLastName" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" formControlName="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" formControlName="phoneNumber" required>
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" formControlName="userName" required>
+          </div>
+          <div class="form-group">
+            <label>Job Title</label>
+            <input type="text" formControlName="jobTitle">
+          </div>
+          <div class="form-group form-group-full">
+            <label>Bio</label>
+            <textarea formControlName="bio"></textarea>
+          </div>
+          <button (click)="editProfile()" type="submit"
+            class="btn-update">Update</button>
+        </form>
+      </div>
+      <div *ngIf="currentView === 'password'">
+        <h3>Password Settings</h3>
+        <form [formGroup]="passwordForm" class="password-form">
+          <div class="form-group">
+            <label for="currentPassword">Current password</label>
+            <input type="password" formControlName="currentPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="newPassword">New password</label>
+            <input type="password" formControlName="newPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm new password</label>
+            <input type="password" formControlName="confirmPassword" required>
+          </div>
+          <br>
+          <button (click)="changePassword()" type="submit"
+            class="btn-update">Update</button>
+        </form>
+      </div>
+
+      <div *ngIf="currentView === 'authorization'">
+        <div class="container1">
+          <h1>Authentication Settings</h1>
+          <p>These settings help keep your account more secure.</p>
+          <hr>
+          <div class="setting">
+            <div class="setting-header">
+              <h2>Multi-Factor Authentication</h2>
+              <span class="status"
+                [ngClass]="{'disabled': !mfaEnabled, 'enabled': mfaEnabled}">
+                {{ mfaEnabled ? 'Enabled' : 'Disabled' }}
+              </span>
+            </div>
+            <p>Set up Multi-factor Authentication (MFA) to help keep your
+              account more secure</p>
+            <button class="enable-btn" (click)="toggleMFA()">{{ mfaEnabled ?
+              'Disable' : 'Enable' }}</button>
+          </div>
+          <hr>
+          <div class="setting">
+            <div class="setting-header">
+              <h2>Activity Logs</h2>
+              <input type="checkbox" id="activity-logs"
+                [(ngModel)]="activityLogsEnabled">
+            </div>
+            <p>Show the latest activities on your account</p>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" formControlName="userLastName" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" formControlName="email" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone</label>
-          <input type="text" formControlName="phoneNumber" required>
-        </div>
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" formControlName="userName" required>
-        </div>
-        <div class="form-group">
-          <label>Job Title</label>
-          <input type="text" formControlName="jobTitle">
-        </div>
-        <div class="form-group form-group-full">
-          <label>Bio</label>
-          <textarea formControlName="bio"></textarea>
-        </div>
-        <button (click)="editProfile()" type="submit"
-          class="btn-update">Update</button>
-      </form>
+
+      </div>
+      <div *ngIf="currentView === 'account'">
+        <h3>Account Settings</h3>
+        <!-- Account form fields here -->
+      </div>
+      <div *ngIf="currentView === 'authentication'">
+        <h3>Application Settings</h3>
+        <form [formGroup]="applicationForm" class="application-form">
+          <div class="form-group">
+            <label>
+              <input type="checkbox" formControlName="accountActive">
+              Account Active
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" formControlName="accountUnlocked">
+              Account Unlocked
+            </label>
+          </div>
+          <button (click)="updateApplicationSettings()" type="submit"
+            class="btn-loading">
+            <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+            <span *ngIf="!isLoading">Update</span>
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

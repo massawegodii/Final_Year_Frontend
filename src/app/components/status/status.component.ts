@@ -42,10 +42,7 @@ export class StatusComponent implements OnInit {
         } else {
           this.responseMessage = GlobalConstant.genericError;
         }
-        this.toastr.info(
-          this.responseMessage,
-          GlobalConstant.error
-        );
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
       }
     );
   }

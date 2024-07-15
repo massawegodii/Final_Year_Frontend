@@ -7,6 +7,7 @@ import { CategoryService } from '../../_services/category.service';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteStatusComponent } from '../extra/delete-status/delete-status.component';
+import { CategoryViewComponent } from '../extra/category-view/category-view.component';
 
 @Component({
   selector: 'app-category',
@@ -17,6 +18,7 @@ export class CategoryComponent implements OnInit {
   responseMessage: any;
   displayedColumns: string[] = ['Id', 'Asset Type', 'Actions'];
   dataSource: Category[] = [];
+  categories: Category[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -104,5 +106,26 @@ export class CategoryComponent implements OnInit {
         console.log('Deletion canceled.');
       }
     });
+  }
+
+  public getProductByName(name: string) {
+    this.categoryService.getCategoryByName(name).subscribe(
+      (response: Category[]) => {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.width = '550px';
+        dialogConfig.data = { categories: response };
+
+        this.dialog.open(CategoryViewComponent, dialogConfig);
+        this.categories = response;
+      },
+      (error) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstant.genericError;
+        }
+        this.toastr.info(this.responseMessage, GlobalConstant.error);
+      }
+    );
   }
 }

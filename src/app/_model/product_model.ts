@@ -10,6 +10,7 @@ export interface Product {
   productSerialNo: number;
   productStatus: string;
   productType: string;
+  productOffice: string;
   productCategory: string;
   productDepartment: string;
   qrCode: string;

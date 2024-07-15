@@ -3,8 +3,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SnackbarService } from '../../_services/snackbar.service';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Product } from '../../_model/product_model';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { MatSelectChange } from '@angular/material/select';
@@ -61,6 +59,7 @@ export class AssetEditComponent implements OnInit {
     productCategory: '',
     productType: '',
     qrCode: '',
+    productOffice: '',
     productImages: [],
 
     user: {
@@ -113,6 +112,7 @@ export class AssetEditComponent implements OnInit {
         productDepartment: product.productDepartment,
         productImages: product.productImages,
         qrCode: product.qrCode,
+        productOffice: product.productOffice,
 
         user: {
           userName: product.user.userName,

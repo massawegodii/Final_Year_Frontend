@@ -95,6 +95,9 @@ import { UserProfileComponent } from './components/extra/user-profile/user-profi
 import { GeneralReportComponent } from './components/extra/general-report/general-report.component';
 import { UserReportComponent } from './components/extra/user-report/user-report.component';
 import { ProfileSettingsComponent } from './components/extra/profile-settings/profile-settings.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CategoryViewComponent } from './components/extra/category-view/category-view.component';
+
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading ...',
@@ -156,6 +159,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     GeneralReportComponent,
     UserReportComponent,
     ProfileSettingsComponent,
+    CategoryViewComponent,
   ],
   imports: [
     HttpClientModule,
@@ -199,6 +203,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatAutocompleteModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
+    MatProgressSpinnerModule,
 
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyBYRHE3SnJJbKwMqEekGuN7mgWEhGbjvvI',

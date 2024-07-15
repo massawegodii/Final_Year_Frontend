@@ -51,6 +51,7 @@ export class AssetsComponent implements OnInit {
     'Asset Type',
     'Product Serial Number',
     'Product Department',
+    'Office',
     'Date Assigned',
     'Name Assigned',
     'Actions',
@@ -151,6 +152,17 @@ export class AssetsComponent implements OnInit {
     return assetType ? assetType.productType : 'No Asset Type';
   }
 
+  offices: Product[] = [];
+  getOffices(productOffice: string): string {
+    if (!productOffice) {
+      return 'No office';
+    }
+
+    const officeType = this.offices.find((p) => p.productOffice === productOffice);
+    console.log(officeType);
+    return officeType ? officeType.productOffice : 'No office';
+  }
+
   departments: Department[] = [];
   getDepartmentName(productDepartment: string): string {
     if (!productDepartment) {
@@ -213,6 +225,7 @@ export class AssetsComponent implements OnInit {
         (response: Product[]) => {
           this.productDetails = response;
           this.products = response;
+          this.offices = response;
           this.isLoading = false;
 
           // Assigning the userName

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category } from '../_model/category-model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -34,9 +35,7 @@ export class CategoryService {
     );
   }
 
-  public getCategoryByName(name: string) {
-    return this.httpClient.get<any>(
-      'http://localhost:8080/category/getByName/' + name
-    );
+    getCategoryByName(name: string): Observable<Category[]> {
+    return this.httpClient.get<Category[]>(`http://localhost:8080/category/getByName/${name}`);
   }
 }

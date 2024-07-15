@@ -2,7 +2,6 @@ import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DepartmentService } from '../../_services/department.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { GlobalConstant } from '../../_constants/global-constant';
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +16,7 @@ export class DepartmentsNewComponent implements OnInit {
   departmentForm: any = FormGroup;
   onAddDepartment = new EventEmitter();
   onEditDepartment = new EventEmitter();
+  offices: string[] = [];
   dialogAction: any = 'Add';
   action: any = 'Add';
 
@@ -35,13 +35,32 @@ export class DepartmentsNewComponent implements OnInit {
         null,
         [Validators.required, Validators.pattern(GlobalConstant.nameRegex)],
       ],
+      office: [
+        null,
+        Validators.required,
+        ,
+        Validators.pattern(GlobalConstant.nameRegex),
+      ],
     });
 
     if (this.dialogData.action === 'Edit') {
       this.dialogAction = 'Edit';
       this.action = 'Update';
       this.departmentForm.patchValue(this.dialogData.data);
+      this.offices = this.dialogData.data.offices || [];
     }
+  }
+
+  addOffices(): void {
+    const office = this.departmentForm.get('office')?.value;
+    if (office && !this.offices.includes(office)) {
+      this.offices.push(office);
+      this.departmentForm.get('office')?.reset();
+    }
+  }
+
+  removeOffices(index: number): void {
+    this.offices.splice(index, 1);
   }
 
   handleSubmit() {
@@ -56,6 +75,7 @@ export class DepartmentsNewComponent implements OnInit {
     var formData = this.departmentForm.value;
     var data = {
       name: formData.name,
+      offices: this.offices,
     };
     this.departmentService.addDepartment(data).subscribe(
       (response: any) => {
@@ -81,6 +101,7 @@ export class DepartmentsNewComponent implements OnInit {
     var data = {
       id: this.dialogData.data.id,
       name: formData.name,
+      offices: this.offices,
     };
     this.departmentService.updateDepartment(data).subscribe(
       (response: any) => {

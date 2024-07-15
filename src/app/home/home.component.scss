@@ -207,4 +207,28 @@ table {
 }
 
 
+.activity-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.card-text {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.icon {
+  color: red;
+  font-size: 21px;
+  transition: font-size 0.3s ease;
+}
+
+.icon:hover {
+  font-size: 30px;
+  background-color: #1d1c1c;
+}
+
 

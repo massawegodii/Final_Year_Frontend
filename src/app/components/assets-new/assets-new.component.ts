@@ -31,6 +31,8 @@ export class AssetsNewComponent implements OnInit {
   selectedCategory: string = '';
   selectedDepartment: string = '';
 
+  selectedOffie: Department[] = [];
+
   selectedName: Category[] = [];
 
   constructor(
@@ -58,6 +60,7 @@ export class AssetsNewComponent implements OnInit {
     productCategory: '',
     productType: '',
     productImages: [],
+    productOffice: '',
     qrCode: '',
 
     user: {
@@ -92,6 +95,7 @@ export class AssetsNewComponent implements OnInit {
       productType: [null],
       productDepartment: [null],
       productImages: [null],
+      productOffice: [null],
       qrCode: [null],
 
       user: this.formBuilder.group({
@@ -114,6 +118,7 @@ export class AssetsNewComponent implements OnInit {
         productType: product.productType,
         productDepartment: product.productDepartment,
         qrCode: product.qrCode,
+        productOffice: product.productOffice,
         productImages: [],
 
         user: {
@@ -295,5 +300,21 @@ export class AssetsNewComponent implements OnInit {
   // Method to handle department selection
   onDepartmentSelect(event: MatSelectChange) {
     this.selectedDepartment = event.value;
+    this.getDepartmentByName(this.selectedDepartment);
+  }
+
+  public getDepartmentByName(name: string) {
+    if (name) {
+      this.departmentService.getDepartmentByName(name).subscribe(
+        (response: Department[]) => {
+          this.selectedOffie = response;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      this.selectedOffie = [];
+    }
   }
 }
