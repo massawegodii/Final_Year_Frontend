@@ -84,7 +84,6 @@ export class GeneralReportComponent implements OnInit {
     }
 
     const assetType = this.products.find((p) => p.productType === productType);
-    console.log(assetType);
     return assetType ? assetType.productType : 'No Asset Type';
   }
 

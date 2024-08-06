@@ -53,13 +53,6 @@ export class HeaderComponent implements OnInit {
     window.open('http://localhost:8080/', '_blank');
   }
 
-  // openProfile() {
-  //   const componentFactory =
-  //     this.componentFactoryResolver.resolveComponentFactory(ProfileComponent);
-  //   this.offcanvasBody.clear();
-  //   this.offcanvasBody.createComponent(componentFactory);
-  // }
-
   updateAction() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '750px';
@@ -70,8 +63,9 @@ export class HeaderComponent implements OnInit {
 
   public logout() {
     const dialogConfig = new MatDialogConfig();
+     dialogConfig.width = '350px';
     dialogConfig.data = {
-      message: 'Logout',
+      message: 'logout',
       confirmation: true,
     };
 

@@ -25,6 +25,7 @@ import { User } from '../_model/users_model';
 import { TextMessageComponent } from '../components/extra/text-message/text-message.component';
 import { ToastrService } from 'ngx-toastr';
 import { UserProfileComponent } from '../components/extra/user-profile/user-profile.component';
+import { AlertService } from '../_services/alert.service';
 
 @Component({
   selector: 'app-user-page',
@@ -40,6 +41,8 @@ export class UserPageComponent implements OnInit {
   productDetails: Product[] = [];
 
   loggedUser: User | null = null;
+
+  alertMessage!: string;
 
   responseMessage: any;
   filteredProducts: Assign[] = [];
@@ -63,6 +66,7 @@ export class UserPageComponent implements OnInit {
     private qrcodeService: QrcodeService,
     private userService: UserService,
     private toastr: ToastrService,
+    private alertService: AlertService,
     private componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
@@ -71,6 +75,11 @@ export class UserPageComponent implements OnInit {
     this.getAllAssign();
     this.getCurrentUser();
     // this.getAllProduct();
+
+    this.alertService.getAlertMessage().subscribe((message) => {
+      this.alertMessage = message;
+      console.log(this.alertMessage);
+    });
   }
 
   public getAllAssign() {
@@ -231,5 +240,9 @@ export class UserPageComponent implements OnInit {
       );
     this.offcanvasBody.clear();
     this.offcanvasBody.createComponent(componentFactory);
+  }
+
+  closeAlert() {
+    this.alertMessage = '';
   }
 }

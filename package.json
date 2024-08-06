@@ -38,7 +38,6 @@
     "firebase": "^10.12.2",
     "jquery": "^3.7.1",
     "jwt-decode": "^4.0.0",
-    "ng2-order-pipe": "^0.1.5",
     "ng2-search-filter": "^0.5.1",
     "ngx-material-timepicker": "^13.1.1",
     "ngx-order-pipe": "^2.2.0",

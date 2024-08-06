@@ -29,6 +29,7 @@ export class MaintananceComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.getAllSchedule();
+    this.setDefaultDate();
 
     this.alertService.getAlertMessage().subscribe((message) => {
       this.alertMessage = message;
@@ -41,6 +42,13 @@ export class MaintananceComponent implements OnInit {
       selectedDate: [''],
       selectedTime: [''],
       note: [''],
+    });
+  }
+
+  setDefaultDate(): void {
+    const today = new Date();
+    this.maintenanceForm.patchValue({
+      selectedDate: today,
     });
   }
 
@@ -66,7 +74,7 @@ export class MaintananceComponent implements OnInit {
   renderEvent(info: any) {
     const eventEl = document.createElement('div');
     eventEl.innerHTML = `<span style="background-color: #ff9999; font-size: 14px;
-    color: ${info.event.backgroundColor}; padding: 4vw 2vw; border-radius: 4px;
+    color: ${info.event.backgroundColor}; padding: 2vw; border-radius: 8px;
      width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
      ${info.event.title}</span>`;
     return { domNodes: [eventEl] };
@@ -135,6 +143,7 @@ export class MaintananceComponent implements OnInit {
         (response: any) => {
           this.maintenanceForm.reset();
           this.getAllSchedule();
+          this.setDefaultDate();
           this.responseMessage = response?.message;
           this.toastr.success('Maintenance Schedule added successfully.');
           window.location.reload();
@@ -145,10 +154,7 @@ export class MaintananceComponent implements OnInit {
           } else {
             this.responseMessage = GlobalConstant.genericError;
           }
-          this.toastr.error(
-            this.responseMessage,
-            GlobalConstant.error
-          );
+          this.toastr.error(this.responseMessage, GlobalConstant.error);
         }
       );
     } else {

@@ -7,8 +7,8 @@ import { Maintanance } from '../_model/maintanance_model';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../_services/user.service';
-import { UserEvents } from '../_model/user-event';
 import Swal from 'sweetalert2';
+import { AlertService } from '../_services/alert.service';
 
 @Component({
   selector: 'app-home',
@@ -32,19 +32,26 @@ export class HomeComponent implements OnInit {
 
   maintenanceDetails: Maintanance[] = [];
   displayedColumns: string[] = ['Information', 'Date', 'Time', 'Actions'];
+  alertMessage!: string;
 
   constructor(
     private dashboardService: DashboardService,
     private maintenanceService: MaintenanceService,
     private userService: UserService,
     private toastr: ToastrService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
     this.getAllSchedule();
     this.dashboardDetails();
     this.getUserEvents();
+
+    this.alertService.getAlertMessage().subscribe((message) => {
+      this.alertMessage = message;
+      console.log(this.alertMessage);
+    });
   }
 
   get totalPages(): number {
@@ -88,7 +95,7 @@ export class HomeComponent implements OnInit {
 
   deleteSchedule(id: number) {
     const dialogRef = this.dialog.open(DeleteScheduleComponent, {
-      width: '450px',
+      width: '350px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -97,6 +104,7 @@ export class HomeComponent implements OnInit {
           (res) => {
             this.getAllSchedule();
             this.toastr.success('Maintenance deleted successfully!');
+            window.location.reload();
           },
           (error) => {
             console.log(error);
@@ -173,5 +181,9 @@ export class HomeComponent implements OnInit {
 
   public closeTimestamps(): void {
     this.showTimestamps = false;
+  }
+
+  closeAlert() {
+    this.alertMessage = '';
   }
 }
